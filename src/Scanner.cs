@@ -117,6 +117,8 @@ namespace LootObjectives
                 if (interactables.scrappers > 0)    sb.AppendLine($"{Language.GetString("SCRAPPER_NAME")}: {interactables.scrappers}");
                 if (interactables.cloakedChests > 0) sb.AppendLine($"{Language.GetString("CHEST1_STEALTHED_NAME")}: {interactables.cloakedChestsAvailable}/{interactables.cloakedChests}");
             }
+            
+            tooltip.bodyToken = sb.ToString();
         }
 
 
@@ -129,8 +131,10 @@ namespace LootObjectives
             tooltip = Utils.AddTooltipProvider(label);
 
             if (tooltip != null) {
+                tooltip.titleColor = DifficultyCatalog.GetDifficultyDef(Run.instance.selectedDifficulty).color;
                 tooltip.titleToken = "Loot";
                 Log.Debug("Tooltip intialized.");
+                Scan();
             }
             else {
                 Log.Warning("Waiting for tooltip to be initialized.");
