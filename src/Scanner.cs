@@ -20,9 +20,10 @@ namespace LootObjectives
             public int voidsAvailable = 0;
             public int cloakedChests = 0;
             public int cloakedChestsAvailable = 0;
-
-            public bool scrapperPresent = false;
+            public int scrappers = 0;
         }
+
+        private RoR2.UI.TooltipProvider tooltip;
 
         public Interactables interactables;
 
@@ -30,12 +31,14 @@ namespace LootObjectives
         {
             Stage.onStageStartGlobal += Scan;
             GlobalEventManager.OnInteractionsGlobal += Scan;
+            RoR2.UI.HUD.shouldHudDisplay += UpdateHUD;
         }
 
         public void Unhook()
         {
             Stage.onStageStartGlobal -= Scan;
             GlobalEventManager.OnInteractionsGlobal -= Scan;
+            RoR2.UI.HUD.shouldHudDisplay -= UpdateHUD;
         }
 
         public void Scan(Stage _) => Scan();
@@ -90,12 +93,37 @@ namespace LootObjectives
                         if (interactors[i].available) interactables.cloakedChestsAvailable++;
                         break;
                     case "SCRAPPER_NAME":
-                        interactables.scrapperPresent = true;
+                        interactables.scrappers++;
                         break;
                 }
             }
 
+            if (tooltip) UpdateTooltip();
+
             return interactables;
+        }
+
+        public void UpdateTooltip()
+        {
+            System.Text.StringBuilder sb = new();
+            if (interactables.terminals > 0)        sb.AppendLine($"{Language.GetString("MULTISHOP_TERMINAL_NAME")}: {interactables.terminalsAvailable}/{interactables.terminals}");
+            if (interactables.chests > 0)           sb.AppendLine($"{Language.GetString("CHEST1_NAME")}: {interactables.chestsAvailable}/{interactables.chests}");
+            if (interactables.adaptiveChests > 0)   sb.AppendLine($"{Language.GetString("CASINOCHEST_NAME")}: {interactables.adaptiveChestsAvailable}/{interactables.adaptiveChests}");
+            if (interactables.shrineChances > 0)    sb.AppendLine($"{Language.GetString("SHRINE_CHANCE_NAME")}: {interactables.shrineChancesAvailable}/{interactables.shrineChances}");
+            if (interactables.lockboxes > 0)        sb.AppendLine($"{Language.GetString("LOCKBOX_NAME")}: {interactables.chestsAvailable}/{interactables.chests}");
+            if (interactables.voids > 0)            sb.AppendLine($"{Language.GetString("VOID_CHEST_NAME")}: {interactables.voidsAvailable}/{interactables.voids}");
+            if (TeleporterInteraction.instance != null && TeleporterInteraction.instance.isCharged) {
+                if (interactables.scrappers > 0)    sb.AppendLine($"{Language.GetString("SCRAPPER_NAME")}: {interactables.scrappers}");
+                if (interactables.cloakedChests > 0) sb.AppendLine($"{Language.GetString("CHEST1_STEALTHED_NAME")}: {interactables.cloakedChestsAvailable}/{interactables.cloakedChests}");
+            }
+        }
+
+
+        private void UpdateHUD(RoR2.UI.HUD hud, ref bool _)
+        {
+            var target = hud.GetComponentInChildren<RoR2.UI.ObjectivePanelController>().GetComponentInChildren<RoR2.UI.HGTextMeshProUGUI>();
+            tooltip = Utils.AddTooltipProvider(target);
+            tooltip.titleToken = "Loot";
         }
     }
 }
