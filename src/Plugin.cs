@@ -14,7 +14,7 @@ namespace LootObjectives
 
         public static new Config Config { get; private set; }
 
-        public Scanner scanner;
+        private Scanner scanner;
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Unity Message")]
         private void Awake()
@@ -30,7 +30,7 @@ namespace LootObjectives
         /// <see href="https://github.com/BepInEx/BepInEx/blob/0d06996b52c0215a8327b8c69a747f425bbb0023/BepInEx/Bootstrap/Chainloader.cs#L88">same</see>
         /// <see cref="UnityEngine.GameObject"/>, so manually manage components instead of calling <see cref="UnityEngine.GameObject.SetActive"/>.
         /// </summary>
-        private void SetActive(bool value)
+        public void SetActive(bool value)
         {
             this.enabled = value;
             Log.Message($"~{(value ? "active" : "inactive")}.");

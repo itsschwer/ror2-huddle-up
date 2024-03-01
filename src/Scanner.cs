@@ -2,9 +2,9 @@
 
 namespace LootObjectives
 {
-    public class Scanner
+    public sealed class Scanner
     {
-        public record Interactables
+        public sealed record Interactables
         {
             public int chests = 0;
             public int chestsAvailable = 0;
@@ -28,14 +28,14 @@ namespace LootObjectives
 
         private RoR2.UI.TooltipProvider tooltip;
 
-        public Interactables interactables;
+        public Interactables interactables { get; private set; }
 
         public void Hook()
         {
             Stage.onStageStartGlobal += Scan;
             GlobalEventManager.OnInteractionsGlobal += Scan;
             TeleporterInteraction.onTeleporterChargedGlobal += Scan;
-            RoR2.UI.HUD.shouldHudDisplay += UpdateHUD;
+            RoR2.UI.HUD.shouldHudDisplay += InitTooltip;
         }
 
         public void Unhook()
@@ -43,7 +43,7 @@ namespace LootObjectives
             Stage.onStageStartGlobal -= Scan;
             GlobalEventManager.OnInteractionsGlobal -= Scan;
             TeleporterInteraction.onTeleporterChargedGlobal -= Scan;
-            RoR2.UI.HUD.shouldHudDisplay -= UpdateHUD;
+            RoR2.UI.HUD.shouldHudDisplay -= InitTooltip;
         }
 
         public void Scan(Stage _) => Scan();
@@ -143,7 +143,7 @@ namespace LootObjectives
         }
 
 
-        private void UpdateHUD(RoR2.UI.HUD hud, ref bool _)
+        private void InitTooltip(RoR2.UI.HUD hud, ref bool _)
         {
             if (tooltip != null) return;
 
