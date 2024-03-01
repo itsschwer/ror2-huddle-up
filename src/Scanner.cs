@@ -124,11 +124,17 @@ namespace LootObjectives
         {
             if (tooltip != null) return;
 
-            var objectivePanel = hud.GetComponentInChildren<RoR2.UI.ObjectivePanelController>(true);
-            var label = objectivePanel.GetComponentInChildren<RoR2.UI.HGTextMeshProUGUI>(true);
+            var objectivePanel = hud.GetComponentInChildren<RoR2.UI.ObjectivePanelController>();
+            var label = objectivePanel?.GetComponentInChildren<RoR2.UI.HGTextMeshProUGUI>();
             tooltip = Utils.AddTooltipProvider(label);
-            tooltip.titleToken = "Loot";
-            Log.Debug("Added to HUD.");
+
+            if (tooltip != null) {
+                tooltip.titleToken = "Loot";
+                Log.Debug("Tooltip intialized.");
+            }
+            else {
+                Log.Warning("Waiting for tooltip to be initialized.");
+            }
         }
     }
 }

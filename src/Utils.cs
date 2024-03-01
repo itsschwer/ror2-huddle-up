@@ -4,6 +4,8 @@
     {
         public static RoR2.UI.TooltipProvider AddTooltipProvider(UnityEngine.UI.Graphic target)
         {
+            if (target == null) return null;
+
             AddGraphicRaycasterToParentCanvas(target);
             target.raycastTarget = true;
             return AddComponentIfMissing<RoR2.UI.TooltipProvider>(target.gameObject);
