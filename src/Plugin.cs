@@ -12,15 +12,12 @@ namespace LootObjectives
         public const string Name = "LootObjectives";
         public const string Version = "0.0.0";
 
-        public static new Config Config { get; private set; }
-
         private Scanner scanner;
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Unity Message")]
         private void Awake()
         {
             Log.Init(Logger);
-            Config = new Config(base.Config);
 
             Log.Message("~awake.");
         }
