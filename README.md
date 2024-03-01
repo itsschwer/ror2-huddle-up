@@ -1,36 +1,15 @@
 # loot objectives
 
-A \[ client-side \] mod that adds ████.
+A \[ client-side \] mod that adds a tooltip to the *Objectives* panel to track how much loot is left on a stage.
 
-## plans
-
-- initial: add an icon w/ tooltip containing trackers
-- potential: add as objectives
-
-### `PurchaseInteraction`
-
-- lockbox
-    - `LOCKBOX_NAME`
-    - `VOIDLOCKBOX_NAME` *(`LOCKBOXVOID_NAME`??)*
-- chests
-    - `CHEST1_NAME`
-    - `CHEST2_NAME`
-    - `GOLDCHEST_NAME`
-    - `CATEGORYCHEST_HEALING_NAME`
-    - `CATEGORYCHEST_DAMAGE_NAME`
-    - `CATEGORYCHEST_UTILITY_NAME`
-    - `CATEGORYCHEST2_HEALING_NAME`
-    - `CATEGORYCHEST2_DAMAGE_NAME`
-    - `CATEGORYCHEST2_UTILITY_NAME`
-- multishops / shipping requests
-    - `MULTISHOP_TERMINAL_NAME`
-- adaptive chests
-    - `CASINOCHEST_NAME`
-- chance shrines
-    - `SHRINE_CHANCE_NAME` — count remaining purchases?
-- void
-    - `VOID_CHEST_NAME`
-    - `VOID_TRIPLE_NAME`
-- on tp clear
-    - `CHEST1_STEALTHED_NAME`
-    - `SCRAPPER_NAME` (yes/no)
+## what is tracked?
+- multishop terminals *(counts individual terminals; includes equipment and shipping requests)*
+- chests *(regular, large, legendary, category, category large)*
+- adaptive chests *`<!>` known issue: counter doesn't decrement until an item has been selected (and rescanned)*
+- shrine chances *(counts all potential drops)*
+- equipment barrels
+- lockboxes *(includes void variant)*
+- void cradles/potentials
+- once teleporter is charged
+    - cloaked chests
+    - scrapper
