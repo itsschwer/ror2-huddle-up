@@ -14,6 +14,8 @@ namespace LootObjectives
 
         public static new Config Config { get; private set; }
 
+        public Scanner scanner;
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Unity Message")]
         private void Awake()
         {
@@ -37,15 +39,30 @@ namespace LootObjectives
         [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Unity Message")]
         private void OnEnable()
         {
-            // to be implemented
+            Run.onRunStartGlobal += OnRunStart;
+            Run.onRunDestroyGlobal += OnRunDestroy;
+
             Log.Message("~enabled.");
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Unity Message")]
         private void OnDisable()
         {
-            // to be implemented
+            Run.onRunStartGlobal -= OnRunStart;
+            Run.onRunDestroyGlobal -= OnRunDestroy;
+
             Log.Message("~disabled.");
+        }
+
+
+        private void OnRunStart(Run _) {
+            scanner = new Scanner();
+            scanner.Hook();
+        }
+
+        private void OnRunDestroy(Run _) {
+            scanner.Unhook();
+            scanner = null;
         }
     }
 }

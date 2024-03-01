@@ -2,9 +2,9 @@
 
 namespace LootObjectives
 {
-    public static class Scanner
+    public class Scanner
     {
-        public struct Interactables
+        public record Interactables
         {
             public int chests = 0;
             public int chestsAvailable = 0;
@@ -22,17 +22,30 @@ namespace LootObjectives
             public int cloakedChestsAvailable = 0;
 
             public bool scrapperPresent = false;
-
-            public Interactables() { }
         }
 
-        public static Interactables Scan()
+        public Interactables interactables;
+
+        public void Hook()
         {
-            Interactables interactables = new Interactables();
+            Stage.onStageStartGlobal += Scan;
+            GlobalEventManager.OnInteractionsGlobal += Scan;
+        }
+
+        public void Unhook()
+        {
+            Stage.onStageStartGlobal -= Scan;
+            GlobalEventManager.OnInteractionsGlobal -= Scan;
+        }
+
+        public void Scan(Stage _) => Scan();
+        public void Scan(Interactor _, IInteractable __, UnityEngine.GameObject ___) => Scan();
+        public Interactables Scan()
+        {
+            interactables = new Interactables();
 
             var interactors = InstanceTracker.GetInstancesList<PurchaseInteraction>();
             for (int i = 0; i < interactors.Count; i++) {
-                // if (!interactors[i].available) continue;
                 switch (interactors[i].displayNameToken) {
                     default: break;
                     case "CHEST1_NAME":
@@ -83,74 +96,6 @@ namespace LootObjectives
             }
 
             return interactables;
-        }
-
-        public static bool IsLoot(PurchaseInteraction interactor)
-        {
-            return IsChest(interactor)
-                || IsTerminal(interactor)
-                || IsChanceShrine(interactor)
-                || IsLockbox(interactor)
-                || IsAdaptiveChest(interactor)
-                || IsVoid(interactor)
-                || IsCloakedChest(interactor);
-        }
-
-        public static bool IsLockbox(PurchaseInteraction interactor)
-        {
-            switch (interactor.displayNameToken) {
-                default: return false;
-                case "LOCKBOX_NAME":
-                case "VOIDLOCKBOX_NAME":
-                    return true;
-            }
-        }
-
-        public static bool IsTerminal(PurchaseInteraction interactor)
-        {
-            return interactor.displayNameToken == "MULTISHOP_TERMINAL_NAME";
-        }
-
-        public static bool IsChanceShrine(PurchaseInteraction interactor)
-        {
-            return interactor.displayNameToken == "SHRINE_CHANCE_NAME";
-        }
-
-        public static bool IsAdaptiveChest(PurchaseInteraction interactor)
-        {
-            return interactor.displayNameToken == "CASINOCHEST_NAME";
-        }
-
-        public static bool IsCloakedChest(PurchaseInteraction interactor)
-        {
-            return interactor.displayNameToken == "CHEST1_STEALTHED_NAME";
-        }
-
-        public static bool IsChest(PurchaseInteraction interactor)
-        {
-            switch(interactor.displayNameToken) {
-                default: return false;
-                case "CHEST1_NAME":
-                case "CHEST2_NAME":
-                case "GOLDCHEST_NAME":
-                case "CATEGORYCHEST_HEALING_NAME":
-                case "CATEGORYCHEST_DAMAGE_NAME":
-                case "CATEGORYCHEST_UTILITY_NAME":
-                case "CATEGORYCHEST2_HEALING_NAME":
-                case "CATEGORYCHEST2_DAMAGE_NAME":
-                case "CATEGORYCHEST2_UTILITY_NAME":
-                    return true;
-            }
-        }
-
-        public static bool IsVoid(PurchaseInteraction interactor)
-        {
-            switch (interactor.displayNameToken) {
-                default: return false;
-                case "VOID_CHEST_NAME":
-                case "VOID_TRIPLE_NAME":
-                    return true;
-            }
         }
     }
 }
