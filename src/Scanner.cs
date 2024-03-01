@@ -107,18 +107,28 @@ namespace LootObjectives
         public void UpdateTooltip()
         {
             System.Text.StringBuilder sb = new();
-            if (interactables.terminals > 0)        sb.AppendLine($"{Language.GetString("MULTISHOP_TERMINAL_NAME")}: {interactables.terminalsAvailable}/{interactables.terminals}");
-            if (interactables.chests > 0)           sb.AppendLine($"{Language.GetString("CHEST1_NAME")}: {interactables.chestsAvailable}/{interactables.chests}");
-            if (interactables.adaptiveChests > 0)   sb.AppendLine($"{Language.GetString("CASINOCHEST_NAME")}: {interactables.adaptiveChestsAvailable}/{interactables.adaptiveChests}");
-            if (interactables.shrineChances > 0)    sb.AppendLine($"{Language.GetString("SHRINE_CHANCE_NAME")}: {interactables.shrineChancesAvailable}/{interactables.shrineChances}");
-            if (interactables.lockboxes > 0)        sb.AppendLine($"{Language.GetString("LOCKBOX_NAME")}: {interactables.chestsAvailable}/{interactables.chests}");
-            if (interactables.voids > 0)            sb.AppendLine($"{Language.GetString("VOID_CHEST_NAME")}: {interactables.voidsAvailable}/{interactables.voids}");
+            if (interactables.terminals > 0)        sb.AppendLine($"{FormatLabel("<style=cIsUtility>" + Language.GetString("MULTISHOP_TERMINAL_NAME") + "</style>")}{FormatCounter(interactables.terminalsAvailable, interactables.terminals)}");
+            if (interactables.chests > 0)           sb.AppendLine($"{FormatLabel("<style=cIsDamage>" + Language.GetString("CHEST1_NAME") + "</style>")}{FormatCounter(interactables.chestsAvailable,interactables.chests)}");
+            if (interactables.adaptiveChests > 0)   sb.AppendLine($"{FormatLabel("<style=cArtifact>" + Language.GetString("CASINOCHEST_NAME") + "</style>")}{FormatCounter(interactables.adaptiveChestsAvailable, interactables.adaptiveChests)}");
+            if (interactables.shrineChances > 0)    sb.AppendLine($"{FormatLabel("<style=cShrine>" + Language.GetString("SHRINE_CHANCE_NAME") + "</style>")}{FormatCounter(interactables.shrineChancesAvailable, interactables.shrineChances)}");
+            if (interactables.lockboxes > 0)        sb.AppendLine($"{FormatLabel("<style=cHumanObjective>" + Language.GetString("LOCKBOX_NAME") + "</style>")}{FormatCounter(interactables.chestsAvailable, interactables.chests)}");
+            if (interactables.voids > 0)            sb.AppendLine($"{FormatLabel("<style=cIsVoid>" + Language.GetString("VOID_CHEST_NAME") + "</style>")}{FormatCounter(interactables.voidsAvailable, interactables.voids)}");
             if (TeleporterInteraction.instance != null && TeleporterInteraction.instance.isCharged) {
-                if (interactables.scrappers > 0)    sb.AppendLine($"{Language.GetString("SCRAPPER_NAME")}: {interactables.scrappers}");
-                if (interactables.cloakedChests > 0) sb.AppendLine($"{Language.GetString("CHEST1_STEALTHED_NAME")}: {interactables.cloakedChestsAvailable}/{interactables.cloakedChests}");
+                if (interactables.scrappers > 0)    sb.AppendLine($"{FormatLabel("<style=cSub>" + Language.GetString("SCRAPPER_NAME") + "</style>")}{interactables.scrappers}");
+                if (interactables.cloakedChests > 0) sb.AppendLine($"{FormatLabel("<style=cLunarObjective>" + Language.GetString("CHEST1_STEALTHED_NAME") + "</style>")}{FormatCounter(interactables.cloakedChestsAvailable, interactables.cloakedChests)}");
             }
             
             tooltip.bodyToken = sb.ToString();
+        }
+
+        private static string FormatLabel(string label)
+        {
+            return $"<style=cStack>></style>{label}<style=cStack>:</style> ";
+        }
+
+        private static string FormatCounter(int available, int total)
+        {
+            return $"{available}<style=cStack>/{total}</style>";
         }
 
 
