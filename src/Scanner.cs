@@ -75,8 +75,8 @@ namespace LootObjectives
                         break;
                     case "MULTISHOP_TERMINAL_NAME":
                         {
-                            ShopTerminalBehavior terminal = interactors[i].GetComponent<ShopTerminalBehavior>();
-                            if (PickupCatalog.GetPickupDef(terminal.CurrentPickupIndex()).equipmentIndex != EquipmentIndex.None) {
+                            MultiShopController controller = interactors[i].GetComponentInParent<MultiShopController>();
+                            if (controller.doEquipmentInstead) {
                                 interactables.equipment++;
                                 if (interactors[i].available) interactables.equipmentAvailable++;
                             }
