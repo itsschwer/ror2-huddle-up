@@ -105,7 +105,7 @@ namespace LootObjectives
                         break;
                 }
             }
-            interactables.scrappers = (UnityEngine.Object.FindObjectsOfType<ScrapperController>() != null);
+            interactables.scrappers = (UnityEngine.Object.FindObjectOfType<ScrapperController>() != null);
 
             if (tooltip) UpdateTooltip();
 
@@ -121,8 +121,8 @@ namespace LootObjectives
             if (interactables.chests > 0)           sb.AppendLine($"{FormatLabel("<style=cIsDamage>" + Language.GetString("CHEST1_NAME") + "</style>")}{FormatCounter(interactables.chestsAvailable,interactables.chests)}");
             if (interactables.adaptiveChests > 0)   sb.AppendLine($"{FormatLabel("<style=cArtifact>" + Language.GetString("CASINOCHEST_NAME") + "</style>")}{FormatCounter(interactables.adaptiveChestsAvailable, interactables.adaptiveChests)}");
             if (interactables.shrineChances > 0)    sb.AppendLine($"{FormatLabel("<style=cShrine>" + Language.GetString("SHRINE_CHANCE_NAME") + "</style>")}{FormatCounter(interactables.shrineChancesAvailable, interactables.shrineChances)}");
-            if (interactables.equipment > 0)        sb.AppendLine($"{FormatLabel("<color=#FF7F7F>" + Language.GetString("EQUIPMENTBARREL_NAME") + "</color>")}{FormatCounter(interactables.equipmentAvailable, interactables.equipment)}");
-            if (interactables.lockboxes > 0)        sb.AppendLine($"{FormatLabel("<style=cHumanObjective>" + Language.GetString("LOCKBOX_NAME") + "</style>")}{FormatCounter(interactables.chestsAvailable, interactables.chests)}");
+            if (interactables.equipment > 0)        sb.AppendLine($"{FormatLabel($"<color=#{equip}>" + Language.GetString("EQUIPMENTBARREL_NAME") + "</color>")}{FormatCounter(interactables.equipmentAvailable, interactables.equipment)}");
+            if (interactables.lockboxes > 0)        sb.AppendLine($"{FormatLabel("<style=cHumanObjective>" + Language.GetString("LOCKBOX_NAME") + "</style>")}{FormatCounter(interactables.lockboxesAvailable, interactables.lockboxes)}");
             if (interactables.voids > 0)            sb.AppendLine($"{FormatLabel("<style=cIsVoid>" + Language.GetString("VOID_CHEST_NAME") + "</style>")}{FormatCounter(interactables.voidsAvailable, interactables.voids)}");
             if (TeleporterInteraction.instance != null && TeleporterInteraction.instance.isCharged) {
                 sb.AppendLine($"{FormatLabel("<style=cSub>" + Language.GetString("SCRAPPER_NAME") + "</style>")}{(interactables.scrappers ? "Yes" : "No")}");
