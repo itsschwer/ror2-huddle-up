@@ -100,6 +100,7 @@ namespace LootObjectives
 
             if (tooltip) UpdateTooltip();
 
+            Log.Debug("Executed scan.");
             return interactables;
         }
 
@@ -121,9 +122,13 @@ namespace LootObjectives
 
         private void UpdateHUD(RoR2.UI.HUD hud, ref bool _)
         {
-            var target = hud.GetComponentInChildren<RoR2.UI.ObjectivePanelController>().GetComponentInChildren<RoR2.UI.HGTextMeshProUGUI>();
-            tooltip = Utils.AddTooltipProvider(target);
+            if (tooltip != null) return;
+
+            var objectivePanel = hud.GetComponentInChildren<RoR2.UI.ObjectivePanelController>(true);
+            var label = objectivePanel.GetComponentInChildren<RoR2.UI.HGTextMeshProUGUI>(true);
+            tooltip = Utils.AddTooltipProvider(label);
             tooltip.titleToken = "Loot";
+            Log.Debug("Added to HUD.");
         }
     }
 }
