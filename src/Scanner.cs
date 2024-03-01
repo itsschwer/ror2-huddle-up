@@ -20,7 +20,10 @@ namespace LootObjectives
             public int voidsAvailable = 0;
             public int cloakedChests = 0;
             public int cloakedChestsAvailable = 0;
-            public int scrappers = 0;
+            public int equipment = 0;
+            public int equipmentAvailable = 0;
+
+            public bool scrappers = false;
         }
 
         private RoR2.UI.TooltipProvider tooltip;
@@ -31,6 +34,7 @@ namespace LootObjectives
         {
             Stage.onStageStartGlobal += Scan;
             GlobalEventManager.OnInteractionsGlobal += Scan;
+            TeleporterInteraction.onTeleporterChargedGlobal += Scan;
             RoR2.UI.HUD.shouldHudDisplay += UpdateHUD;
         }
 
@@ -38,11 +42,13 @@ namespace LootObjectives
         {
             Stage.onStageStartGlobal -= Scan;
             GlobalEventManager.OnInteractionsGlobal -= Scan;
+            TeleporterInteraction.onTeleporterChargedGlobal -= Scan;
             RoR2.UI.HUD.shouldHudDisplay -= UpdateHUD;
         }
 
         public void Scan(Stage _) => Scan();
         public void Scan(Interactor _, IInteractable __, UnityEngine.GameObject ___) => Scan();
+        public void Scan(TeleporterInteraction _) => Scan();
         public Interactables Scan()
         {
             interactables = new Interactables();
@@ -63,15 +69,28 @@ namespace LootObjectives
                         interactables.chests++;
                         if (interactors[i].available) interactables.chestsAvailable++;
                         break;
-                    case "MULTISHOP_TERMINAL_NAME":
-                        interactables.terminals++;
-                        if (interactors[i].available) interactables.terminalsAvailable++;
+                    case "EQUIPMENTBARREL_NAME":
+                        interactables.equipment++;
+                        if (interactors[i].available) interactables.equipmentAvailable++;
                         break;
+                    case "MULTISHOP_TERMINAL_NAME":
+                        {
+                            ShopTerminalBehavior terminal = interactors[i].GetComponent<ShopTerminalBehavior>();
+                            if (PickupCatalog.GetPickupDef(terminal.CurrentPickupIndex()).equipmentIndex != EquipmentIndex.None) {
+                                interactables.equipment++;
+                                if (interactors[i].available) interactables.equipmentAvailable++;
+                            }
+                            else {
+                                interactables.terminals++;
+                                if (interactors[i].available) interactables.terminalsAvailable++;
+                            }
+                            break;
+                        }
                     case "SHRINE_CHANCE_NAME":
                         {
                             ShrineChanceBehavior shrine = interactors[i].GetComponent<ShrineChanceBehavior>();
                             interactables.shrineChances += shrine.maxPurchaseCount;
-                            if (interactors[i].available) interactables.shrineChancesAvailable += (shrine.maxPurchaseCount - shrine.successfulPurchaseCount);
+                            interactables.shrineChancesAvailable += (shrine.maxPurchaseCount - shrine.successfulPurchaseCount);
                             break;
                         }
                     case "LOCKBOX_NAME":
@@ -81,6 +100,7 @@ namespace LootObjectives
                         break;
                     case "CASINOCHEST_NAME":
                         interactables.adaptiveChests++;
+                        //todo: need to account for roulette time
                         if (interactors[i].available) interactables.adaptiveChestsAvailable++;
                         break;
                     case "VOID_CHEST_NAME":
@@ -92,11 +112,9 @@ namespace LootObjectives
                         interactables.cloakedChests++;
                         if (interactors[i].available) interactables.cloakedChestsAvailable++;
                         break;
-                    case "SCRAPPER_NAME":
-                        interactables.scrappers++;
-                        break;
                 }
             }
+            interactables.scrappers = (UnityEngine.Object.FindObjectsOfType<ScrapperController>() != null);
 
             if (tooltip) UpdateTooltip();
 
@@ -106,15 +124,17 @@ namespace LootObjectives
 
         public void UpdateTooltip()
         {
+            string equip = ColorCatalog.GetColorHexString(ColorCatalog.ColorIndex.Equipment);
             System.Text.StringBuilder sb = new();
             if (interactables.terminals > 0)        sb.AppendLine($"{FormatLabel("<style=cIsUtility>" + Language.GetString("MULTISHOP_TERMINAL_NAME") + "</style>")}{FormatCounter(interactables.terminalsAvailable, interactables.terminals)}");
             if (interactables.chests > 0)           sb.AppendLine($"{FormatLabel("<style=cIsDamage>" + Language.GetString("CHEST1_NAME") + "</style>")}{FormatCounter(interactables.chestsAvailable,interactables.chests)}");
             if (interactables.adaptiveChests > 0)   sb.AppendLine($"{FormatLabel("<style=cArtifact>" + Language.GetString("CASINOCHEST_NAME") + "</style>")}{FormatCounter(interactables.adaptiveChestsAvailable, interactables.adaptiveChests)}");
             if (interactables.shrineChances > 0)    sb.AppendLine($"{FormatLabel("<style=cShrine>" + Language.GetString("SHRINE_CHANCE_NAME") + "</style>")}{FormatCounter(interactables.shrineChancesAvailable, interactables.shrineChances)}");
+            if (interactables.equipment > 0)        sb.AppendLine($"{FormatLabel("<color=#FF7F7F>" + Language.GetString("SCOREBOARD_HEADER_EQUIPMENT") + "</color>")}{FormatCounter(interactables.equipmentAvailable, interactables.equipment)}");
             if (interactables.lockboxes > 0)        sb.AppendLine($"{FormatLabel("<style=cHumanObjective>" + Language.GetString("LOCKBOX_NAME") + "</style>")}{FormatCounter(interactables.chestsAvailable, interactables.chests)}");
             if (interactables.voids > 0)            sb.AppendLine($"{FormatLabel("<style=cIsVoid>" + Language.GetString("VOID_CHEST_NAME") + "</style>")}{FormatCounter(interactables.voidsAvailable, interactables.voids)}");
             if (TeleporterInteraction.instance != null && TeleporterInteraction.instance.isCharged) {
-                if (interactables.scrappers > 0)    sb.AppendLine($"{FormatLabel("<style=cSub>" + Language.GetString("SCRAPPER_NAME") + "</style>")}{interactables.scrappers}");
+                sb.AppendLine($"{FormatLabel("<style=cSub>" + Language.GetString("SCRAPPER_NAME") + "</style>")}{(interactables.scrappers ? "Yes" : "No")}");
                 if (interactables.cloakedChests > 0) sb.AppendLine($"{FormatLabel("<style=cLunarObjective>" + Language.GetString("CHEST1_STEALTHED_NAME") + "</style>")}{FormatCounter(interactables.cloakedChestsAvailable, interactables.cloakedChests)}");
             }
             
@@ -123,7 +143,7 @@ namespace LootObjectives
 
         private static string FormatLabel(string label)
         {
-            return $"<style=cStack>></style>{label}<style=cStack>:</style> ";
+            return $"<style=cStack>> </style>{label}<style=cStack>:</style> ";
         }
 
         private static string FormatCounter(int available, int total)
