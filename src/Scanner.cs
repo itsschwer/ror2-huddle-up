@@ -33,7 +33,7 @@ namespace LootObjectives
         public void Hook()
         {
             Stage.onStageStartGlobal += Scan;
-            GlobalEventManager.OnInteractionsGlobal += Scan;
+            Plugin.OnInteractionAttempted += Scan;
             TeleporterInteraction.onTeleporterChargedGlobal += Scan;
             RoR2.UI.HUD.shouldHudDisplay += InitTooltip;
         }
@@ -41,15 +41,14 @@ namespace LootObjectives
         public void Unhook()
         {
             Stage.onStageStartGlobal -= Scan;
-            GlobalEventManager.OnInteractionsGlobal -= Scan;
+            Plugin.OnInteractionAttempted -= Scan;
             TeleporterInteraction.onTeleporterChargedGlobal -= Scan;
             RoR2.UI.HUD.shouldHudDisplay -= InitTooltip;
         }
 
         public void Scan(Stage _) => Scan();
-        public void Scan(Interactor _, IInteractable __, UnityEngine.GameObject ___) => Scan();
         public void Scan(TeleporterInteraction _) => Scan();
-        public Interactables Scan()
+        public void Scan()
         {
             interactables = new Interactables();
 
@@ -110,7 +109,6 @@ namespace LootObjectives
             if (tooltip) UpdateTooltip();
 
             Log.Debug("Executed scan.");
-            return interactables;
         }
 
         public void UpdateTooltip()
