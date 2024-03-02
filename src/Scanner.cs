@@ -23,7 +23,7 @@ namespace LootObjectives
             public int equipment = 0;
             public int equipmentAvailable = 0;
 
-            public bool scrappers = false;
+            public bool scrapperPresent = false;
         }
 
         private RoR2.UI.TooltipProvider tooltip;
@@ -52,9 +52,9 @@ namespace LootObjectives
         {
             interactables = new Interactables();
 
-            var interactors = InstanceTracker.GetInstancesList<PurchaseInteraction>();
-            for (int i = 0; i < interactors.Count; i++) {
-                switch (interactors[i].displayNameToken) {
+            var interactions = InstanceTracker.GetInstancesList<PurchaseInteraction>();
+            for (int i = 0; i < interactions.Count; i++) {
+                switch (interactions[i].displayNameToken) {
                     default: break;
                     case "CHEST1_NAME":
                     case "CHEST2_NAME":
@@ -66,23 +66,23 @@ namespace LootObjectives
                     case "CATEGORYCHEST2_DAMAGE_NAME":
                     case "CATEGORYCHEST2_UTILITY_NAME":
                         interactables.chests++;
-                        if (interactors[i].available) interactables.chestsAvailable++;
+                        if (interactions[i].available) interactables.chestsAvailable++;
                         break;
                     case "EQUIPMENTBARREL_NAME":
                         interactables.equipment++;
-                        if (interactors[i].available) interactables.equipmentAvailable++;
+                        if (interactions[i].available) interactables.equipmentAvailable++;
                         break;
                     case "MULTISHOP_TERMINAL_NAME":
                         interactables.terminals++;
-                        if (interactors[i].available) interactables.terminalsAvailable++;
+                        if (interactions[i].available) interactables.terminalsAvailable++;
                         break;
                     case "SHRINE_CHANCE_NAME":
                         {
                             int total = 1;
-                            int avail = (interactors[i].available ? 1 : 0);
+                            int avail = (interactions[i].available ? 1 : 0);
                             if (UnityEngine.Networking.NetworkServer.active) {
                                 // Only count potential successes on server ∵ purchase counts are not networked
-                                ShrineChanceBehavior shrine = interactors[i].GetComponent<ShrineChanceBehavior>();
+                                ShrineChanceBehavior shrine = interactions[i].GetComponent<ShrineChanceBehavior>();
                                 total = shrine.maxPurchaseCount;
                                 avail = shrine.maxPurchaseCount - shrine.successfulPurchaseCount;
                             }
@@ -93,25 +93,25 @@ namespace LootObjectives
                     case "LOCKBOX_NAME":
                     case "VOIDLOCKBOX_NAME":
                         interactables.lockboxes++;
-                        if (interactors[i].available) interactables.lockboxesAvailable++;
+                        if (interactions[i].available) interactables.lockboxesAvailable++;
                         break;
                     case "CASINOCHEST_NAME":
                         interactables.adaptiveChests++;
                         //todo: need to account for roulette time
-                        if (interactors[i].available) interactables.adaptiveChestsAvailable++;
+                        if (interactions[i].available) interactables.adaptiveChestsAvailable++;
                         break;
                     case "VOID_CHEST_NAME":
                     case "VOID_TRIPLE_NAME":
                         interactables.voids++;
-                        if (interactors[i].available) interactables.voidsAvailable++;
+                        if (interactions[i].available) interactables.voidsAvailable++;
                         break;
                     case "CHEST1_STEALTHED_NAME":
                         interactables.cloakedChests++;
-                        if (interactors[i].available) interactables.cloakedChestsAvailable++;
+                        if (interactions[i].available) interactables.cloakedChestsAvailable++;
                         break;
                 }
             }
-            interactables.scrappers = (UnityEngine.Object.FindObjectOfType<ScrapperController>() != null);
+            interactables.scrapperPresent = (UnityEngine.Object.FindObjectOfType<ScrapperController>() != null);
 
             if (tooltip) UpdateTooltip();
 
@@ -130,7 +130,7 @@ namespace LootObjectives
             if (interactables.lockboxes > 0)        sb.AppendLine($"{FormatLabel("<style=cHumanObjective>" + Language.GetString("LOCKBOX_NAME") + "</style>")}{FormatCounter(interactables.lockboxesAvailable, interactables.lockboxes)}");
             if (interactables.voids > 0)            sb.AppendLine($"{FormatLabel("<style=cIsVoid>" + Language.GetString("VOID_CHEST_NAME") + "</style>")}{FormatCounter(interactables.voidsAvailable, interactables.voids)}");
             if (TeleporterInteraction.instance != null && TeleporterInteraction.instance.isCharged) {
-                sb.AppendLine($"{FormatLabel("<style=cSub>" + Language.GetString("SCRAPPER_NAME") + "</style>")}{(interactables.scrappers ? "Yes" : "No")}");
+                sb.AppendLine($"{FormatLabel("<style=cSub>" + Language.GetString("SCRAPPER_NAME") + "</style>")}{(interactables.scrapperPresent ? "Yes" : "No")}");
                 if (interactables.cloakedChests > 0) sb.AppendLine($"{FormatLabel("<style=cLunarObjective>" + Language.GetString("CHEST1_STEALTHED_NAME") + "</style>")}{FormatCounter(interactables.cloakedChestsAvailable, interactables.cloakedChests)}");
             }
             

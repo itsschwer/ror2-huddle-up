@@ -13,7 +13,7 @@ A \[ client-side \] mod that adds a tooltip to the *Objectives* panel to track h
 - equipment barrels
 - lockboxes *(includes void variant)*
 - void cradles/potentials
-- once teleporter is charged
+- *once teleporter is charged*
     - cloaked chests
     - scrapper
 
