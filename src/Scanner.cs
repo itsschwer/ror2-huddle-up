@@ -78,9 +78,16 @@ namespace LootObjectives
                         break;
                     case "SHRINE_CHANCE_NAME":
                         {
-                            ShrineChanceBehavior shrine = interactors[i].GetComponent<ShrineChanceBehavior>();
-                            interactables.shrineChances += shrine.maxPurchaseCount;
-                            interactables.shrineChancesAvailable += (shrine.maxPurchaseCount - shrine.successfulPurchaseCount);
+                            int total = 1;
+                            int avail = (interactors[i].available ? 1 : 0);
+                            if (UnityEngine.Networking.NetworkServer.active) {
+                                // Only count potential successes on server ∵ purchase counts are not networked
+                                ShrineChanceBehavior shrine = interactors[i].GetComponent<ShrineChanceBehavior>();
+                                total = shrine.maxPurchaseCount;
+                                avail = shrine.maxPurchaseCount - shrine.successfulPurchaseCount;
+                            }
+                            interactables.shrineChances += total;
+                            interactables.shrineChancesAvailable += avail;
                             break;
                         }
                     case "LOCKBOX_NAME":
