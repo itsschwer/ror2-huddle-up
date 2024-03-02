@@ -1,6 +1,5 @@
 using BepInEx;
 using HarmonyLib;
-using RoR2;
 
 namespace LootObjectives
 {
@@ -14,8 +13,7 @@ namespace LootObjectives
         public const string Name = "LootObjectives";
         public const string Version = "0.0.0";
 
-        internal static event System.Action OnInteractionAttempted;
-        private Scanner scanner;
+        private static Scanner scanner;
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Unity Message")]
         private void Awake()
@@ -40,8 +38,8 @@ namespace LootObjectives
         [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Unity Message")]
         private void OnEnable()
         {
-            Run.onRunStartGlobal += OnRunStart;
-            Run.onRunDestroyGlobal += OnRunDestroy;
+            RoR2.Run.onRunStartGlobal += OnRunStart;
+            RoR2.Run.onRunDestroyGlobal += OnRunDestroy;
 
             Log.Message("~enabled.");
         }
@@ -49,19 +47,19 @@ namespace LootObjectives
         [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Unity Message")]
         private void OnDisable()
         {
-            Run.onRunStartGlobal -= OnRunStart;
-            Run.onRunDestroyGlobal -= OnRunDestroy;
+            RoR2.Run.onRunStartGlobal -= OnRunStart;
+            RoR2.Run.onRunDestroyGlobal -= OnRunDestroy;
 
             Log.Message("~disabled.");
         }
 
 
-        private void OnRunStart(Run _) {
+        private void OnRunStart(RoR2.Run _) {
             scanner = new Scanner();
             scanner.Hook();
         }
 
-        private void OnRunDestroy(Run _) {
+        private void OnRunDestroy(RoR2.Run _) {
             scanner.Unhook();
             scanner = null;
         }
@@ -70,17 +68,14 @@ namespace LootObjectives
 
 
         /// <remarks>
-        /// Need to use a patch since <see cref="GlobalEventManager.OnInteractionsGlobal"/> is not called on clients.
+        /// Need to use a patch since <see cref="RoR2.GlobalEventManager.OnInteractionsGlobal"/> is not called on clients.
         /// </remarks>
-        [HarmonyPostfix]
-        [HarmonyPatch(typeof(PurchaseInteraction), nameof(PurchaseInteraction.OnSerialize))]
-        [HarmonyPatch(typeof(PurchaseInteraction), nameof(PurchaseInteraction.OnDeserialize))]
-        private static void PurchaseInteraction_OnSerializeOrDeserialize() {
-#if DEBUG
-            var caller = new System.Diagnostics.StackTrace().GetFrame(1).GetMethod();
-            Log.Debug($"{caller.DeclaringType}::{caller.Name} <{UnityEngine.Time.frameCount}>");
-#endif
-            OnInteractionAttempted?.Invoke();
+        [HarmonyPostfix, HarmonyPatch(typeof(RoR2.UI.TooltipController), nameof(RoR2.UI.TooltipController.SetTooltipProvider))]
+        private static void TooltipController_SetTooltipProvider(RoR2.UI.TooltipController __instance, RoR2.UI.TooltipProvider provider) {
+            if (provider.titleToken != Scanner.TOOLTIP_TITLE_TOKEN) return;
+
+            __instance.titleLabel.text = Scanner.TOOLTIP_TITLE;
+            __instance.bodyLabel.text = scanner.Scan().GetTooltipString();
         }
     }
 }
