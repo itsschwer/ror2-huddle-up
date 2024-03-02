@@ -72,7 +72,15 @@ namespace LootObjectives
         /// <remarks>
         /// Need to use a patch since <see cref="GlobalEventManager.OnInteractionsGlobal"/> is not called on clients.
         /// </remarks>
-        [HarmonyPostfix, HarmonyPatch(typeof(Interactor), nameof(Interactor.AttemptInteraction))]
-        private static void Interactor_AttemptInteraction() => OnInteractionAttempted?.Invoke();
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(PurchaseInteraction), nameof(PurchaseInteraction.OnSerialize))]
+        [HarmonyPatch(typeof(PurchaseInteraction), nameof(PurchaseInteraction.OnDeserialize))]
+        private static void PurchaseInteraction_OnSerializeOrDeserialize() {
+#if DEBUG
+            var caller = new System.Diagnostics.StackTrace().GetFrame(1).GetMethod();
+            Log.Debug($"{caller.DeclaringType}::{caller.Name} <{UnityEngine.Time.frameCount}>");
+#endif
+            OnInteractionAttempted?.Invoke();
+        }
     }
 }
