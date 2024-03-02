@@ -8,14 +8,14 @@ A \[ client-side \] mod that adds a tooltip to the *Objectives* panel to track h
 
 - multishop terminals *(counts individual terminals; includes equipment and shipping requests)*
 - chests *(regular, large, legendary, category, category large)*
-- adaptive chests *__<!> known issue__: counter doesn't decrement until rescan after an item has been selected*
+- adaptive chests
 - shrine chances *(counts all potential drops if host)*
 - equipment barrels
 - lockboxes *(includes void variant)*
-- void cradles/potentials
-- *once teleporter is charged*
-    - cloaked chests
+- void cradles *(includes void potentials)*
+- *once teleporter is charged:*
     - scrapper
+    - cloaked chests
 
 <!--
 
