@@ -28,6 +28,7 @@ A \[ client-side \] mod that adds a tooltip to the *Objectives* panel to track h
         - on tp boss defeat
         - on tp charged
 - track more?
+    - printers?
     - lunar pods?
     - blood shrines?
     - mountain shrines?

@@ -165,8 +165,9 @@ namespace LootObjectives
             if (monsters > 0) strings.Add($"<style=cSub>{monsters}</style>");
             if (lunars > 0) strings.Add($"<style=cLunarObjective>{lunars}</style>");
             if (voids > 0) strings.Add($"<style=cIsVoid>{voids}</style>");
+            string result = string.Join("/", strings);
 
-            return $"<style=cStack>Enemies: {string.Join("/", strings)}</style>";
+            return $"<style=cStack>Enemies: {(string.IsNullOrEmpty(result) ? "0" : result)}</style>";
         }
 
         private static string FormatLine(string tagKey, string tagValue, string token, int available, int total, int meta)
