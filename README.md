@@ -9,12 +9,13 @@ A \[ client-side \] mod that adds a tooltip to the *Objectives* panel to track h
 - multishop terminals *(counts individual terminals; includes equipment and shipping requests)*
 - chests *(regular, large, legendary, category, category large)*
 - adaptive chests
-- shrine chances *(counts all potential drops if host)*
+- chance shrines *(counts all potential drops if host)*
 - equipment barrels
 - lockboxes *(includes void variant)*
-- void cradles *(includes void potentials)*
-- *once teleporter is charged:*
+- *once teleporter boss is defeated:*
     - scrapper
+    - void cradles *(includes void potentials)*
+- *once teleporter is charged:*
     - cloaked chests
 
 <!--
@@ -22,12 +23,15 @@ A \[ client-side \] mod that adds a tooltip to the *Objectives* panel to track h
 ## todo (maybe)
 - config
     - what to display in tooltip
-        - add lunar pods?
-        - add blood shrines?
-        - add mountain shrines?
-        - add barrels?
-    - only display after tp charged 
-        - granular?
+    - when to display in tooltip (granular?)
+        - always
+        - on tp boss defeat
+        - on tp charged
+- track more?
+    - lunar pods?
+    - blood shrines?
+    - mountain shrines?
+    - barrels/stalks?
 
 ## wontdo
 - add proper objectives — too convenient

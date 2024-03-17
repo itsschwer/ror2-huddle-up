@@ -11,6 +11,8 @@ namespace LootObjectives
             public readonly int chestsAvailable = 0;
             public readonly int terminals = 0;
             public readonly int terminalsAvailable = 0;
+            public readonly int chanceShrines = 0;
+            public readonly int chanceShrinesAvailable = 0;
             public readonly int shrineChances = 0;
             public readonly int shrineChancesAvailable = 0;
             public readonly int lockboxes = 0;
@@ -54,19 +56,15 @@ namespace LootObjectives
                             if (interactions[i].available) terminalsAvailable++;
                             break;
                         case "SHRINE_CHANCE_NAME":
-                            {
-                                int total = 1;
-                                int avail = (interactions[i].available ? 1 : 0);
-                                if (UnityEngine.Networking.NetworkServer.active) {
-                                    // Only count potential successes on server ∵ purchase counts are not networked
-                                    ShrineChanceBehavior shrine = interactions[i].GetComponent<ShrineChanceBehavior>();
-                                    total = shrine.maxPurchaseCount;
-                                    avail = shrine.maxPurchaseCount - shrine.successfulPurchaseCount;
-                                }
-                                shrineChances += total;
-                                shrineChancesAvailable += avail;
-                                break;
+                            chanceShrines++;
+                            if (interactions[i].available) chanceShrinesAvailable++;
+                            // Only count potential successes on server ∵ purchase counts are not networked
+                            if (UnityEngine.Networking.NetworkServer.active) {
+                                ShrineChanceBehavior shrine = interactions[i].GetComponent<ShrineChanceBehavior>();
+                                shrineChances = shrine.maxPurchaseCount;
+                                shrineChancesAvailable = shrine.maxPurchaseCount - shrine.successfulPurchaseCount;
                             }
+                            break;
                         case "LOCKBOX_NAME":
                         case "VOIDLOCKBOX_NAME":
                             lockboxes++;
@@ -131,26 +129,44 @@ namespace LootObjectives
 
         internal string GetTooltipString()
         {
-            string equip = ColorCatalog.GetColorHexString(ColorCatalog.ColorIndex.Equipment);
+            string equip = $"#{ColorCatalog.GetColorHexString(ColorCatalog.ColorIndex.Equipment)}";
             System.Text.StringBuilder sb = new();
-            if (interactables.terminals > 0)        sb.AppendLine($"{FormatLabel("<style=cIsUtility>" + Language.GetString("MULTISHOP_TERMINAL_NAME") + "</style>")}{FormatCounter(interactables.terminalsAvailable, interactables.terminals)}");
-            if (interactables.chests > 0)           sb.AppendLine($"{FormatLabel("<style=cIsDamage>" + Language.GetString("CHEST1_NAME") + "</style>")}{FormatCounter(interactables.chestsAvailable,interactables.chests)}");
-            if (interactables.adaptiveChests > 0)   sb.AppendLine($"{FormatLabel("<style=cArtifact>" + Language.GetString("CASINOCHEST_NAME") + "</style>")}{FormatCounter(interactables.adaptiveChestsAvailable, interactables.adaptiveChests)}");
-            if (interactables.shrineChances > 0)    sb.AppendLine($"{FormatLabel("<style=cShrine>" + Language.GetString("SHRINE_CHANCE_NAME") + "</style>")}{FormatCounter(interactables.shrineChancesAvailable, interactables.shrineChances)}");
-            if (interactables.equipment > 0)        sb.AppendLine($"{FormatLabel($"<color=#{equip}>" + Language.GetString("EQUIPMENTBARREL_NAME") + "</color>")}{FormatCounter(interactables.equipmentAvailable, interactables.equipment)}");
-            if (interactables.lockboxes > 0)        sb.AppendLine($"{FormatLabel("<style=cHumanObjective>" + Language.GetString("LOCKBOX_NAME") + "</style>")}{FormatCounter(interactables.lockboxesAvailable, interactables.lockboxes)}");
-            if (interactables.voids > 0)            sb.AppendLine($"{FormatLabel("<style=cIsVoid>" + Language.GetString("VOID_CHEST_NAME") + "</style>")}{FormatCounter(interactables.voidsAvailable, interactables.voids)}");
-            if (TeleporterInteraction.instance != null && TeleporterInteraction.instance.isCharged) {
-                sb.AppendLine().AppendLine($"{FormatLabel("<style=cSub>" + Language.GetString("SCRAPPER_NAME") + "</style>")}{(interactables.scrapperPresent ? "Yes" : "No")}");
-                if (interactables.cloakedChests > 0) sb.AppendLine($"{FormatLabel("<style=cLunarObjective>" + Language.GetString("CHEST1_STEALTHED_NAME") + "</style>")}{FormatCounter(interactables.cloakedChestsAvailable, interactables.cloakedChests)}");
+            if (interactables.terminals > 0)        sb.AppendLine(FormatLine("style", "cIsUtility", "MULTISHOP_TERMINAL_NAME", interactables.terminalsAvailable, interactables.terminals));
+            if (interactables.chests > 0)           sb.AppendLine(FormatLine("style", "cIsDamage", "CHEST1_NAME", interactables.chestsAvailable,interactables.chests));
+            if (interactables.adaptiveChests > 0)   sb.AppendLine(FormatLine("style", "cArtifact", "CASINOCHEST_NAME", interactables.adaptiveChestsAvailable, interactables.adaptiveChests));
+            if (interactables.shrineChances > 0)    sb.AppendLine(UnityEngine.Networking.NetworkServer.active
+                                                                ? FormatLine("style", "cShrine", "SHRINE_CHANCE_NAME", interactables.shrineChancesAvailable, interactables.shrineChances, interactables.chanceShrinesAvailable)
+                                                                : FormatLine("style", "cShrine", "SHRINE_CHANCE_NAME", interactables.chanceShrinesAvailable, interactables.chanceShrines));
+            if (interactables.equipment > 0)        sb.AppendLine(FormatLine("color", equip, "EQUIPMENTBARREL_NAME", interactables.equipmentAvailable, interactables.equipment));
+            if (interactables.lockboxes > 0)        sb.AppendLine(FormatLine("style", "cHumanObjective", "LOCKBOX_NAME", interactables.lockboxesAvailable, interactables.lockboxes));
+
+            if (TeleporterInteraction.instance != null) {
+                if (TeleporterInteraction.instance.monstersCleared) {
+                    sb.AppendLine().AppendLine($"{FormatLabel("<style=cSub>" + Language.GetString("SCRAPPER_NAME") + "</style>")}{(interactables.scrapperPresent ? "Yes" : "No")}");
+                    if (interactables.voids > 0) sb.AppendLine(FormatLine("style", "cIsVoid", "VOID_CHEST_NAME", interactables.voidsAvailable, interactables.voids));
+                }
+                if (TeleporterInteraction.instance.isCharged) {
+                    if (interactables.cloakedChests > 0) sb.AppendLine().AppendLine(FormatLine("style", "cLunarObjective", "CHEST1_STEALTHED_NAME", interactables.cloakedChestsAvailable, interactables.cloakedChests));
+                }
             }
-            
+
             return sb.ToString();
         }
 
+        private static string FormatLine(string tagKey, string tagValue, string token, int available, int total, int meta)
+            => $"{FormatToken(token, tagKey, tagValue)}{FormatCounter(available, total, meta)}";
+        private static string FormatLine(string tagKey, string tagValue, string token, int available, int total)
+            => $"{FormatToken(token, tagKey, tagValue)}{FormatCounter(available, total)}";
+        private static string FormatToken(string token, string tagKey, string tagValue)
+            => FormatLabel($"<{tagKey}={tagValue}>{Language.GetString(token)}</{tagKey}>");
         private static string FormatLabel(string label)
             => $"<style=cStack>> </style>{label}<style=cStack>:</style> ";
+        private static string FormatCounter(int available, int total, int meta)
+            => $"{FormatCounter(available, total)} <style=cStack><size=60%>({meta})</size></style>";
         private static string FormatCounter(int available, int total)
-            => $"{available}<style=cStack>/{total}</style>";
+        {
+            if (available != 0) return $"{available}<style=cStack>/{total}</style>";
+            else return $"<style=cSub>{available}</style><style=cStack>/{total}</style>";
+        }
     }
 }
