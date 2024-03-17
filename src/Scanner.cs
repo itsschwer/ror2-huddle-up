@@ -150,7 +150,23 @@ namespace LootObjectives
                 }
             }
 
+            sb.AppendLine().AppendLine(FormatEnemies());
+
             return sb.ToString();
+        }
+
+        private static string FormatEnemies()
+        {
+            int monsters = TeamComponent.GetTeamMembers(TeamIndex.Monster).Count;
+            int lunars = TeamComponent.GetTeamMembers(TeamIndex.Lunar).Count;
+            int voids = TeamComponent.GetTeamMembers(TeamIndex.Void).Count;
+
+            System.Collections.Generic.List<string> strings = new();
+            if (monsters > 0) strings.Add($"<style=cSub>{monsters}</style>");
+            if (lunars > 0) strings.Add($"<style=cLunarObjective>{lunars}</style>");
+            if (voids > 0) strings.Add($"<style=cIsVoid>{voids}</style>");
+
+            return $"<style=cStack>Enemies: {string.Join("/", strings)}</style>";
         }
 
         private static string FormatLine(string tagKey, string tagValue, string token, int available, int total, int meta)
