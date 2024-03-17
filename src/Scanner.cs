@@ -178,7 +178,7 @@ namespace LootObjectives
         private static string FormatLabel(string label)
             => $"<style=cStack>> </style>{label}<style=cStack>:</style> ";
         private static string FormatCounter(int available, int total, int meta)
-            => $"{FormatCounter(available, total)} <style=cStack><size=60%>({meta})</size></style>";
+            => $"{FormatCounter(available, total)}<style=cStack><size=90%> ({meta})</size></style>";
         private static string FormatCounter(int available, int total)
         {
             if (available != 0) return $"{available}<style=cStack>/{total}</style>";
