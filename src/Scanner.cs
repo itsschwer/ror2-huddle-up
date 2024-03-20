@@ -61,8 +61,8 @@ namespace LootObjectives
                             // Only count potential successes on server ∵ purchase counts are not networked
                             if (UnityEngine.Networking.NetworkServer.active) {
                                 ShrineChanceBehavior shrine = interactions[i].GetComponent<ShrineChanceBehavior>();
-                                shrineChances = shrine.maxPurchaseCount;
-                                shrineChancesAvailable = shrine.maxPurchaseCount - shrine.successfulPurchaseCount;
+                                shrineChances += shrine.maxPurchaseCount;
+                                shrineChancesAvailable += shrine.maxPurchaseCount - shrine.successfulPurchaseCount;
                             }
                             break;
                         case "LOCKBOX_NAME":
@@ -134,7 +134,7 @@ namespace LootObjectives
             if (interactables.terminals > 0)        sb.AppendLine(FormatLine("style", "cIsUtility", "MULTISHOP_TERMINAL_NAME", interactables.terminalsAvailable, interactables.terminals));
             if (interactables.chests > 0)           sb.AppendLine(FormatLine("style", "cIsDamage", "CHEST1_NAME", interactables.chestsAvailable,interactables.chests));
             if (interactables.adaptiveChests > 0)   sb.AppendLine(FormatLine("style", "cArtifact", "CASINOCHEST_NAME", interactables.adaptiveChestsAvailable, interactables.adaptiveChests));
-            if (interactables.shrineChances > 0)    sb.AppendLine(UnityEngine.Networking.NetworkServer.active
+            if (interactables.chanceShrines > 0)    sb.AppendLine(UnityEngine.Networking.NetworkServer.active
                                                                 ? FormatLine("style", "cShrine", "SHRINE_CHANCE_NAME", interactables.shrineChancesAvailable, interactables.shrineChances, interactables.chanceShrinesAvailable)
                                                                 : FormatLine("style", "cShrine", "SHRINE_CHANCE_NAME", interactables.chanceShrinesAvailable, interactables.chanceShrines));
             if (interactables.equipment > 0)        sb.AppendLine(FormatLine("color", equip, "EQUIPMENTBARREL_NAME", interactables.equipmentAvailable, interactables.equipment));
