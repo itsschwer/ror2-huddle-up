@@ -28,6 +28,11 @@ namespace LootObjectives
 
             public readonly bool scrapperPresent = false;
 
+            public readonly int whiteTakers = 0;
+            public readonly int greenTakers = 0;
+            public readonly int redTakers = 0;
+            public readonly int yellowTakers = 0;
+
             public Interactables(System.Collections.Generic.List<PurchaseInteraction> interactions, bool scrapperPresent)
             {
                 this.scrapperPresent = scrapperPresent;
@@ -82,6 +87,27 @@ namespace LootObjectives
                         case "CHEST1_STEALTHED_NAME":
                             cloakedChests++;
                             if (interactions[i].available) cloakedChestsAvailable++;
+                            break;
+                        case "DUPLICATOR_NAME":
+                        case "DUPLICATOR_MILITARY_NAME":
+                        case "DUPLICATOR_WILD_NAME":
+                        case "BAZAAR_CAULDRON_NAME":
+                            switch (interactions[i].costType) {
+                                default: break;
+                                case CostTypeIndex.WhiteItem:
+                                    whiteTakers++;
+                                    break;
+                                case CostTypeIndex.GreenItem:
+                                    greenTakers++;
+                                    break;
+                                case CostTypeIndex.RedItem:
+                                    redTakers++;
+                                    break;
+                                case CostTypeIndex.BossItem:
+                                    yellowTakers++;
+                                    break;
+                                
+                            }
                             break;
                     }
                 }
@@ -146,13 +172,25 @@ namespace LootObjectives
                     if (interactables.voids > 0) sb.AppendLine(FormatLine("style", "cIsVoid", "VOID_CHEST_NAME", interactables.voidsAvailable, interactables.voids));
                 }
                 if (TeleporterInteraction.instance.isCharged) {
-                    if (interactables.cloakedChests > 0) sb.AppendLine().AppendLine(FormatLine("style", "cLunarObjective", "CHEST1_STEALTHED_NAME", interactables.cloakedChestsAvailable, interactables.cloakedChests));
+                    sb.AppendLine(FormatFabricators(interactables));
+                    if (interactables.cloakedChests > 0) sb.AppendLine(FormatLine("style", "cLunarObjective", "CHEST1_STEALTHED_NAME", interactables.cloakedChestsAvailable, interactables.cloakedChests));
                 }
             }
 
             sb.AppendLine().AppendLine(FormatEnemies());
 
             return sb.ToString();
+        }
+
+        private static string FormatFabricators(Interactables interactables)
+        {
+            System.Collections.Generic.List<string> strings = new();
+            if (interactables.whiteTakers > 0)  strings.Add(Util.GenerateColoredString(interactables.whiteTakers.ToString(),  ColorCatalog.GetColor(ColorCatalog.ColorIndex.Tier1Item)));
+            if (interactables.greenTakers > 0)  strings.Add(Util.GenerateColoredString(interactables.greenTakers.ToString(),  ColorCatalog.GetColor(ColorCatalog.ColorIndex.Tier2Item)));
+            if (interactables.redTakers > 0)    strings.Add(Util.GenerateColoredString(interactables.redTakers.ToString(),    ColorCatalog.GetColor(ColorCatalog.ColorIndex.Tier3Item)));
+            if (interactables.yellowTakers > 0) strings.Add(Util.GenerateColoredString(interactables.yellowTakers.ToString(), ColorCatalog.GetColor(ColorCatalog.ColorIndex.BossItem)));
+            string result = string.Join(" · ", strings);
+            return string.IsNullOrEmpty(result) ? "" : $"<style=cStack>{Language.GetString("DUPLICATOR_NAME")}: {result}</style>";
         }
 
         private static string FormatEnemies()
@@ -165,7 +203,7 @@ namespace LootObjectives
             if (monsters > 0) strings.Add($"<style=cSub>{monsters}</style>");
             if (lunars > 0) strings.Add($"<style=cLunarObjective>{lunars}</style>");
             if (voids > 0) strings.Add($"<style=cIsVoid>{voids}</style>");
-            string result = string.Join("/", strings);
+            string result = string.Join(" · ", strings);
 
             return $"<style=cStack>Enemies: {(string.IsNullOrEmpty(result) ? "0" : result)}</style>";
         }

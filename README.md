@@ -16,6 +16,7 @@ A \[ client-side \] mod that adds a tooltip to the *Objectives* panel to track h
     - scrapper
     - void cradles *(includes void potentials)*
 - *once teleporter is charged:*
+    - printers *(includes cauldrons)*
     - cloaked chests
 
 <!--
@@ -28,7 +29,7 @@ A \[ client-side \] mod that adds a tooltip to the *Objectives* panel to track h
         - on tp boss defeat
         - on tp charged
 - track more?
-    - printers?
+    - cleansing pools?
     - lunar pods?
     - blood shrines?
     - mountain shrines?
