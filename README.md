@@ -14,9 +14,9 @@ A \[ client-side \] mod that adds a tooltip to the *Objectives* panel to track h
 - lockboxes *(includes void variant)*
 - *once teleporter boss is defeated:*
     - scrapper
+    - printers *(includes cauldrons; based on <u>input</u> item tier)*
     - void cradles *(includes void potentials)*
 - *once teleporter is charged:*
-    - printers *(includes cauldrons)*
     - cloaked chests
 
 <!--

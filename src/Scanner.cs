@@ -169,11 +169,11 @@ namespace LootObjectives
             if (TeleporterInteraction.instance != null) {
                 if (TeleporterInteraction.instance.monstersCleared) {
                     sb.AppendLine().AppendLine($"{FormatLabel("<style=cSub>" + Language.GetString("SCRAPPER_NAME") + "</style>")}{(interactables.scrapperPresent ? "Yes" : "No")}");
+                    AppendFabricators(interactables, sb);
                     if (interactables.voids > 0) sb.AppendLine(FormatLine("style", "cIsVoid", "VOID_CHEST_NAME", interactables.voidsAvailable, interactables.voids));
                 }
                 if (TeleporterInteraction.instance.isCharged) {
-                    sb.AppendLine(FormatFabricators(interactables));
-                    if (interactables.cloakedChests > 0) sb.AppendLine(FormatLine("style", "cLunarObjective", "CHEST1_STEALTHED_NAME", interactables.cloakedChestsAvailable, interactables.cloakedChests));
+                    if (interactables.cloakedChests > 0) sb.AppendLine().AppendLine(FormatLine("style", "cLunarObjective", "CHEST1_STEALTHED_NAME", interactables.cloakedChestsAvailable, interactables.cloakedChests));
                 }
             }
 
@@ -182,7 +182,7 @@ namespace LootObjectives
             return sb.ToString();
         }
 
-        private static string FormatFabricators(Interactables interactables)
+        private static System.Text.StringBuilder AppendFabricators(Interactables interactables, System.Text.StringBuilder sb)
         {
             System.Collections.Generic.List<string> strings = new();
             if (interactables.whiteTakers > 0)  strings.Add(Util.GenerateColoredString(interactables.whiteTakers.ToString(),  ColorCatalog.GetColor(ColorCatalog.ColorIndex.Tier1Item)));
@@ -190,7 +190,9 @@ namespace LootObjectives
             if (interactables.redTakers > 0)    strings.Add(Util.GenerateColoredString(interactables.redTakers.ToString(),    ColorCatalog.GetColor(ColorCatalog.ColorIndex.Tier3Item)));
             if (interactables.yellowTakers > 0) strings.Add(Util.GenerateColoredString(interactables.yellowTakers.ToString(), ColorCatalog.GetColor(ColorCatalog.ColorIndex.BossItem)));
             string result = string.Join(" · ", strings);
-            return string.IsNullOrEmpty(result) ? "" : $"<style=cStack>{Language.GetString("DUPLICATOR_NAME")}: {result}</style>";
+
+            if (!string.IsNullOrEmpty(result)) sb.AppendLine($"{FormatToken("DUPLICATOR_NAME", "style", "cStack")}<style=cStack>{result}</style>");
+            return sb;
         }
 
         private static string FormatEnemies()
