@@ -1,6 +1,6 @@
 ﻿using BepInEx.Logging;
 
-namespace LootObjectives
+namespace LootTip
 {
     internal static class Log
     {

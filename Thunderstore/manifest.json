@@ -1,8 +1,8 @@
 ﻿{
 	"author": "itsschwer",
-	"name": "LootObjectives",
+	"name": "LootTip",
 	"version_number": "0.0.0",
-	"website_url": "https://github.com/itsschwer/ror2-loot-objectives",
+	"website_url": "https://github.com/itsschwer/ror2-loot-tip",
 	"description": "Adds a tooltip to the Objectives panel to track how much loot is left on a stage — [ client-side ]",
 	"dependencies": [
 		"bbepis-BepInExPack-5.4.2113"

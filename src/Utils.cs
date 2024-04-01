@@ -1,4 +1,4 @@
-﻿namespace LootObjectives
+﻿namespace LootTip
 {
     public static class Utils
     {

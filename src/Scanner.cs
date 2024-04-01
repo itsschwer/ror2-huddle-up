@@ -1,7 +1,7 @@
 ﻿using RoR2;
 using RoR2.UI;
 
-namespace LootObjectives
+namespace LootTip
 {
     public sealed class Scanner
     {

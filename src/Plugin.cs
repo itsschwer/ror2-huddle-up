@@ -1,7 +1,7 @@
 using BepInEx;
 using HarmonyLib;
 
-namespace LootObjectives
+namespace LootTip
 {
     [HarmonyPatch]
     [BepInPlugin(GUID, Name, Version)]
@@ -10,7 +10,7 @@ namespace LootObjectives
     {
         public const string GUID = Author + "." + Name;
         public const string Author = "itsschwer";
-        public const string Name = "LootObjectives";
+        public const string Name = "LootTip";
         public const string Version = "0.0.0";
 
         private static Scanner scanner;

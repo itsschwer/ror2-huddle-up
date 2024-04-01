@@ -1,4 +1,4 @@
-# loot objectives
+# loot tip
 
 A \[ client-side \] mod that adds a tooltip to the *Objectives* panel to track how much loot is left on a stage.
 
