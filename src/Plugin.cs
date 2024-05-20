@@ -5,7 +5,6 @@ namespace LootTip
 {
     [HarmonyPatch]
     [BepInPlugin(GUID, Name, Version)]
-
     public sealed class Plugin : BaseUnityPlugin
     {
         public const string GUID = Author + "." + Name;
@@ -71,7 +70,8 @@ namespace LootTip
         /// Need to use a patch since <see cref="RoR2.GlobalEventManager.OnInteractionsGlobal"/> is not called on clients.
         /// </remarks>
         [HarmonyPostfix, HarmonyPatch(typeof(RoR2.UI.TooltipController), nameof(RoR2.UI.TooltipController.SetTooltipProvider))]
-        private static void TooltipController_SetTooltipProvider(RoR2.UI.TooltipController __instance, RoR2.UI.TooltipProvider provider) {
+        private static void TooltipController_SetTooltipProvider(RoR2.UI.TooltipController __instance, RoR2.UI.TooltipProvider provider)
+        {
             if (provider.titleToken != Scanner.TOOLTIP_TITLE_TOKEN) return;
 
             __instance.titleLabel.text = Scanner.TOOLTIP_TITLE;
