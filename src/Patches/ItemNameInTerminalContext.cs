@@ -15,9 +15,9 @@ namespace LootTip
                     string item = (terminal.pickupIndexIsHidden || !terminal.pickupDisplay) ? "?" : RoR2.Language.GetString(RoR2.PickupCatalog.GetPickupDef(terminal.CurrentPickupIndex()).nameToken ?? RoR2.PickupCatalog.invalidPickupToken);
 
                     System.Text.StringBuilder sb = new System.Text.StringBuilder(__result);
-                    sb.Append(" <nobr>[");
+                    sb.Append(" <nobr><style=cStack><i>");
                     sb.Append(item);
-                    sb.Append("]</nobr>");
+                    sb.Append("</i></style></nobr>");
                     __result = sb.ToString();
                 }
             }
