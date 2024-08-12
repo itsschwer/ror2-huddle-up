@@ -116,44 +116,53 @@ namespace LootTip
 
         public Interactables interactables { get; private set; }
 
-        private TooltipProvider tooltip;
-        internal const string TOOLTIP_TITLE_TOKEN = "ITSSCHWER_LOOT_OBJECTIVE";
-        internal const string TOOLTIP_TITLE = "Loot Remaining";
+        private HGTextMeshProUGUI display;
+        private UnityEngine.UI.LayoutElement layout;
 
         public void Hook() => HUD.shouldHudDisplay += InitTooltip;
         public void Unhook() => HUD.shouldHudDisplay -= InitTooltip;
 
         private void InitTooltip(HUD hud, ref bool _)
         {
-            if (tooltip != null) return;
+            if (display != null) return;
 
             var objectivePanel = hud.GetComponentInChildren<ObjectivePanelController>();
-            var label = objectivePanel?.GetComponentInChildren<HGTextMeshProUGUI>();
-            tooltip = Utils.AddTooltipProvider(label);
+            if (!objectivePanel) {
+                Log.Debug("Waiting for loot panel to be initialized.");
+                return;
+            }
 
-            if (tooltip != null) {
-                tooltip.titleColor = DifficultyCatalog.GetDifficultyDef(Run.instance.selectedDifficulty).color;
-                tooltip.titleToken = TOOLTIP_TITLE_TOKEN;
-                Log.Debug("Tooltip intialized.");
-                Scan();
-            }
-            else {
-                Log.Warning("Waiting for tooltip to be initialized.");
-            }
+            HudPanel panel = objectivePanel.ClonePanel("Loot Panel");
+            panel.label.text = "Loot";
+            display = panel.AddTextComponent("Loot Tracker");
+            layout = display.GetComponent<UnityEngine.UI.LayoutElement>();
+
+            Log.Debug("Loot panel initialized.");
+            Scan();
         }
 
-        public Scanner Scan()
+        public void Scan()
         {
+            if (!display) {
+                Log.Warning("Attempted to scan but loot panel has not been initialized!");
+                return;
+            }
+
             interactables = new Interactables(
                 InstanceTracker.GetInstancesList<PurchaseInteraction>(),
                 (UnityEngine.Object.FindObjectOfType<ScrapperController>() != null)
             );
 
-            Log.Debug("Scanned interactables.");
-            return this;
+            UpdateDisplay();
         }
 
-        internal string GetTooltipString()
+        private void UpdateDisplay()
+        {
+            display.text = GenerateText();
+            layout.preferredHeight = display.renderedHeight;
+        }
+
+        internal string GenerateText()
         {
             string equip = $"#{ColorCatalog.GetColorHexString(ColorCatalog.ColorIndex.Equipment)}";
             System.Text.StringBuilder sb = new();

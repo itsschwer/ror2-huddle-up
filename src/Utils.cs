@@ -6,20 +6,20 @@
         {
             if (target == null) return null;
 
-            AddGraphicRaycasterToParentCanvas(target);
+            target.AddGraphicRaycasterToParentCanvas();
             target.raycastTarget = true;
-            return AddComponentIfMissing<RoR2.UI.TooltipProvider>(target.gameObject);
+            return target.gameObject.AddComponentIfMissing<RoR2.UI.TooltipProvider>();
         }
 
-        public static bool AddGraphicRaycasterToParentCanvas(UnityEngine.Component child)
+        private static bool AddGraphicRaycasterToParentCanvas(this UnityEngine.Component child)
         {
             // Unity 2019.4 only allows finding components on active game objects...
             UnityEngine.GameObject parentCanvas = child.GetComponentInParent<UnityEngine.Canvas>().gameObject;
             Log.Debug($"Found parent canvas {parentCanvas.name} for {child.name}");
-            return AddComponentIfMissing<UnityEngine.UI.GraphicRaycaster>(parentCanvas);
+            return parentCanvas.AddComponentIfMissing<UnityEngine.UI.GraphicRaycaster>();
         }
 
-        public static T AddComponentIfMissing<T>(UnityEngine.GameObject target) where T : UnityEngine.Component
+        private static T AddComponentIfMissing<T>(this UnityEngine.GameObject target) where T : UnityEngine.Component
         {
             T current = target.GetComponent<T>();
             if (current == null) {

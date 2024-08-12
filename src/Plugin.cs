@@ -63,19 +63,11 @@ namespace LootTip
             scanner = null;
         }
 
-
-
-
-        /// <remarks>
-        /// Need to use a patch since <see cref="RoR2.GlobalEventManager.OnInteractionsGlobal"/> is not called on clients.
-        /// </remarks>
-        [HarmonyPostfix, HarmonyPatch(typeof(RoR2.UI.TooltipController), nameof(RoR2.UI.TooltipController.SetTooltipProvider))]
-        private static void TooltipController_SetTooltipProvider(RoR2.UI.TooltipController __instance, RoR2.UI.TooltipProvider provider)
+        private void Update()
         {
-            if (provider.titleToken != Scanner.TOOLTIP_TITLE_TOKEN) return;
+            if (scanner == null) return;
 
-            __instance.titleLabel.text = Scanner.TOOLTIP_TITLE;
-            __instance.bodyLabel.text = scanner.Scan().GetTooltipString();
+            scanner.Scan();
         }
     }
 }
