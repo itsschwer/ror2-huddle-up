@@ -26,6 +26,10 @@ namespace LootTip
             public readonly int equipment = 0;
             public readonly int equipmentAvailable = 0;
 
+            public readonly int lunarPods = 0;
+            public readonly int lunarPodsAvailable = 0;
+            public readonly bool cleansingPoolPresent = false;
+
             public readonly bool scrapperPresent = false;
 
             public readonly int whiteTakers = 0;
@@ -109,6 +113,13 @@ namespace LootTip
                                 
                             }
                             break;
+                        case "SHRINE_CLEANSE_NAME":
+                            cleansingPoolPresent = true;
+                            break;
+                        case "LUNAR_CHEST_NAME":
+                            lunarPods++;
+                            if (interactions[i].available) lunarPodsAvailable++;
+                            break;
                     }
                 }
             }
@@ -177,9 +188,11 @@ namespace LootTip
 
             if (TeleporterInteraction.instance != null) {
                 if (TeleporterInteraction.instance.monstersCleared) {
-                    sb.AppendLine().AppendLine($"{FormatLabel("<style=cSub>" + Language.GetString("SCRAPPER_NAME") + "</style>")}{(interactables.scrapperPresent ? "Yes" : "No")}");
+                    string cleansingPool = interactables.cleansingPoolPresent ? " · <style=cLunarObjective>✓</style>" : "";
+                    sb.AppendLine().AppendLine($"{FormatLabel("<style=cSub>" + Language.GetString("SCRAPPER_NAME") + "</style>")}{(interactables.scrapperPresent ? "✓" : "✗")}{cleansingPool}");
                     AppendFabricators(interactables, sb);
                     if (interactables.voids > 0) sb.AppendLine(FormatLine("style", "cIsVoid", "VOID_CHEST_NAME", interactables.voidsAvailable, interactables.voids));
+                    if (interactables.lunarPods > 0) sb.AppendLine(FormatLine("style", "cLunarObjective", "LUNAR_CHEST_NAME", interactables.lunarPodsAvailable, interactables.lunarPods));
                 }
                 if (TeleporterInteraction.instance.isCharged) {
                     if (interactables.cloakedChests > 0) sb.AppendLine().AppendLine(FormatLine("style", "cLunarObjective", "CHEST1_STEALTHED_NAME", interactables.cloakedChestsAvailable, interactables.cloakedChests));

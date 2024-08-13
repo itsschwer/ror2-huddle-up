@@ -6,7 +6,6 @@ A \[ client-side \] mod that aims to expose more information in the UI.
 - rename project
 - describe patches in readme
 - refactor loot tracking
-- maybe track cleansing pools and lunar pods
 - make loot panel only show with scoreboard
 - add screenshots
 
@@ -26,10 +25,10 @@ adds a Loot panel to the hud to track how much loot is left on a stage.
 - equipment barrels ***todo:* try lumping equipment terminals in again?**
 - lockboxes *(includes void variant)*
 - *once teleporter boss is defeated:*
-    - scrapper ***todo:* include cleansing pools? `SHRINE_CLEANSE_NAME`**
+    - scrapper *(includes cleansing pools (second tick))*
     - printers *(includes cauldrons; based on <u>input</u> item tier)*
     - void cradles *(includes void potentials)*
-    - ***todo:* lunar pods? `LUNAR_CHEST_NAME`**
+    - lunar pods *(does <u>not</u> include lunar buds (bazaar))*
 - *once teleporter is charged:*
     - cloaked chests
 
