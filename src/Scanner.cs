@@ -128,11 +128,10 @@ namespace LootTip
         public Interactables interactables { get; private set; }
 
         private HUD hud;
-        private HudPanel hudPanel;
+        private HUDPanel hudPanel;
         private HGTextMeshProUGUI display;
-        private UnityEngine.UI.LayoutElement layout;
 
-        public void Hook() => HUD.shouldHudDisplay += InitTooltip;
+        public void   Hook() => HUD.shouldHudDisplay += InitTooltip;
         public void Unhook() => HUD.shouldHudDisplay -= InitTooltip;
 
         private void InitTooltip(HUD hud, ref bool _)
@@ -145,10 +144,9 @@ namespace LootTip
                 return;
             }
 
-            HudPanel panel = objectivePanel.ClonePanel("Loot Panel");
+            HUDPanel panel = HUDPanel.ClonePanel(objectivePanel, "Loot Panel");
             panel.label.text = "Loot";
             display = panel.AddTextComponent("Loot Tracker");
-            layout = display.GetComponent<UnityEngine.UI.LayoutElement>();
             this.hud = hud;
             hudPanel = panel;
 
@@ -174,7 +172,6 @@ namespace LootTip
             );
 
             display.text = GenerateText();
-            layout.preferredHeight = display.renderedHeight;
         }
 
         internal string GenerateText()

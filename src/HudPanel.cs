@@ -3,12 +3,12 @@ using UnityEngine;
 
 namespace LootTip
 {
-    public sealed class HudPanel
+    public sealed class HUDPanel
     {
         public readonly GameObject gameObject;
         public readonly HGTextMeshProUGUI label;
 
-        internal HudPanel(GameObject panel, HGTextMeshProUGUI label)
+        internal HUDPanel(GameObject panel, HGTextMeshProUGUI label)
         {
             this.gameObject = panel;
             this.label = label;
@@ -17,6 +17,8 @@ namespace LootTip
         public HGTextMeshProUGUI AddTextComponent(string name)
         {
             HGTextMeshProUGUI text = Object.Instantiate(label, label.transform.parent);
+            var unwanted = text.GetComponent<UnityEngine.UI.LayoutElement>();
+            if (unwanted) Object.Destroy(unwanted);
             text.name = name;
             // Based on in-game objectives text component
             text.GetComponent<RoR2.UI.SkinControllers.LabelSkinController>().labelType = RoR2.UI.SkinControllers.LabelSkinController.LabelType.Default;
@@ -28,24 +30,24 @@ namespace LootTip
             text.text = "hello world.";
             return text;
         }
-    }
 
-    public static class HudPanelUtil
-    {
-        public static HudPanel ClonePanel(this ObjectivePanelController objectivePanel, string name)
+
+
+
+        public static HUDPanel ClonePanel(ObjectivePanelController objectivePanel, string name)
         {
             var clone = Object.Instantiate(objectivePanel, objectivePanel.transform.parent);
             var panel = DeleteObjectiveComponents(clone);
 
             var label = panel.GetComponentInChildren<HGTextMeshProUGUI>();
-            var component = label.GetComponent<LanguageTextMeshController>();
-            if (component) Object.Destroy(component);
+            var unwanted = label.GetComponent<LanguageTextMeshController>();
+            if (unwanted) Object.DestroyImmediate(unwanted); // DestroyImmediate in case calling AddTextComponent in same frame
 
             panel.name = name;
-            return new HudPanel(panel, label);
+            return new HUDPanel(panel, label);
         }
 
-        private static GameObject DeleteObjectiveComponents(this ObjectivePanelController objectivePanel)
+        private static GameObject DeleteObjectiveComponents(ObjectivePanelController objectivePanel)
         {
             GameObject stripContainer = objectivePanel.transform.GetChild(objectivePanel.transform.childCount - 1).gameObject;
             if (stripContainer) Object.Destroy(stripContainer);
