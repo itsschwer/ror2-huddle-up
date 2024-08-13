@@ -6,7 +6,6 @@ A \[ client-side \] mod that aims to expose more information in the UI.
 - rename project
 - describe patches in readme
 - refactor loot tracking
-- make loot panel only show with scoreboard
 - add screenshots
 
 ## patches
@@ -33,12 +32,13 @@ adds a Loot panel to the hud to track how much loot is left on a stage.
     - cloaked chests
 
 ### config (todo, maybe)
-- what to display in tooltip
-- when to display in tooltip (granular?)
+- option to always display loot panel (instead of only w/ scoreboard)
+- what to display in panel
+- when to display in panel (granular?)
     - always
     - on tp boss defeat
     - on tp charged
-- track more?
+- a separate drones panel?
 
 ## see also
 - [StageRecap](https://thunderstore.io/package/Lawlzee/StageRecap/) <sup>[*src*](https://github.com/Lawlzee/StageReport)</sup> by [Lawlzee](https://thunderstore.io/package/Lawlzee/) — released faster than me

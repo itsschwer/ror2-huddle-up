@@ -127,6 +127,8 @@ namespace LootTip
 
         public Interactables interactables { get; private set; }
 
+        private HUD hud;
+        private HudPanel hudPanel;
         private HGTextMeshProUGUI display;
         private UnityEngine.UI.LayoutElement layout;
 
@@ -147,6 +149,8 @@ namespace LootTip
             panel.label.text = "Loot";
             display = panel.AddTextComponent("Loot Tracker");
             layout = display.GetComponent<UnityEngine.UI.LayoutElement>();
+            this.hud = hud;
+            hudPanel = panel;
 
             Log.Debug("Loot panel initialized.");
             Scan();
@@ -159,16 +163,16 @@ namespace LootTip
                 return;
             }
 
+            // Scoreboard visibility logic from RoR2.UI.HUD.Update()
+            bool visible = (hud.localUserViewer?.inputPlayer != null && hud.localUserViewer.inputPlayer.GetButton("info"));
+            hudPanel.gameObject.SetActive(visible);
+            if (!visible) return; //todo: maybe config
+
             interactables = new Interactables(
                 InstanceTracker.GetInstancesList<PurchaseInteraction>(),
                 (UnityEngine.Object.FindObjectOfType<ScrapperController>() != null)
             );
 
-            UpdateDisplay();
-        }
-
-        private void UpdateDisplay()
-        {
             display.text = GenerateText();
             layout.preferredHeight = display.renderedHeight;
         }
