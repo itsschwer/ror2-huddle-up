@@ -21,8 +21,6 @@ namespace LootTip
             }
 
             HUDPanel panel = HUDPanel.ClonePanel(objectivePanel, nameof(LootPanel));
-            panel.label.text = "Loot:";
-
             hud.gameObject.AddComponent<LootPanel>().panel = panel;
             LootPanel.hud = hud;
             Log.Debug($"Initialized {nameof(LootPanel)}.");
@@ -37,6 +35,7 @@ namespace LootTip
 
         private void Start()
         {
+            panel.label.text = "Loot:";
             display = panel.AddTextComponent("Loot Tracker");
         }
 
@@ -69,8 +68,8 @@ namespace LootTip
 
             if (TeleporterInteraction.instance != null) {
                 if (TeleporterInteraction.instance.monstersCleared) {
-                    string cleansingPool = interactables.cleansingPoolPresent ? " · <style=cLunarObjective><sprite name=\"LunarCoin\" tint=1></style>" : "";
-                    sb.AppendLine().AppendLine($"{FormatLabel("<style=cSub>" + Language.GetString("SCRAPPER_NAME") + "</style>")}{(interactables.scrapperPresent ? "<sprite name=\"LunarCoin\" tint=1>" : "×")}{cleansingPool}");
+                    string cleansingPool = interactables.cleansingPoolPresent ? " · <style=cLunarObjective>@</style>" : "";
+                    sb.AppendLine().AppendLine($"{FormatLabel("<style=cSub>" + Language.GetString("SCRAPPER_NAME") + "</style>")}{(interactables.scrapperPresent ? "@" : "×")}{cleansingPool}");
                     AppendFabricators(interactables, sb);
                     if (interactables.voids > 0) sb.AppendLine(FormatLine("style", "cIsVoid", "VOID_CHEST_NAME", interactables.voidsAvailable, interactables.voids));
                     if (interactables.lunarPods > 0) sb.AppendLine(FormatLine("style", "cLunarObjective", "LUNAR_CHEST_NAME", interactables.lunarPodsAvailable, interactables.lunarPods));
