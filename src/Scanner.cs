@@ -192,8 +192,8 @@ namespace LootTip
 
             if (TeleporterInteraction.instance != null) {
                 if (TeleporterInteraction.instance.monstersCleared) {
-                    string cleansingPool = interactables.cleansingPoolPresent ? " · <style=cLunarObjective>✓</style>" : "";
-                    sb.AppendLine().AppendLine($"{FormatLabel("<style=cSub>" + Language.GetString("SCRAPPER_NAME") + "</style>")}{(interactables.scrapperPresent ? "✓" : "✗")}{cleansingPool}");
+                    string cleansingPool = interactables.cleansingPoolPresent ? " · <style=cLunarObjective><sprite name=\"LunarCoin\" tint=1></style>" : "";
+                    sb.AppendLine().AppendLine($"{FormatLabel("<style=cSub>" + Language.GetString("SCRAPPER_NAME") + "</style>")}{(interactables.scrapperPresent ? "<sprite name=\"LunarCoin\" tint=1>" : "×")}{cleansingPool}");
                     AppendFabricators(interactables, sb);
                     if (interactables.voids > 0) sb.AppendLine(FormatLine("style", "cIsVoid", "VOID_CHEST_NAME", interactables.voidsAvailable, interactables.voids));
                     if (interactables.lunarPods > 0) sb.AppendLine(FormatLine("style", "cLunarObjective", "LUNAR_CHEST_NAME", interactables.lunarPodsAvailable, interactables.lunarPods));
