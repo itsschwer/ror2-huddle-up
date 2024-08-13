@@ -12,8 +12,6 @@ namespace LootTip
         public const string Name = "LootTip";
         public const string Version = "0.0.0";
 
-        private static Scanner scanner;
-
         [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Unity Message")]
         private void Awake()
         {
@@ -54,20 +52,11 @@ namespace LootTip
 
 
         private void OnRunStart(RoR2.Run _) {
-            scanner = new Scanner();
-            scanner.Hook();
+            LootPanel.Hook();
         }
 
         private void OnRunDestroy(RoR2.Run _) {
-            scanner.Unhook();
-            scanner = null;
-        }
-
-        private void Update()
-        {
-            if (scanner == null) return;
-
-            scanner.Scan();
+            LootPanel.Unhook();
         }
     }
 }
