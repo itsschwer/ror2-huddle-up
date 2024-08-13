@@ -6,7 +6,10 @@ A \[ client-side \] mod that aims to expose more information in the UI.
 - rename project
 - describe patches in readme
 - refactor loot tracking
+    - clean up string formatting
+    - try lumping equipment terminals into equipment barrels?
 - add screenshots
+- make icon
 
 ## patches
 - `RunDifficultyTooltip`
@@ -16,8 +19,7 @@ A \[ client-side \] mod that aims to expose more information in the UI.
 adds a Loot panel to the hud to track how much loot is left on a stage.
 
 ### what is tracked?
-
-- multishop terminals *(counts individual terminals; includes equipment and shipping requests)*
+- multishop terminals *(counts individual terminals; includes **equipment** and shipping requests)*
 - chests *(regular, large, legendary, category, large category)*
 - adaptive chests
 - chance shrines *(counts all potential drops if host)*
