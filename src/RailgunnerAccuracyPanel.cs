@@ -7,22 +7,25 @@ namespace LootTip
     internal sealed class RailgunnerAccuracyPanel : UnityEngine.MonoBehaviour
     {
         private static HUD hud;
-        private static RailgunnerReloadAccuracy reloadAccuracy;
+        private static Railgunner.ReloadAccuracy reloadAccuracy;
 
         public static void Hook()
         {
             HUD.shouldHudDisplay += Init;
 
-            reloadAccuracy = new RailgunnerReloadAccuracy();
+            reloadAccuracy = new Railgunner.ReloadAccuracy();
             Reload.AttemptBoost += reloadAccuracy.RecordReload;
 
-            RoR2.Stage.onStageStartGlobal += reloadAccuracy.StageClear;
+            RoR2.Stage.onStageStartGlobal += reloadAccuracy.OnStageStart;
         }
 
         public static void Unhook()
         {
             HUD.shouldHudDisplay -= Init;
 
+            RoR2.Stage.onStageStartGlobal -= reloadAccuracy.OnStageStart;
+
+            Reload.AttemptBoost -= reloadAccuracy.RecordReload;
             reloadAccuracy = null;
         }
 
@@ -57,65 +60,14 @@ namespace LootTip
 
         private void Update()
         {
-            System.Text.StringBuilder sb = new();
-            sb.AppendLine(reloadAccuracy.ToString());
-            display.text = sb.ToString();
-        }
+            display.text = reloadAccuracy.ToString();
 
-
-
-
-        /* RailgunnerSnipeAccuracy [to[re]do]
-         * - aim to track total shots, total hits, and weak point hits (consecutive + percentage)
-         * - check RoR2.Achievements.Railgunner.RailgunnerConsecutiveWeakPointsAchievement
-         * - check EntityStates.Railgunner.Weapon.BaseFireSnipe (OnExit, ModifyBullet)
-         *    - OnExit call seems to be delayed (maybe animation timings?)
-         */
-
-        private class RailgunnerReloadAccuracy
-        {
-            private const string SniperDamageColor = "#FF888B";
-
-            private int totalReloads;
-            private int perfectReloads;
-            private int totalReloadsStage;
-            private int perfectReloadsStage;
-
-            private int consecutive;
-            private int consecutiveBest;
-
-            internal bool RecordReload(Reload.orig_AttemptBoost orig, EntityStates.Railgunner.Reload.Reloading self)
-            {
-                bool successful = orig(self);
-                if (successful) {
-                    perfectReloads++;
-                    perfectReloadsStage++;
-                    consecutive++;
-                }
-                else {
-                    if (consecutive > consecutiveBest)
-                        consecutiveBest = consecutive;
-                    consecutive = 0;
-                }
-                totalReloads++;
-                totalReloadsStage++;
-                return successful;
-            }
-
-            internal void StageClear(RoR2.Stage _)
-            {
-                totalReloadsStage = 0;
-                perfectReloadsStage = 0;
-            }
-
-            // color derived from DamageColorIndex.Weakpoint
-            public override string ToString()
-                => $"<color={SniperDamageColor}>Perfect Reloads</color>: {Format(perfectReloadsStage, totalReloadsStage)} [{consecutive}] <align=\"right\">{Format(perfectReloads, totalReloads)} [{consecutiveBest}]</align>";
-            private string Format(int perfect, int total)
-            {
-                if (total == 0) return "-/- (-)";
-                return $"{perfect} / {total} ({((float)perfect/total):0.0%})";
-            }
+            /* RailgunnerSnipeAccuracy [to[re]do]
+             * - aim to track total shots, total hits, and weak point hits (consecutive + percentage)
+             * - check RoR2.Achievements.Railgunner.RailgunnerConsecutiveWeakPointsAchievement
+             * - check EntityStates.Railgunner.Weapon.BaseFireSnipe (OnExit, ModifyBullet)
+             *    - OnExit call seems to be delayed (maybe animation timings?)
+             */
         }
     }
 }
