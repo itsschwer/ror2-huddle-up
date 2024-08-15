@@ -1,6 +1,5 @@
 ﻿using RoR2.UI;
 
-using Snipe = On.EntityStates.Railgunner.Weapon.BaseFireSnipe;
 using Reload = On.EntityStates.Railgunner.Reload.Reloading;
 
 namespace LootTip
@@ -8,16 +7,13 @@ namespace LootTip
     internal sealed class RailgunnerAccuracyPanel : UnityEngine.MonoBehaviour
     {
         private static HUD hud;
-        private static RailgunnerSnipeAccuracy snipeAccuracy;
         private static RailgunnerReloadAccuracy reloadAccuracy;
 
         public static void Hook()
         {
             HUD.shouldHudDisplay += Init;
 
-            snipeAccuracy = new RailgunnerSnipeAccuracy();
             reloadAccuracy = new RailgunnerReloadAccuracy();
-            Snipe.OnExit += snipeAccuracy.RecordSnipe;
             Reload.AttemptBoost += reloadAccuracy.RecordReload;
 
             RoR2.Stage.onStageStartGlobal += reloadAccuracy.StageClear;
@@ -62,7 +58,6 @@ namespace LootTip
         private void Update()
         {
             System.Text.StringBuilder sb = new();
-            sb.AppendLine(snipeAccuracy.ToString());
             sb.AppendLine(reloadAccuracy.ToString());
             display.text = sb.ToString();
         }
@@ -70,21 +65,12 @@ namespace LootTip
 
 
 
-        private class RailgunnerSnipeAccuracy
-        {
-            private const string WeakPointDamageColor = "#EF8434";
-
-            private bool hitWeakPoint;
-            // todo: convert into tracking streaks and both regular and critical hits
-            internal void RecordSnipe(Snipe.orig_OnExit orig, EntityStates.Railgunner.Weapon.BaseFireSnipe self)
-            {
-                hitWeakPoint = (!self.wasMiss && self.wasAtLeastOneWeakpoint);
-                orig(self);
-            }
-
-            public override string ToString()
-                => $"<color={WeakPointDamageColor}>Hit Weak Point?</color>: {(hitWeakPoint ? "@" : "×")}";
-        }
+        /* RailgunnerSnipeAccuracy [to[re]do]
+         * - aim to track total shots, total hits, and weak point hits (consecutive + percentage)
+         * - check RoR2.Achievements.Railgunner.RailgunnerConsecutiveWeakPointsAchievement
+         * - check EntityStates.Railgunner.Weapon.BaseFireSnipe (OnExit, ModifyBullet)
+         *    - OnExit call seems to be delayed (maybe animation timings?)
+         */
 
         private class RailgunnerReloadAccuracy
         {
