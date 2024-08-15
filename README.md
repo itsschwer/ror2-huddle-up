@@ -14,6 +14,7 @@ A \[ client-side \] mod that aims to expose more information in the UI.
 ## patches
 - `RunDifficultyTooltip`
 - `ItemNameInTerminalContext`
+- `EquipmentDroneUseHeldEquipmentNameInAllyCard`
 
 ## loot panel
 adds a Loot panel to the hud to track how much loot is left on a stage.

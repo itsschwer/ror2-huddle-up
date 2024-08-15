@@ -1,6 +1,6 @@
 ﻿using HarmonyLib;
 
-namespace LootTip
+namespace LootTip.Patches
 {
     [HarmonyPatch]
     internal static class ItemNameInTerminalContext
