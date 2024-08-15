@@ -4,7 +4,7 @@ namespace LootTip.Railgunner
 {
     internal sealed class ReloadAccuracy
     {
-        private const string SniperDamageColor = "#FF888B";
+        private readonly string labelColor = $"#{UnityEngine.ColorUtility.ToHtmlStringRGB(RoR2.DamageColor.FindColor(RoR2.DamageColorIndex.Sniper))}"; // #FF888B
 
         private int totalReloads;
         private int perfectReloads;
@@ -38,13 +38,23 @@ namespace LootTip.Railgunner
             perfectReloadsStage = 0;
         }
 
-        // color derived from DamageColorIndex.Weakpoint
         public override string ToString()
-            => $"<color={SniperDamageColor}>Perfect Reloads</color>: {Format(perfectReloadsStage, totalReloadsStage)} [{consecutive}] <align=\"right\">{Format(perfectReloads, totalReloads)} [{consecutiveBest}]</align>";
-        private string Format(int perfect, int total)
         {
-            if (total == 0) return "-/- (-)";
-            return $"{perfect} / {total} ({((float)perfect / total):0.0%})";
+            System.Text.StringBuilder sb = new();
+
+            sb.Append($"<style=cStack>> </style><color={labelColor}>Perfect Reloads</color><style=cStack>: </style>");
+            if (totalReloads == 0) sb.Append("<style=cStack>-.--%</style>");
+            else sb.Append($"{((float)perfectReloads / totalReloads):0.00%}");
+            sb.AppendLine();
+
+            sb.Append($"<style=cStack>   > this stage: </style>");
+            if (totalReloadsStage == 0) sb.Append("<style=cStack>-.--%</style>");
+            else sb.Append($"{((float)perfectReloadsStage / totalReloadsStage):0.00%}");
+            sb.AppendLine($"<style=cStack> ({perfectReloadsStage}/{totalReloadsStage})</style>");
+
+            sb.Append($"<style=cStack>   > consecutive: </style>{consecutive}<style=cStack> ({consecutiveBest})</style>");
+
+            return sb.ToString();
         }
     }
 }

@@ -60,6 +60,7 @@ namespace LootTip
 
         private void Update()
         {
+            if (reloadAccuracy == null) return;
             display.text = reloadAccuracy.ToString();
 
             /* RailgunnerSnipeAccuracy [to[re]do]
