@@ -32,6 +32,7 @@ namespace LootTip.Railgunner
 
         private void Snipe_onFireSnipe(Snipe snipe)
         {
+            if (!snipe.isAuthority) return;
             shots++;
         }
 
