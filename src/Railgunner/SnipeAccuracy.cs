@@ -18,7 +18,7 @@ namespace LootTip.Railgunner
             Snipe.onWeakPointHit += Snipe_onWeakPointHit;
             Snipe.onWeakPointMissed += Snipe_onWeakPointMissed;
 
-            RoR2.Stage.onServerStageBegin += OnStageStart;
+            RoR2.Stage.onStageStartGlobal += OnStageStart;
         }
 
         public void Unhook()
@@ -27,7 +27,7 @@ namespace LootTip.Railgunner
             Snipe.onWeakPointHit -= Snipe_onWeakPointHit;
             Snipe.onWeakPointMissed -= Snipe_onWeakPointMissed;
 
-            RoR2.Stage.onServerStageBegin -= OnStageStart;
+            RoR2.Stage.onStageStartGlobal -= OnStageStart;
         }
 
         private void Snipe_onFireSnipe(Snipe snipe)
