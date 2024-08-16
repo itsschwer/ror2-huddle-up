@@ -8,6 +8,7 @@ namespace LootTip
     {
         private static HUD hud;
         private static Railgunner.ReloadAccuracy reloadAccuracy;
+        private static Railgunner.SnipeAccuracy snipeAccuracy;
 
         public static void Hook()
         {
@@ -17,6 +18,9 @@ namespace LootTip
             Reload.AttemptBoost += reloadAccuracy.RecordReload;
 
             RoR2.Stage.onStageStartGlobal += reloadAccuracy.OnStageStart;
+
+            snipeAccuracy = new Railgunner.SnipeAccuracy();
+            snipeAccuracy.Hook();
         }
 
         public static void Unhook()
@@ -27,6 +31,9 @@ namespace LootTip
 
             Reload.AttemptBoost -= reloadAccuracy.RecordReload;
             reloadAccuracy = null;
+
+            snipeAccuracy.Unhook();
+            snipeAccuracy = null;
         }
 
         public static void Init(HUD hud, ref bool _)
@@ -61,14 +68,12 @@ namespace LootTip
         private void Update()
         {
             if (reloadAccuracy == null) return;
-            display.text = reloadAccuracy.ToString();
 
-            /* RailgunnerSnipeAccuracy [to[re]do]
-             * - aim to track total shots, total hits, and weak point hits (consecutive + percentage)
-             * - check RoR2.Achievements.Railgunner.RailgunnerConsecutiveWeakPointsAchievement
-             * - check EntityStates.Railgunner.Weapon.BaseFireSnipe (OnExit, ModifyBullet)
-             *    - OnExit call seems to be delayed (maybe animation timings?)
-             */
+            System.Text.StringBuilder sb = new();
+            sb.AppendLine(reloadAccuracy.ToString());
+            sb.AppendLine();
+            sb.AppendLine(snipeAccuracy.ToString());
+            display.text = sb.ToString();
         }
     }
 }
