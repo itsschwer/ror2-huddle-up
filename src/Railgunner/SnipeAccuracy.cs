@@ -4,11 +4,9 @@ namespace LootTip.Railgunner
 {
     internal sealed class SnipeAccuracy
     {
-        private Snipe currentShot;
+        private readonly string labelColor = $"#{UnityEngine.ColorUtility.ToHtmlStringRGB(RoR2.DamageColor.FindColor(RoR2.DamageColorIndex.WeakPoint))}";
 
         private int shots;
-        private int misses;
-        // private int missedWeakPointShots;
         private int weakPointHits; // Can have multiple hits from a single shot
 
         private int consecutive;
@@ -19,6 +17,8 @@ namespace LootTip.Railgunner
             Snipe.onFireSnipe += Snipe_onFireSnipe;
             Snipe.onWeakPointHit += Snipe_onWeakPointHit;
             Snipe.onWeakPointMissed += Snipe_onWeakPointMissed;
+
+            RoR2.Stage.onServerStageBegin += OnStageStart;
         }
 
         public void Unhook()
@@ -26,12 +26,13 @@ namespace LootTip.Railgunner
             Snipe.onFireSnipe -= Snipe_onFireSnipe;
             Snipe.onWeakPointHit -= Snipe_onWeakPointHit;
             Snipe.onWeakPointMissed -= Snipe_onWeakPointMissed;
+
+            RoR2.Stage.onServerStageBegin -= OnStageStart;
         }
 
         private void Snipe_onFireSnipe(Snipe snipe)
         {
             shots++;
-            currentShot = snipe;
         }
 
         private void Snipe_onWeakPointHit(RoR2.DamageInfo _)
@@ -42,39 +43,29 @@ namespace LootTip.Railgunner
 
         private void Snipe_onWeakPointMissed()
         {
-            // missedWeakPointShots++;
-
+            // onWeakPointMissed is invoked in OnExit, which seems to be delayed (maybe animation timing?)
             if (consecutive > consecutiveBest)
                 consecutiveBest = consecutive;
             consecutive = 0;
-
-            if (currentShot == null) { Log.Warning("Missed a Weak Point without firing a shot??"); return; }
-            if (currentShot.wasMiss) {
-                misses++;
-            }
-            currentShot = null;
+            // Note: can't extract regular hits/misses by checking .wasMiss on its own,
+            //       since hitting terrain sets .wasMiss to false :/
         }
 
-        private string styleAlt = "cWorldEvent";
-        private string style = "cStack";
+        private void OnStageStart(RoR2.Stage _)
+        {
+            shots = 0;
+            weakPointHits = 0;
+        }
+
         public override string ToString()
         {
             System.Text.StringBuilder sb = new();
-            sb.Append($"<style={style}>");
-            sb.AppendLine($"> shots: {shots}");
-            sb.AppendLine($"> crits: {weakPointHits}");
-            sb.AppendLine($"> norms: {shots - misses - weakPointHits}");
-            sb.AppendLine($"> misses: {misses}");
-            sb.Append("</style>");
-            // (styleAlt, style) = (style, styleAlt);
+
+            sb.Append($"<style=cStack>> </style><color={labelColor}>Weak Points Hit</color><style=cStack>: </style>");
+            sb.AppendLine($"{weakPointHits}<style=cStack> : {shots}</style>");
+            sb.Append($"<style=cStack>   > consecutive: </style>{consecutive}<style=cStack> ({consecutiveBest})</style>");
+
             return sb.ToString();
         }
-
-        /* RailgunnerSnipeAccuracy [to[re]do]
-         * - aim to track total shots, total hits, and weak point hits (consecutive + percentage)
-         * - check RoR2.Achievements.Railgunner.RailgunnerConsecutiveWeakPointsAchievement
-         * - check EntityStates.Railgunner.Weapon.BaseFireSnipe (OnExit, ModifyBullet)
-         *    - OnExit call seems to be delayed (maybe animation timings?)
-         */
     }
 }
