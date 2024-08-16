@@ -10,6 +10,7 @@ A \[ client-side \] mod that aims to expose more information in the UI.
     - try lumping equipment terminals into equipment barrels?
 - add screenshots
 - make icon
+- a separate drones panel?
 
 ## patches
 - `RunDifficultyTooltip`
@@ -41,7 +42,10 @@ adds a Loot panel to the hud to track how much loot is left on a stage.
     - always
     - on tp boss defeat
     - on tp charged
-- a separate drones panel?
+
+## railgunner accuracy
+- active reload *(accuracy, consecutive streak)*
+- weak point *(consecutive streak)*
 
 ## see also
 - [StageRecap](https://thunderstore.io/package/Lawlzee/StageRecap/) <sup>[*src*](https://github.com/Lawlzee/StageReport)</sup> by [Lawlzee](https://thunderstore.io/package/Lawlzee/) — released faster than me
