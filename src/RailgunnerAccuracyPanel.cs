@@ -15,10 +15,7 @@ namespace LootTip
             HUD.shouldHudDisplay += Init;
 
             reloadAccuracy = new Railgunner.ReloadAccuracy();
-            Reload.AttemptBoost += reloadAccuracy.RecordReload;
-
-            RoR2.Stage.onStageStartGlobal += reloadAccuracy.OnStageStart;
-
+            reloadAccuracy.Hook();
             snipeAccuracy = new Railgunner.SnipeAccuracy();
             snipeAccuracy.Hook();
         }
@@ -27,11 +24,8 @@ namespace LootTip
         {
             HUD.shouldHudDisplay -= Init;
 
-            RoR2.Stage.onStageStartGlobal -= reloadAccuracy.OnStageStart;
-
-            Reload.AttemptBoost -= reloadAccuracy.RecordReload;
+            reloadAccuracy.Unhook();
             reloadAccuracy = null;
-
             snipeAccuracy.Unhook();
             snipeAccuracy = null;
         }

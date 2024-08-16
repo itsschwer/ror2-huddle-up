@@ -14,7 +14,19 @@ namespace LootTip.Railgunner
         private int consecutive;
         private int consecutiveBest;
 
-        internal bool RecordReload(Reload.orig_AttemptBoost orig, EntityStates.Railgunner.Reload.Reloading self)
+        public void Hook()
+        {
+            Reload.AttemptBoost += RecordReload;
+            RoR2.Stage.onServerStageBegin += OnStageStart;
+        }
+
+        public void Unhook()
+        {
+            Reload.AttemptBoost -= RecordReload;
+            RoR2.Stage.onServerStageBegin -= OnStageStart;
+        }
+
+        private bool RecordReload(Reload.orig_AttemptBoost orig, EntityStates.Railgunner.Reload.Reloading self)
         {
             bool successful = orig(self);
             if (successful) {
@@ -32,7 +44,7 @@ namespace LootTip.Railgunner
             return successful;
         }
 
-        internal void OnStageStart(RoR2.Stage _)
+        private void OnStageStart(RoR2.Stage _)
         {
             totalReloadsStage = 0;
             perfectReloadsStage = 0;
