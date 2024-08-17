@@ -1,7 +1,5 @@
 ﻿using RoR2.UI;
 
-using Reload = On.EntityStates.Railgunner.Reload.Reloading;
-
 namespace LootTip
 {
     internal sealed class RailgunnerAccuracyPanel : UnityEngine.MonoBehaviour
@@ -40,9 +38,14 @@ namespace LootTip
                 return;
             }
 
+            RailgunnerAccuracyPanel.hud = hud;
+            if (hud.localUserViewer.cachedBody.bodyIndex != RoR2.BodyCatalog.FindBodyIndex("RailgunnerBody")) {
+                Log.Debug($"Local user is not Railgunner, skipping {nameof(RailgunnerAccuracyPanel)} initialization.");
+                return;
+            }
+
             HUDPanel panel = HUDPanel.ClonePanel(objectivePanel, nameof(RailgunnerAccuracyPanel));
             hud.gameObject.AddComponent<RailgunnerAccuracyPanel>().panel = panel;
-            RailgunnerAccuracyPanel.hud = hud;
             Log.Debug($"Initialized {nameof(RailgunnerAccuracyPanel)}.");
         }
 
@@ -51,7 +54,6 @@ namespace LootTip
 
         private HUDPanel panel;
         private HGTextMeshProUGUI display;
-        // private readonly BodyIndex bodyRequirement = BodyCatalog.FindBodyIndex("RailgunnerBody");
 
         private void Start()
         {
