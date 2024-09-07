@@ -57,6 +57,7 @@ namespace LootTip.Loot
         {
             string equip = $"#{ColorCatalog.GetColorHexString(ColorCatalog.ColorIndex.Equipment)}";
             System.Text.StringBuilder sb = new();
+
             if (interactables.terminals > 0)      sb.AppendLine(FormatLine("style", "cIsUtility", "MULTISHOP_TERMINAL_NAME", interactables.terminalsAvailable, interactables.terminals));
             if (interactables.chests > 0)         sb.AppendLine(FormatLine("style", "cIsDamage", "CHEST1_NAME", interactables.chestsAvailable, interactables.chests));
             if (interactables.adaptiveChests > 0) sb.AppendLine(FormatLine("style", "cArtifact", "CASINOCHEST_NAME", interactables.adaptiveChestsAvailable, interactables.adaptiveChests));
@@ -78,7 +79,11 @@ namespace LootTip.Loot
                     if (interactables.cloakedChests > 0) sb.AppendLine().AppendLine(FormatLine("style", "cLunarObjective", "CHEST1_STEALTHED_NAME", interactables.cloakedChestsAvailable, interactables.cloakedChests));
                 }
             }
+
             sb.AppendLine().AppendLine(FormatEnemies());
+            if (TeleporterInteraction.instance != null && TeleporterInteraction.instance.shrineBonusStacks > 0)
+                sb.AppendLine($"<style=cStack>Invitations: <style=cIsUtility>{TeleporterInteraction.instance.shrineBonusStacks}</style></style>");
+
             return sb.ToString();
         }
 
