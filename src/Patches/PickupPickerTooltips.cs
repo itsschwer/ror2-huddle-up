@@ -11,7 +11,8 @@ namespace LootTip.Patches
         {
             for (int i = 0; i < options.Length; i++) {
                 RoR2.UI.TooltipProvider tooltip = TooltipHelper.AddTooltipProvider(
-                    __instance.buttonAllocator.elements[i].GetComponent<UnityEngine.UI.Graphic>()
+                    __instance.buttonAllocator.elements[i].GetComponent<UnityEngine.UI.Graphic>(),
+                    true
                 );
 
                 PickupDef pickup = PickupCatalog.GetPickupDef(options[i].pickupIndex);
