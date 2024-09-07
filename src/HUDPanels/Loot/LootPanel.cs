@@ -16,14 +16,14 @@ namespace LootTip.Loot
 
             var objectivePanel = hud.GetComponentInChildren<ObjectivePanelController>();
             if (!objectivePanel) {
-                Log.Debug($"Waiting to initialize {nameof(LootPanel)}.");
+                Plugin.Logger.LogDebug($"Waiting to initialize {nameof(LootPanel)}.");
                 return;
             }
 
             HUDPanel panel = HUDPanel.ClonePanel(objectivePanel, nameof(LootPanel));
             hud.gameObject.AddComponent<LootPanel>().panel = panel;
             LootPanel.hud = hud;
-            Log.Debug($"Initialized {nameof(LootPanel)}.");
+            Plugin.Logger.LogDebug($"Initialized {nameof(LootPanel)}.");
         }
 
 

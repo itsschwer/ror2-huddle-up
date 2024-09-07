@@ -15,7 +15,7 @@
         {
             // Unity 2019.4 only allows finding components on active game objects...
             UnityEngine.GameObject parentCanvas = child.GetComponentInParent<UnityEngine.Canvas>().gameObject;
-            Log.Debug($"Found parent canvas {parentCanvas.name} for {child.name}");
+            Plugin.Logger.LogDebug($"Found parent canvas {parentCanvas.name} for {child.name}");
             return parentCanvas.AddComponentIfMissing<UnityEngine.UI.GraphicRaycaster>();
         }
 
@@ -24,7 +24,7 @@
             T current = target.GetComponent<T>();
             if (current == null) {
                 current = target.AddComponent<T>();
-                Log.Debug($"Added {typeof(T).FullName} to {target.name}");
+                Plugin.Logger.LogDebug($"Added {typeof(T).FullName} to {target.name}");
             }
             return current;
         }

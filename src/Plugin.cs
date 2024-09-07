@@ -12,42 +12,33 @@ namespace LootTip
         public const string Name = "LootTip";
         public const string Version = "0.0.0";
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Unity Message")]
+        internal static new BepInEx.Logging.ManualLogSource Logger { get; private set; }
+
         private void Awake()
         {
-            Log.Init(Logger);
+            // Use Plugin.GUID instead of Plugin.Name as source name
+            BepInEx.Logging.Logger.Sources.Remove(base.Logger);
+            Logger = BepInEx.Logging.Logger.CreateLogSource(Plugin.GUID);
+
             new Harmony(Info.Metadata.GUID).PatchAll();
 
-            Log.Message("~awake.");
+            Logger.LogMessage("~awake.");
         }
-
-        /// <summary>
-        /// All plugins are attached to the
-        /// <see href="https://github.com/BepInEx/BepInEx/blob/0d06996b52c0215a8327b8c69a747f425bbb0023/BepInEx/Bootstrap/Chainloader.cs#L88">same</see>
-        /// <see cref="UnityEngine.GameObject"/>, so manually manage components instead of calling <see cref="UnityEngine.GameObject.SetActive"/>.
-        /// </summary>
-        public void SetActive(bool value)
-        {
-            this.enabled = value;
-            Log.Message($"~{(value ? "active" : "inactive")}.");
-        }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Unity Message")]
+        
         private void OnEnable()
         {
             RoR2.Run.onRunStartGlobal += OnRunStart;
             RoR2.Run.onRunDestroyGlobal += OnRunDestroy;
 
-            Log.Message("~enabled.");
+            Logger.LogMessage("~enabled.");
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Unity Message")]
         private void OnDisable()
         {
             RoR2.Run.onRunStartGlobal -= OnRunStart;
             RoR2.Run.onRunDestroyGlobal -= OnRunDestroy;
 
-            Log.Message("~disabled.");
+            Logger.LogMessage("~disabled.");
         }
 
 

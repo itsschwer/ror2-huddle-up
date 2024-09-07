@@ -34,19 +34,19 @@ namespace LootTip.Railgunner
 
             var objectivePanel = hud.GetComponentInChildren<ObjectivePanelController>();
             if (!objectivePanel) {
-                Log.Debug($"Waiting to initialize {nameof(RailgunnerAccuracyPanel)}.");
+                Plugin.Logger.LogDebug($"Waiting to initialize {nameof(RailgunnerAccuracyPanel)}.");
                 return;
             }
 
             RailgunnerAccuracyPanel.hud = hud;
             if (hud.localUserViewer.cachedBody.bodyIndex != RoR2.BodyCatalog.FindBodyIndex("RailgunnerBody")) {
-                Log.Debug($"Local user is not Railgunner, skipping {nameof(RailgunnerAccuracyPanel)} initialization.");
+                Plugin.Logger.LogDebug($"Local user is not Railgunner, skipping {nameof(RailgunnerAccuracyPanel)} initialization.");
                 return;
             }
 
             HUDPanel panel = HUDPanel.ClonePanel(objectivePanel, nameof(RailgunnerAccuracyPanel));
             hud.gameObject.AddComponent<RailgunnerAccuracyPanel>().panel = panel;
-            Log.Debug($"Initialized {nameof(RailgunnerAccuracyPanel)}.");
+            Plugin.Logger.LogDebug($"Initialized {nameof(RailgunnerAccuracyPanel)}.");
         }
 
 
