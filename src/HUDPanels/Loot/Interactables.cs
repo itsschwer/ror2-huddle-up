@@ -1,6 +1,6 @@
 ﻿using RoR2;
 
-namespace LootTip
+namespace LootTip.Loot
 {
     public sealed record Interactables
     {

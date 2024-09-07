@@ -52,12 +52,12 @@ namespace LootTip
 
 
         private void OnRunStart(RoR2.Run _) {
-            LootPanel.Hook();
+            Loot.LootPanel.Hook();
             Railgunner.RailgunnerAccuracyPanel.Hook();
         }
 
         private void OnRunDestroy(RoR2.Run _) {
-            LootPanel.Unhook();
+            Loot.LootPanel.Unhook();
             Railgunner.RailgunnerAccuracyPanel.Unhook();
         }
     }

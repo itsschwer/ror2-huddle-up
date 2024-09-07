@@ -1,6 +1,6 @@
 ﻿namespace LootTip
 {
-    public static class Utils
+    public static class TooltipHelper
     {
         public static RoR2.UI.TooltipProvider AddTooltipProvider(UnityEngine.UI.Graphic target)
         {

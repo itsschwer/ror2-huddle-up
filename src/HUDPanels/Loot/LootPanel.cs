@@ -1,7 +1,7 @@
 ﻿using RoR2;
 using RoR2.UI;
 
-namespace LootTip
+namespace LootTip.Loot
 {
     internal sealed class LootPanel : UnityEngine.MonoBehaviour
     {
