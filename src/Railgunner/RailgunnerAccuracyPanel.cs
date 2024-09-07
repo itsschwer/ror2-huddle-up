@@ -1,21 +1,21 @@
 ﻿using RoR2.UI;
 
-namespace LootTip
+namespace LootTip.Railgunner
 {
     internal sealed class RailgunnerAccuracyPanel : UnityEngine.MonoBehaviour
     {
         private static HUD hud;
-        private static Railgunner.ReloadAccuracy reloadAccuracy;
-        private static Railgunner.SnipeAccuracy snipeAccuracy;
+        private static ReloadAccuracy reloadAccuracy;
+        private static WeakPointAccuracy weakPointAccuracy;
 
         public static void Hook()
         {
             HUD.shouldHudDisplay += Init;
 
-            reloadAccuracy = new Railgunner.ReloadAccuracy();
+            reloadAccuracy = new ReloadAccuracy();
             reloadAccuracy.Hook();
-            snipeAccuracy = new Railgunner.SnipeAccuracy();
-            snipeAccuracy.Hook();
+            weakPointAccuracy = new WeakPointAccuracy();
+            weakPointAccuracy.Hook();
         }
 
         public static void Unhook()
@@ -24,8 +24,8 @@ namespace LootTip
 
             reloadAccuracy.Unhook();
             reloadAccuracy = null;
-            snipeAccuracy.Unhook();
-            snipeAccuracy = null;
+            weakPointAccuracy.Unhook();
+            weakPointAccuracy = null;
         }
 
         public static void Init(HUD hud, ref bool _)
@@ -68,7 +68,7 @@ namespace LootTip
             System.Text.StringBuilder sb = new();
             sb.AppendLine(reloadAccuracy.ToString());
             sb.AppendLine();
-            sb.AppendLine(snipeAccuracy.ToString());
+            sb.AppendLine(weakPointAccuracy.ToString());
             display.text = sb.ToString();
         }
     }

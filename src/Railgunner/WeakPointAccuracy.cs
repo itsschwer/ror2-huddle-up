@@ -2,7 +2,7 @@
 
 namespace LootTip.Railgunner
 {
-    internal sealed class SnipeAccuracy
+    internal sealed class WeakPointAccuracy
     {
         private readonly string labelColor = $"#{UnityEngine.ColorUtility.ToHtmlStringRGB(RoR2.DamageColor.FindColor(RoR2.DamageColorIndex.WeakPoint))}";
 
