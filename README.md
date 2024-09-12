@@ -29,7 +29,7 @@ adds a Loot panel to the hud to track how much loot is left on a stage.
 - equipment barrels ***todo:* try lumping equipment terminals in again?**
 - lockboxes *(includes void variant)*
 - *once teleporter boss is defeated:*
-    - scrapper *(includes cleansing pools (second `@`))*
+    - scrapper *(includes cleansing pools; `@` if present)*
     - printers *(includes cauldrons; based on <u>input</u> item tier)*
     - void cradles *(includes void potentials)*
     - lunar pods *(does <u>not</u> include lunar buds (bazaar))*
