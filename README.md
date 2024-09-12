@@ -1,21 +1,22 @@
-# uiSpy
+# HUDdle up
 
-A \[ client-side \] mod that aims to expose more information in the UI.
+A \[ client-side \] mod that aims to expose more information in the HUD UI.
 
 ## <mark>todo</mark>
 - rename project
-- describe patches in readme
 - refactor loot tracking
     - clean up string formatting
     - try lumping equipment terminals into equipment barrels?
 - add screenshots
 - make icon
+- configs to enable/disable each feature
 - a separate drones panel?
 
 ## patches
-- `RunDifficultyTooltip`
-- `ItemNameInTerminalContext`
-- `EquipmentDroneUseHeldEquipmentNameInAllyCard`
+- `RunDifficultyTooltip` — adds a tooltip to the difficulty icon in the HUD that shows the description of the difficulty
+- `EquipmentDroneUseHeldEquipmentNameInAllyCard` *(host-only?)* — replaces the names of equipment drones in ally cards with the name of its held equipment
+- `FullerDescriptions` — replace the default short descriptions in item and equipment tooltips with a combination of the short and detailed descriptions ***todo:* stack and cooldown calculations?**
+- `PickupPickerTooltips` — add tooltips to items in pickup picker menus *(e.g. command cubes, void potentials)* that show the (fuller) description of the item
 
 ## loot panel
 adds a Loot panel to the hud to track how much loot is left on a stage.
@@ -28,12 +29,14 @@ adds a Loot panel to the hud to track how much loot is left on a stage.
 - equipment barrels ***todo:* try lumping equipment terminals in again?**
 - lockboxes *(includes void variant)*
 - *once teleporter boss is defeated:*
-    - scrapper *(includes cleansing pools (second tick))*
+    - scrapper *(includes cleansing pools (second `@`))*
     - printers *(includes cauldrons; based on <u>input</u> item tier)*
     - void cradles *(includes void potentials)*
     - lunar pods *(does <u>not</u> include lunar buds (bazaar))*
 - *once teleporter is charged:*
     - cloaked chests
+- enemy counts (per team)
+- mountain shrine invitations
 
 ### config (todo, maybe)
 - option to always display loot panel (instead of only w/ scoreboard)
@@ -44,8 +47,13 @@ adds a Loot panel to the hud to track how much loot is left on a stage.
     - on tp charged
 
 ## railgunner accuracy
-- active reload *(accuracy, consecutive streak)*
-- weak point *(consecutive streak)*
+- active reload
+    - run accuracy *-percentage-*
+    - stage accuracy *-percentage-* (*-cardinal-*)
+    - consecutive (best)
+- weak point
+    - stage ratio *a single shot can hit multiple enemies' weak points*
+    - consecutive (best)
 
 ## see also
 - [StageRecap](https://thunderstore.io/package/Lawlzee/StageRecap/) <sup>[*src*](https://github.com/Lawlzee/StageReport)</sup> by [Lawlzee](https://thunderstore.io/package/Lawlzee/) — released faster than me

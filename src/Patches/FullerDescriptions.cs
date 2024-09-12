@@ -5,7 +5,7 @@ using System.Text;
 namespace LootTip.Patches
 {
     [HarmonyPatch]
-    internal static class ItemDescription
+    internal static class FullerDescriptions
     {
         [HarmonyPostfix, HarmonyPatch(typeof(RoR2.UI.ItemIcon), nameof(RoR2.UI.ItemIcon.SetItemIndex))]
         private static void ItemIcon_SetItemIndex(RoR2.UI.ItemIcon __instance)

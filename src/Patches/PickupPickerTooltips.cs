@@ -23,7 +23,7 @@ namespace LootTip.Patches
                 tooltip.titleColor = pickup.darkColor;
                 tooltip.titleToken = isItem ? item.nameToken : equipment.nameToken;
                 tooltip.bodyToken = isItem ? item.descriptionToken : equipment.descriptionToken;
-                tooltip.overrideBodyText = ItemDescription.GetCombinedDescription(tooltip.bodyToken, (isItem ? item.pickupToken : equipment.pickupToken));
+                tooltip.overrideBodyText = FullerDescriptions.GetCombinedDescription(tooltip.bodyToken, (isItem ? item.pickupToken : equipment.pickupToken));
             }
         }
     }
