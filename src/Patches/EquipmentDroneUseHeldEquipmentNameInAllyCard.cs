@@ -1,6 +1,6 @@
 ﻿using HarmonyLib;
 
-namespace LootTip.Patches
+namespace HUDdleUP.Patches
 {
     [HarmonyPatch]
     internal static class EquipmentDroneUseHeldEquipmentNameInAllyCard

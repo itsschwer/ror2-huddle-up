@@ -1,4 +1,4 @@
-# HUDdle up
+# HUDdle UP
 
 A \[ client-side \] mod that aims to expose more information in the HUD UI.
 
@@ -46,7 +46,7 @@ adds a Loot panel to the hud to track how much loot is left on a stage.
     - on tp boss defeat
     - on tp charged
 
-## railgunner accuracy
+## railgunner accuracy panel
 - active reload
     - run accuracy *-percentage-*
     - stage accuracy *-percentage-* (*-cardinal-*)

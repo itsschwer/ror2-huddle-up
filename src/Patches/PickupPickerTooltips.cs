@@ -1,7 +1,7 @@
 ﻿using HarmonyLib;
 using RoR2;
 
-namespace LootTip.Patches
+namespace HUDdleUP.Patches
 {
     [HarmonyPatch]
     internal static class PickupPickerTooltips

@@ -1,7 +1,7 @@
 using BepInEx;
 using HarmonyLib;
 
-namespace LootTip
+namespace HUDdleUP
 {
     [HarmonyPatch]
     [BepInPlugin(GUID, Name, Version)]
@@ -9,8 +9,8 @@ namespace LootTip
     {
         public const string GUID = Author + "." + Name;
         public const string Author = "itsschwer";
-        public const string Name = "LootTip";
-        public const string Version = "0.0.0";
+        public const string Name = "HUDdleUP";
+        public const string Version = "0.0.1";
 
         internal static new BepInEx.Logging.ManualLogSource Logger { get; private set; }
 

@@ -1,6 +1,6 @@
 ﻿using Reload = On.EntityStates.Railgunner.Reload.Reloading;
 
-namespace LootTip.Railgunner
+namespace HUDdleUP.Railgunner
 {
     internal sealed class ReloadAccuracy
     {

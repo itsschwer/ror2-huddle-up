@@ -1,7 +1,7 @@
 ﻿using RoR2.UI;
 using UnityEngine;
 
-namespace LootTip
+namespace HUDdleUP
 {
     public sealed class HUDPanel
     {

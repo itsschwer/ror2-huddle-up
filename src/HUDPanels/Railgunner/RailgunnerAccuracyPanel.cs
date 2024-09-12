@@ -1,6 +1,6 @@
 ﻿using RoR2.UI;
 
-namespace LootTip.Railgunner
+namespace HUDdleUP.Railgunner
 {
     internal sealed class RailgunnerAccuracyPanel : UnityEngine.MonoBehaviour
     {

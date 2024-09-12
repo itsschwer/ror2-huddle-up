@@ -1,6 +1,6 @@
 ﻿using RoR2;
 
-namespace LootTip.Loot
+namespace HUDdleUP.Loot
 {
     public sealed record Interactables
     {

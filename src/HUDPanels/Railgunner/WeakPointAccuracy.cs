@@ -1,6 +1,6 @@
 ﻿using Snipe = EntityStates.Railgunner.Weapon.BaseFireSnipe;
 
-namespace LootTip.Railgunner
+namespace HUDdleUP.Railgunner
 {
     internal sealed class WeakPointAccuracy
     {

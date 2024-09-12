@@ -2,7 +2,7 @@
 using RoR2;
 using System.Text;
 
-namespace LootTip.Patches
+namespace HUDdleUP.Patches
 {
     [HarmonyPatch]
     internal static class FullerDescriptions

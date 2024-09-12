@@ -1,4 +1,4 @@
-﻿namespace LootTip
+﻿namespace HUDdleUP
 {
     public static class TooltipHelper
     {
