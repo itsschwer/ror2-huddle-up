@@ -3,7 +3,6 @@
 A \[ client-side \] mod that aims to expose more information in the HUD UI.
 
 ## <mark>todo</mark>
-- rename project
 - refactor loot tracking
     - clean up string formatting
     - try lumping equipment terminals into equipment barrels?
