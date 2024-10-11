@@ -58,8 +58,14 @@ namespace HUDdleUP.Loot
                         if (interactions[i].available) equipmentAvailable++;
                         break;
                     case "MULTISHOP_TERMINAL_NAME":
-                        terminals++;
-                        if (interactions[i].available) terminalsAvailable++;
+                        if (interactions[i].name.Contains("Equipment")) { // can't seem to find another client-friendly way
+                            equipment++;
+                            if (interactions[i].available) equipmentAvailable++;
+                        }
+                        else {
+                            terminals++;
+                            if (interactions[i].available) terminalsAvailable++;
+                        }
                         break;
                     case "SHRINE_CHANCE_NAME":
                         chanceShrines++;

@@ -5,7 +5,6 @@ A \[ client-side \] mod that aims to expose more information in the HUD UI.
 ## <mark>todo</mark>
 - refactor loot tracking
     - clean up string formatting
-    - try lumping equipment terminals into equipment barrels?
 - add screenshots
 - make icon
 - configs to enable/disable each feature
@@ -21,11 +20,11 @@ A \[ client-side \] mod that aims to expose more information in the HUD UI.
 adds a Loot panel to the hud to track how much loot is left on a stage.
 
 ### what is tracked?
-- multishop terminals *(counts individual terminals; includes **equipment** and shipping requests)*
+- multishop terminals *(counts individual terminals; includes shipping requests, excludes equipment)*
 - chests *(regular, large, legendary, category, large category)*
 - adaptive chests
 - chance shrines *(counts all potential drops if host)*
-- equipment barrels ***todo:* try lumping equipment terminals in again?**
+- equipment barrels *(includes equipment terminals)*
 - lockboxes *(includes void variant)*
 - *once teleporter boss is defeated:*
     - scrapper *(includes cleansing pools; `@` if present)*
