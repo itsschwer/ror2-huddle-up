@@ -23,10 +23,7 @@ namespace HUDdleUP.Patches
             if (item == null || __instance.tooltipProvider == null) return;
 
             StringBuilder sb = new(GetCombinedDescription(item.descriptionToken, item.pickupToken));
-            sb.AppendLine().AppendLine();
-            float scaleFactor = __instance.targetInventory.CalculateEquipmentCooldownScale();
-            sb.Append($"Cooldown: <style=cIsDamage>{(item.cooldown * scaleFactor):0.###}s</style>");
-            if (scaleFactor < 1) sb.Append($" <style=cStack>({item.cooldown}×<style=cIsUtility>{scaleFactor:0.###%}</style>)</style>");
+            sb.AppendLine().AppendLine().Append(GetEquipmentCooldown(item, __instance.targetInventory));
 
             __instance.tooltipProvider.overrideBodyText = sb.ToString();
         }
@@ -46,6 +43,18 @@ namespace HUDdleUP.Patches
             else {
                 sb.Append(shortDescription);
             }
+
+            return sb.ToString();
+        }
+
+        internal static string GetEquipmentCooldown(EquipmentDef equipment, Inventory inventory)
+        {
+            if (inventory == null) return $"Cooldown: <style=cIsDamage>{(equipment.cooldown):0.###}s</style>";
+            StringBuilder sb = new();
+
+            float scaleFactor = inventory.CalculateEquipmentCooldownScale();
+            sb.Append($"Cooldown: <style=cIsDamage>{(equipment.cooldown * scaleFactor):0.###}s</style>");
+            if (scaleFactor < 1) sb.Append($" <style=cStack>({equipment.cooldown}×<style=cIsUtility>{scaleFactor:0.###%}</style>)</style>");
 
             return sb.ToString();
         }

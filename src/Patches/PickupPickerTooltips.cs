@@ -7,7 +7,7 @@ namespace HUDdleUP.Patches
     internal static class PickupPickerTooltips
     {
         [HarmonyPostfix, HarmonyPatch(typeof(RoR2.UI.PickupPickerPanel), nameof(RoR2.UI.PickupPickerPanel.SetPickupOptions))]
-        private static void PickupPickerPanel_SetPickupOptions(RoR2.UI.PickupPickerPanel __instance, RoR2.PickupPickerController.Option[] options)
+        private static void PickupPickerPanel_SetPickupOptions(RoR2.UI.PickupPickerPanel __instance, PickupPickerController.Option[] options)
         {
             for (int i = 0; i < options.Length; i++) {
                 RoR2.UI.TooltipProvider tooltip = TooltipHelper.AddTooltipProvider(
@@ -23,7 +23,8 @@ namespace HUDdleUP.Patches
                 tooltip.titleColor = pickup.darkColor;
                 tooltip.titleToken = isItem ? item.nameToken : equipment.nameToken;
                 tooltip.bodyToken = isItem ? item.descriptionToken : equipment.descriptionToken;
-                tooltip.overrideBodyText = FullerDescriptions.GetCombinedDescription(tooltip.bodyToken, (isItem ? item.pickupToken : equipment.pickupToken));
+                if (isItem) tooltip.overrideBodyText = FullerDescriptions.GetCombinedDescription(tooltip.bodyToken, item.pickupToken);
+                else tooltip.overrideBodyText = FullerDescriptions.GetCombinedDescription(tooltip.bodyToken, equipment.pickupToken) + "\n\n" + FullerDescriptions.GetEquipmentCooldown(equipment, null);
             }
         }
     }
