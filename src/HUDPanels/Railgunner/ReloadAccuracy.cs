@@ -1,4 +1,5 @@
 ﻿using Reload = On.EntityStates.Railgunner.Reload.Reloading;
+// Replace MMHookGen dependency? https://github.com/risk-of-thunder/RoR2BepInExPack/commit/3718bf2e1bce5a711af58ac8c7c539ac9f64898e#diff-648a15e6047e408fdf4c57b35892de1754db65f11a9149707133485c6d55c8dfR36-R46
 
 namespace HUDdleUP.Railgunner
 {
