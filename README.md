@@ -9,11 +9,15 @@ A \[ client-side \] mod that aims to expose more information in the HUD UI.
 - make icon
 - configs to enable/disable each feature
 - a separate drones panel?
+- **item stack calculations? *(separate api mod?)***
+- **add the sweeping(?) animation from skill cooldowns to the equipment cooldown**
 
 ## patches
 - `RunDifficultyTooltip` — adds a tooltip to the difficulty icon in the HUD that shows the description of the difficulty
-- `EquipmentDroneUseHeldEquipmentNameInAllyCard` *(host-only?)* — replaces the names of equipment drones in ally cards with the name of its held equipment
-- `FullerDescriptions` — replace the default short descriptions in item and equipment tooltips with a combination of the short and detailed descriptions ***todo:* stack and cooldown calculations?**
+- `EquipmentDroneUseHeldEquipmentNameInAllyCard` — replaces the names of equipment drones in ally cards with the name of its held equipment
+    - *does not update if the drone changes equipment (until next stage)*
+        - ***technical**: checks `nameLabel` for equipment drone but replaces with equipment name*
+- `FullerDescriptions` — replace the default short descriptions in item (and equipment) tooltips with a combination of the short and detailed descriptions (and equipment cooldown)
 - `PickupPickerTooltips` — add tooltips to items in pickup picker menus *(e.g. command cubes, void potentials)* that show the (fuller) description of the item
 
 ## loot panel
