@@ -25,7 +25,8 @@ namespace HUDdleUP.Patches
             StringBuilder sb = new(GetCombinedDescription(item.descriptionToken, item.pickupToken));
             sb.AppendLine().AppendLine();
             float scaleFactor = __instance.targetInventory.CalculateEquipmentCooldownScale();
-            sb.Append($"Cooldown: <style=cIsDamage>{item.cooldown * scaleFactor}</style> <style=cStack>({item.cooldown} × <style=cIsDamage>{scaleFactor:###.##%}</style>)</style>");
+            sb.Append($"Cooldown: <style=cIsDamage>{(item.cooldown * scaleFactor):0.###}s</style>");
+            if (scaleFactor < 1) sb.Append($" <style=cStack>({item.cooldown}×<style=cIsUtility>{scaleFactor:0.###%}</style>)</style>");
 
             __instance.tooltipProvider.overrideBodyText = sb.ToString();
         }
