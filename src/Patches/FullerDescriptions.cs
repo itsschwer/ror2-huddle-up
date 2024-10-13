@@ -10,7 +10,6 @@ namespace HUDdleUP.Patches
         [HarmonyPostfix, HarmonyPatch(typeof(RoR2.UI.ItemIcon), nameof(RoR2.UI.ItemIcon.SetItemIndex))]
         private static void ItemIcon_SetItemIndex(RoR2.UI.ItemIcon __instance)
         {
-
             ItemDef item = ItemCatalog.GetItemDef(__instance.itemIndex);
             if (item == null || __instance.tooltipProvider == null) return;
 
@@ -23,7 +22,12 @@ namespace HUDdleUP.Patches
             EquipmentDef item = __instance.currentDisplayData.equipmentDef;
             if (item == null || __instance.tooltipProvider == null) return;
 
-            __instance.tooltipProvider.overrideBodyText = GetCombinedDescription(item.descriptionToken, item.pickupToken);
+            StringBuilder sb = new(GetCombinedDescription(item.descriptionToken, item.pickupToken));
+            sb.AppendLine().AppendLine();
+            float scaleFactor = __instance.targetInventory.CalculateEquipmentCooldownScale();
+            sb.Append($"Cooldown: <style=cIsDamage>{item.cooldown * scaleFactor}</style> <style=cStack>({item.cooldown} × <style=cIsDamage>{scaleFactor:###.##%}</style>)</style>");
+
+            __instance.tooltipProvider.overrideBodyText = sb.ToString();
         }
 
         internal static string GetCombinedDescription(string descriptionToken, string pickupToken)
