@@ -2,17 +2,13 @@
 
 A \[ client-side \] mod that aims to expose more information in the HUD UI.
 
-## <mark>todo</mark>
-- refactor loot tracking
-    - clean up string formatting
-- add screenshots
-- make icon
-- configs to enable/disable each feature
-- a separate drones panel?
-<!--  -->
-- **item stack calculations? *(separate api mod?)***
+- <mark>add railgunner accuracy panel screenshot</mark>
+- <mark>make icon</mark>
 - **add the sweeping(?) animation from skill cooldowns to the equipment cooldown**
-- **move scoreboard chat from PressureDrop**
+<!--
+- **item stack calculations? *(soft-dependency on LookingGlass? separate api mod?)***
+- refactor loot tracking and loot panel string formatting
+-->
 
 ## fuller item descriptions
 replace the default short *(pickup)* descriptions in item (and equipment) tooltips with a combination of the short and detailed descriptions (and equipment cooldown)
@@ -63,14 +59,6 @@ adds a Loot panel to the hud to track how much loot is left on a stage *— only
 - enemy counts (per team)
 - mountain shrine invitations
 
-### config (todo, maybe)
-- option to always display loot panel (instead of only w/ scoreboard)
-- what to display in panel
-- when to display in panel (granular?)
-    - always
-    - on tp boss defeat
-    - on tp charged
-
 ## railgunner accuracy panel
 - active reload
     - run accuracy *-percentage-*
@@ -81,6 +69,9 @@ adds a Loot panel to the hud to track how much loot is left on a stage *— only
     - consecutive (best)
 
 ![screenshot of railgunner accuracy panel](https://github.com/itsschwer/ror2-huddle-up/blob/main/xtra/demo-railgunner-accuracy-panel.png?raw=true)
+
+
+----
 
 ## see also
 - [LookingGlass](https://thunderstore.io/package/DropPod/LookingGlass/) <sup>[*src*](https://github.com/Wet-Boys/LookingGlass)</sup> by [DropPod](https://thunderstore.io/package/DropPod/) — the more definitive quality-of-life UI mod
