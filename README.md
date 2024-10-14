@@ -14,19 +14,24 @@ A \[ client-side \] mod that aims to expose more information in the HUD UI.
 - **add the sweeping(?) animation from skill cooldowns to the equipment cooldown**
 - **move scoreboard chat from PressureDrop**
 
-## misc
-
-### fuller item descriptions
+## fuller item descriptions
 replace the default short *(pickup)* descriptions in item (and equipment) tooltips with a combination of the short and detailed descriptions (and equipment cooldown)
 
-### item tooltips in Artifact of Command menu
+vanilla | HUDdleUP | LookingGlass
+--- | --- | ---
+![screenshot of item description tooltip for equipment without any mods](./xtra/demo-fuller-descriptions-vanilla.png?raw=true) | ![screenshot of item description tooltip for equipment with the HUDdleUp mod](./xtra/demo-fuller-descriptions.png?raw=true) | ![screenshot of item description tooltip for equipment with the LookingGlass mod](./xtra/demo-fuller-descriptions-lookingglass.png?raw=true)
+
+## item tooltips in Artifact of Command menu
 add tooltips to items in pickup picker menus *(e.g. command cubes, void potentials)* that show the (fuller) description of the item
 
-### difficulty tooltip in run info panel
+## difficulty tooltip in run info panel
 adds a tooltip to the difficulty icon in the HUD that shows the description of the run's difficulty
 
-### rename equipment drones
+## rename equipment drones
 replaces the names of equipment drones in ally cards with the name of its held equipment
+
+
+----
 
 ## loot panel
 adds a Loot panel to the hud to track how much loot is left on a stage.
