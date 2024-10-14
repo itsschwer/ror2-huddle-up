@@ -16,7 +16,9 @@ namespace HUDdleUP.Loot
 
             var objectivePanel = hud.GetComponentInChildren<ObjectivePanelController>();
             if (!objectivePanel) {
+#if DEBUG
                 Plugin.Logger.LogDebug($"Waiting to initialize {nameof(LootPanel)}.");
+#endif
                 return;
             }
 
