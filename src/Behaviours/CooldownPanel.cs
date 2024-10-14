@@ -9,6 +9,7 @@ namespace HUDdleUP.Behaviours
     {
         private EquipmentIcon parent;
         private RawImage cooldownRemapPanel;
+        private float cooldownTimerMax;
 
         internal static void Init(EquipmentIcon parent, GameObject target)
         {
@@ -16,15 +17,19 @@ namespace HUDdleUP.Behaviours
             CooldownPanel instance = clone.AddComponent<CooldownPanel>();
             instance.parent = parent;
             instance.cooldownRemapPanel = clone.GetComponent<RawImage>();
+            ((RectTransform)instance.cooldownRemapPanel.transform).sizeDelta = ((RectTransform)parent.transform).sizeDelta;
         }
 
         private void Update()
         {
             float alpha = 1;
-            if (parent.hasEquipment) {
-                float total = parent.targetEquipmentSlot._rechargeTime.t;
-                if (total >= Mathf.Epsilon) {
-                    alpha = 1 - parent.targetEquipmentSlot.cooldownTimer / total;
+            if (parent.targetInventory) {
+                EquipmentState state = (parent.displayAlternateEquipment ? parent.targetInventory.alternateEquipmentState : parent.targetInventory.currentEquipmentState);
+
+                float cooldownTimer = state.chargeFinishTime.timeUntilClamped;
+                if (cooldownTimer > cooldownTimerMax || float.IsInfinity(cooldownTimerMax)) cooldownTimerMax = cooldownTimer;
+                if (cooldownTimerMax >= Mathf.Epsilon) {
+                    alpha = 1 - (cooldownTimer / cooldownTimerMax);
                 }
             }
             cooldownRemapPanel.enabled = alpha < 1;
