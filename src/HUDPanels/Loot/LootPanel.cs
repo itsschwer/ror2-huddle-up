@@ -12,6 +12,7 @@ namespace HUDdleUP.Loot
 
         public static void Init(HUD hud, ref bool _)
         {
+            if (!Plugin.Config.LootPanel) return;
             if (LootPanel.hud != null) return;
 
             var objectivePanel = hud.GetComponentInChildren<ObjectivePanelController>();

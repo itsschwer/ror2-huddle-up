@@ -29,6 +29,7 @@ namespace HUDdleUP.Railgunner
 
         public static void Init(HUD hud, ref bool _)
         {
+            if (!Plugin.Config.RailgunnerAccuracyPanel) return;
             if (RailgunnerAccuracyPanel.hud != null) return;
 
             var objectivePanel = hud.GetComponentInChildren<ObjectivePanelController>();

@@ -23,6 +23,13 @@ namespace HUDdleUP
         public bool RunDifficultyTooltip => runDifficultyTooltip.Value;
         public bool ScoreboardShowChat => scoreboardShowChat.Value;
 
+        // HUD Panels
+        private readonly ConfigEntry<bool> lootPanel;
+        private readonly ConfigEntry<bool> railgunnerAccuracyPanel;
+        // Accessors
+        public bool LootPanel => lootPanel.Value;
+        public bool RailgunnerAccuracyPanel => railgunnerAccuracyPanel.Value;
+
         public Config(ConfigFile config)
         {
             file = config;
@@ -40,6 +47,12 @@ namespace HUDdleUP
                 "Add a tooltip to the difficulty icon in the HUD that shows the description of the run's difficulty.");
             scoreboardShowChat = config.Bind<bool>(Generic, nameof(scoreboardShowChat), true,
                 "Show the chat history when the scoreboard is open.");
+
+            const string HUDPanels = "HUD Panels";
+            lootPanel = config.Bind<bool>(HUDPanels, nameof(lootPanel), true,
+                "Add a Loot panel to the HUD to track how much loot is left on a stage.\n\nOnly visible when the scoreboard is open.");
+            railgunnerAccuracyPanel = config.Bind<bool>(HUDPanels, nameof(railgunnerAccuracyPanel), true,
+                "Add an Accuracy panel to the HUD to track your accuracy with landing perfect reloads and hitting weak points.");
         }
     }
 }
