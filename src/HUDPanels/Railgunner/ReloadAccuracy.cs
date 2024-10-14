@@ -1,10 +1,13 @@
-﻿using Reload = On.EntityStates.Railgunner.Reload.Reloading;
-// Replace MMHookGen dependency? https://github.com/risk-of-thunder/RoR2BepInExPack/commit/3718bf2e1bce5a711af58ac8c7c539ac9f64898e#diff-648a15e6047e408fdf4c57b35892de1754db65f11a9149707133485c6d55c8dfR36-R46
+﻿using MonoMod.RuntimeDetour;
+using System;
+using System.Reflection;
+using RailgunnerReloading = EntityStates.Railgunner.Reload.Reloading;
 
 namespace HUDdleUP.Railgunner
 {
     internal sealed class ReloadAccuracy
     {
+        private static readonly MethodInfo AttemptBoost = typeof(RailgunnerReloading).GetMethod(nameof(RailgunnerReloading.AttemptBoost), BindingFlags.Instance | BindingFlags.Public);
         private readonly string labelColor = $"#{UnityEngine.ColorUtility.ToHtmlStringRGB(RoR2.DamageColor.FindColor(RoR2.DamageColorIndex.Sniper))}"; // #FF888B
 
         private int totalReloads;
@@ -15,19 +18,23 @@ namespace HUDdleUP.Railgunner
         private int consecutive;
         private int consecutiveBest;
 
+
+        private Hook OnReloadAttemptBoost;
+
         public void Hook()
         {
-            Reload.AttemptBoost += RecordReload;
+            MethodInfo hook = typeof(ReloadAccuracy).GetMethod(nameof(ReloadAccuracy.RecordReload), BindingFlags.Instance | BindingFlags.NonPublic);
+            OnReloadAttemptBoost = new Hook(AttemptBoost, hook, this);
             RoR2.Stage.onStageStartGlobal += OnStageStart;
         }
 
         public void Unhook()
         {
-            Reload.AttemptBoost -= RecordReload;
+            OnReloadAttemptBoost.Undo();
             RoR2.Stage.onStageStartGlobal -= OnStageStart;
         }
 
-        private bool RecordReload(Reload.orig_AttemptBoost orig, EntityStates.Railgunner.Reload.Reloading self)
+        private bool RecordReload(Func<RailgunnerReloading, bool> orig, RailgunnerReloading self)
         {
             bool successful = orig(self);
             if (successful) {
