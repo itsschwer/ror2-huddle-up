@@ -10,7 +10,7 @@ namespace HUDdleUP
         public const string GUID = Author + "." + Name;
         public const string Author = "itsschwer";
         public const string Name = "HUDdleUP";
-        public const string Version = "0.0.1";
+        public const string Version = "1.0.0";
 
         internal static new BepInEx.Logging.ManualLogSource Logger { get; private set; }
 
@@ -28,7 +28,7 @@ namespace HUDdleUP
 
             Logger.LogMessage("~awake.");
         }
-        
+
         private void OnEnable()
         {
             RoR2.Run.onRunStartGlobal += OnRunStart;

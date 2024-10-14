@@ -2,9 +2,8 @@
 
 A \[ client-side \] mod that aims to expose more information in the HUD UI.
 
-### *planned*
-- <mark>add railgunner accuracy panel screenshot</mark>
 <!--
+### *planned*
 - **item stack calculations? *(soft-dependency on LookingGlass? separate api mod?)***
 - refactor loot tracking and loot panel string formatting
 -->
@@ -42,12 +41,12 @@ replace the names of equipment drones in ally cards with the name of its held eq
 ![screenshot of renamed equipment drone ally cards](https://github.com/itsschwer/ror2-huddle-up/blob/main//xtra/demo-equipment-drone-rename.png?raw=true)
 
 ## scoreboard shows chat history
-show the chat history when the scoreboard is open.
+show the chat history when the scoreboard is open
 
 ----
 
 ## loot panel
-adds a Loot panel to the hud to track how much loot is left on a stage *— only visible when the scoreboard is open*.
+adds a Loot panel to the hud to track how much loot is left on a stage *— only visible when the scoreboard is open*
 
 ![screenshot of loot panel](https://github.com/itsschwer/ror2-huddle-up/blob/main/xtra/demo-loot-panel.png?raw=true)
 
@@ -74,7 +73,7 @@ adds a Loot panel to the hud to track how much loot is left on a stage *— only
     - stage accuracy *-percentage-* (*-cardinal-*)
     - consecutive (best)
 - weak point
-    - stage ratio *a single shot can hit multiple enemies' weak points*
+    - stage ratio *— a single shot can hit multiple enemies' weak points*
     - consecutive (best)
 
 ![screenshot of railgunner accuracy panel](https://github.com/itsschwer/ror2-huddle-up/blob/main/xtra/demo-railgunner-accuracy-panel.png?raw=true)
