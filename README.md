@@ -17,9 +17,11 @@ A \[ client-side \] mod that aims to expose more information in the HUD UI.
 ## fuller item descriptions
 replace the default short *(pickup)* descriptions in item (and equipment) tooltips with a combination of the short and detailed descriptions (and equipment cooldown)
 
+***note**: this mod currently does not provide calculated item stack stats*
+
 vanilla | HUDdleUP | LookingGlass
 --- | --- | ---
-![screenshot of item description tooltip for equipment without any mods](./xtra/demo-fuller-descriptions-vanilla.png?raw=true) | ![screenshot of item description tooltip for equipment with the HUDdleUp mod](./xtra/demo-fuller-descriptions.png?raw=true) | ![screenshot of item description tooltip for equipment with the LookingGlass mod](./xtra/demo-fuller-descriptions-lookingglass.png?raw=true)
+![screenshot of item description tooltip for equipment without any mods](https://github.com/itsschwer/ror2-huddle-up/blob/main/xtra/demo-fuller-descriptions-vanilla.png?raw=true) | ![screenshot of item description tooltip for equipment with the HUDdleUp mod](https://github.com/itsschwer/ror2-huddle-up/blob/main/xtra/demo-fuller-descriptions.png?raw=true) | ![screenshot of item description tooltip for equipment with the LookingGlass mod](https://github.com/itsschwer/ror2-huddle-up/blob/main/xtra/demo-fuller-descriptions-lookingglass.png?raw=true)
 
 ## item tooltips in Artifact of Command menu
 add tooltips to items in pickup picker menus *(e.g. command cubes, void potentials)* that show the (fuller) description of the item
