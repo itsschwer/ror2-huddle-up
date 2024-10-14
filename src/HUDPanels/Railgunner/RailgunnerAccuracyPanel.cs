@@ -11,21 +11,20 @@ namespace HUDdleUP.Railgunner
         public static void Hook()
         {
             HUD.shouldHudDisplay += Init;
-
-            reloadAccuracy = new ReloadAccuracy();
-            reloadAccuracy.Hook();
-            weakPointAccuracy = new WeakPointAccuracy();
-            weakPointAccuracy.Hook();
         }
 
         public static void Unhook()
         {
             HUD.shouldHudDisplay -= Init;
 
-            reloadAccuracy.Unhook();
-            reloadAccuracy = null;
-            weakPointAccuracy.Unhook();
-            weakPointAccuracy = null;
+            if (reloadAccuracy != null) {
+                reloadAccuracy.Unhook();
+                reloadAccuracy = null;
+            }
+            if (weakPointAccuracy != null) {
+                weakPointAccuracy.Unhook();
+                weakPointAccuracy = null;
+            }
         }
 
         public static void Init(HUD hud, ref bool _)
@@ -44,6 +43,15 @@ namespace HUDdleUP.Railgunner
             if (hud.localUserViewer.cachedBody.bodyIndex != RoR2.BodyCatalog.FindBodyIndex("RailgunnerBody")) {
                 Plugin.Logger.LogDebug($"Local user is not Railgunner, skipping {nameof(RailgunnerAccuracyPanel)} initialization.");
                 return;
+            }
+
+            if (reloadAccuracy == null) {
+                reloadAccuracy = new ReloadAccuracy();
+                reloadAccuracy.Hook();
+            }
+            if (weakPointAccuracy == null) {
+                weakPointAccuracy = new WeakPointAccuracy();
+                weakPointAccuracy.Hook();
             }
 
             HUDPanel panel = HUDPanel.ClonePanel(objectivePanel, nameof(RailgunnerAccuracyPanel));
