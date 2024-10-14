@@ -30,7 +30,7 @@ namespace HUDdleUP.Railgunner
 
         public void Unhook()
         {
-            OnReloadAttemptBoost.Undo();
+            OnReloadAttemptBoost.Dispose();
             RoR2.Stage.onStageStartGlobal -= OnStageStart;
         }
 
