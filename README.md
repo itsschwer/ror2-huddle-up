@@ -2,9 +2,9 @@
 
 A \[ client-side \] mod that aims to expose more information in the HUD UI.
 
+### *planned*
 - <mark>add railgunner accuracy panel screenshot</mark>
-- <mark>make icon</mark>
-- **add the sweeping(?) animation from skill cooldowns to the equipment cooldown**
+- **add the sweeping line progress animation from skill cooldowns to the equipment cooldown**
 <!--
 - **item stack calculations? *(soft-dependency on LookingGlass? separate api mod?)***
 - refactor loot tracking and loot panel string formatting
