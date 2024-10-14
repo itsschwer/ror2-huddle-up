@@ -4,11 +4,15 @@ A \[ client-side \] mod that aims to expose more information in the HUD UI.
 
 ### *planned*
 - <mark>add railgunner accuracy panel screenshot</mark>
-- **add the sweeping line progress animation from skill cooldowns to the equipment cooldown**
 <!--
 - **item stack calculations? *(soft-dependency on LookingGlass? separate api mod?)***
 - refactor loot tracking and loot panel string formatting
 -->
+
+### configuration
+each feature can be toggled on or off
+
+> *[***OptionGenerator***](https://thunderstore.io/package/6thmoon/OptionGenerator/) *(+[***Risk Of Options***](https://thunderstore.io/package/Rune580/Risk_Of_Options/))* can be used to change the configuration in-game, rather than editing the file or using **r2modman**.*
 
 ## fuller item descriptions
 replace the default short *(pickup)* descriptions in item (and equipment) tooltips with a combination of the short and detailed descriptions (and equipment cooldown)
@@ -21,6 +25,11 @@ vanilla | HUDdleUP | LookingGlass
 
 ## item tooltips in Artifact of Command menu
 add tooltips to items in pickup picker menus *(e.g. command cubes, void potentials)* that show the (fuller) description of the item
+
+## equipment icon cooldown visual
+add the cooldown progress visual from skill icons to the equipment icon
+
+![screenshot of equipment icon cooldown visual](https://github.com/itsschwer/ror2-huddle-up/blob/main/xtra/demo-equipment-cooldown-visual.png?raw=true)
 
 ## difficulty tooltip in run info panel
 add a tooltip to the difficulty icon in the HUD that shows the description of the run's difficulty

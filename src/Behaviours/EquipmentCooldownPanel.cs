@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace HUDdleUP.Behaviours
 {
-    internal class CooldownPanel : MonoBehaviour
+    internal class EquipmentCooldownPanel : MonoBehaviour
     {
         private EquipmentIcon parent;
         private RawImage cooldownRemapPanel;
@@ -14,7 +14,7 @@ namespace HUDdleUP.Behaviours
         internal static void Init(EquipmentIcon parent, GameObject target)
         {
             GameObject clone = Instantiate(target, parent.transform);
-            CooldownPanel instance = clone.AddComponent<CooldownPanel>();
+            EquipmentCooldownPanel instance = clone.AddComponent<EquipmentCooldownPanel>();
             instance.parent = parent;
             instance.cooldownRemapPanel = clone.GetComponent<RawImage>();
             ((RectTransform)instance.cooldownRemapPanel.transform).sizeDelta = ((RectTransform)parent.transform).sizeDelta;
