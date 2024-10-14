@@ -81,6 +81,7 @@ adds a Loot panel to the hud to track how much loot is left on a stage *— only
 
 ## see also
 - [LookingGlass](https://thunderstore.io/package/DropPod/LookingGlass/) <sup>[*src*](https://github.com/Wet-Boys/LookingGlass)</sup> by [DropPod](https://thunderstore.io/package/DropPod/) — the more definitive quality-of-life UI mod
+    - goes beyond exposing information *(e.g. sorts items in the scoreboard inventory and the Artifact of Command menu)*
 - [StageRecap](https://thunderstore.io/package/Lawlzee/StageRecap/) <sup>[*src*](https://github.com/Lawlzee/StageReport)</sup> by [Lawlzee](https://thunderstore.io/package/Lawlzee/) — shows a window at the end each stage reporting how many interactables you have collected *(server-side)*
 <!--  -->
 - [DamageLog](https://thunderstore.io/package/itsschwer/DamageLog/) — another client-side UI mod, adding *"a damage log to the HUD to show what you have taken damage from recently."*

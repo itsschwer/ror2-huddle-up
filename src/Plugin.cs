@@ -14,11 +14,15 @@ namespace HUDdleUP
 
         internal static new BepInEx.Logging.ManualLogSource Logger { get; private set; }
 
+        public static new Config Config { get; private set; }
+
         private void Awake()
         {
             // Use Plugin.GUID instead of Plugin.Name as source name
             BepInEx.Logging.Logger.Sources.Remove(base.Logger);
             Logger = BepInEx.Logging.Logger.CreateLogSource(Plugin.GUID);
+
+            Config = new Config(base.Config);
 
             new Harmony(Info.Metadata.GUID).PatchAll();
 
