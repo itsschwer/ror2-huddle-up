@@ -29,14 +29,19 @@ add tooltips to items in pickup picker menus *(e.g. command cubes, void potentia
 ## difficulty tooltip in run info panel
 adds a tooltip to the difficulty icon in the HUD that shows the description of the run's difficulty
 
+![screenshot of run difficulty tooltip](https://github.com/itsschwer/ror2-huddle-up/blob/main/xtra/demo-run-difficulty.png?raw=true)
+
 ## rename equipment drones
 replaces the names of equipment drones in ally cards with the name of its held equipment
 
+![screenshot of renamed equipment drone ally cards](https://github.com/itsschwer/ror2-huddle-up/blob/main//xtra/demo-equipment-drone-rename.png?raw=true)
 
 ----
 
 ## loot panel
-adds a Loot panel to the hud to track how much loot is left on a stage.
+adds a Loot panel to the hud to track how much loot is left on a stage *— only visible when the scoreboard is open*.
+
+![screenshot of loot panel](https://github.com/itsschwer/ror2-huddle-up/blob/main/xtra/demo-loot-panel.png?raw=true)
 
 ### what is tracked?
 - multishop terminals *(counts individual terminals; includes shipping requests, excludes equipment)*
@@ -71,6 +76,8 @@ adds a Loot panel to the hud to track how much loot is left on a stage.
 - weak point
     - stage ratio *a single shot can hit multiple enemies' weak points*
     - consecutive (best)
+
+![screenshot of railgunner accuracy panel](https://github.com/itsschwer/ror2-huddle-up/blob/main/xtra/demo-railgunner-accuracy-panel.png?raw=true)
 
 ## see also
 - [LookingGlass](https://thunderstore.io/package/DropPod/LookingGlass/) <sup>[*src*](https://github.com/Wet-Boys/LookingGlass)</sup> by [DropPod](https://thunderstore.io/package/DropPod/) — the more definitive quality-of-life UI mod
