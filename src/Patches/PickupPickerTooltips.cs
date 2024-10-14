@@ -9,6 +9,8 @@ namespace HUDdleUP.Patches
         [HarmonyPostfix, HarmonyPatch(typeof(RoR2.UI.PickupPickerPanel), nameof(RoR2.UI.PickupPickerPanel.SetPickupOptions))]
         private static void PickupPickerPanel_SetPickupOptions(RoR2.UI.PickupPickerPanel __instance, PickupPickerController.Option[] options)
         {
+            if (!Plugin.Config.CommandMenuItemTooltips) return;
+
             for (int i = 0; i < options.Length; i++) {
                 RoR2.UI.TooltipProvider tooltip = TooltipHelper.AddTooltipProvider(
                     __instance.buttonAllocator.elements[i].GetComponent<UnityEngine.UI.Graphic>(),

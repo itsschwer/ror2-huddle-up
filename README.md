@@ -27,14 +27,17 @@ vanilla | HUDdleUP | LookingGlass
 add tooltips to items in pickup picker menus *(e.g. command cubes, void potentials)* that show the (fuller) description of the item
 
 ## difficulty tooltip in run info panel
-adds a tooltip to the difficulty icon in the HUD that shows the description of the run's difficulty
+add a tooltip to the difficulty icon in the HUD that shows the description of the run's difficulty
 
 ![screenshot of run difficulty tooltip](https://github.com/itsschwer/ror2-huddle-up/blob/main/xtra/demo-run-difficulty.png?raw=true)
 
 ## rename equipment drones
-replaces the names of equipment drones in ally cards with the name of its held equipment
+replace the names of equipment drones in ally cards with the name of its held equipment
 
 ![screenshot of renamed equipment drone ally cards](https://github.com/itsschwer/ror2-huddle-up/blob/main//xtra/demo-equipment-drone-rename.png?raw=true)
+
+## scoreboard shows chat history
+show the chat history when the scoreboard is open.
 
 ----
 

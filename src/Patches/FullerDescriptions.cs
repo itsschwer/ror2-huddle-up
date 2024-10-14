@@ -10,6 +10,8 @@ namespace HUDdleUP.Patches
         [HarmonyPostfix, HarmonyPatch(typeof(RoR2.UI.ItemIcon), nameof(RoR2.UI.ItemIcon.SetItemIndex))]
         private static void ItemIcon_SetItemIndex(RoR2.UI.ItemIcon __instance)
         {
+            if (!Plugin.Config.FullerItemDescriptions) return;
+
             ItemDef item = ItemCatalog.GetItemDef(__instance.itemIndex);
             if (item == null || __instance.tooltipProvider == null) return;
 
@@ -19,6 +21,8 @@ namespace HUDdleUP.Patches
         [HarmonyPostfix, HarmonyPatch(typeof(RoR2.UI.EquipmentIcon), nameof(RoR2.UI.EquipmentIcon.SetDisplayData))]
         private static void EquipmentIcon_SetDisplayData(RoR2.UI.EquipmentIcon __instance)
         {
+            if (!Plugin.Config.FullerEquipmentDescriptions) return;
+
             EquipmentDef item = __instance.currentDisplayData.equipmentDef;
             if (item == null || __instance.tooltipProvider == null) return;
 

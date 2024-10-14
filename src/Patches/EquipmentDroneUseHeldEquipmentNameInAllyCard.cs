@@ -8,6 +8,8 @@ namespace HUDdleUP.Patches
         [HarmonyPostfix, HarmonyPatch(typeof(RoR2.UI.AllyCardController), nameof(RoR2.UI.AllyCardController.LateUpdate))]
         private static void AllyCardController_LateUpdate(RoR2.UI.AllyCardController __instance)
         {
+            if (!Plugin.Config.RenameEquipmentDrones) return;
+
             if (!__instance.sourceMaster || !__instance.sourceMaster.inventory) return;            // No inventory
             RoR2.EquipmentDef equipment = RoR2.EquipmentCatalog.GetEquipmentDef(__instance.sourceMaster.inventory.currentEquipmentIndex);
             if (equipment == null) return;                                                         // No equipment
