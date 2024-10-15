@@ -11,7 +11,14 @@ A \[ client-side \] mod that aims to expose more information in the HUD UI.
 ### configuration
 each feature can be toggled on or off
 
-> *[***OptionGenerator***](https://thunderstore.io/package/6thmoon/OptionGenerator/) *(+[***Risk Of Options***](https://thunderstore.io/package/Rune580/Risk_Of_Options/))* can be used to change the configuration in-game, rather than editing the file or using **r2modman**.*
+> *[***OptionGenerator***](https://thunderstore.io/package/6thmoon/OptionGenerator/) *(+[***Risk Of Options***](https://thunderstore.io/package/Rune580/Risk_Of_Options/))* can be used to change the configuration in-game, rather than editing the file or using **r2modman**. If using ***OptionGenerator**, note that most toggles will not take effect until the next stage.*
+
+### compatibility
+- can be used alongside [***LookingGlass***](https://thunderstore.io/package/DropPod/LookingGlass/)
+    - **LookingGlass** also implements item descriptions *(+stat calculations)* and Artifact of Command menu tooltips
+        - If you prefer **HUDdleUP**'s implementation, disable the following configs in **LookingGlass**:
+            - `Misc` > `Item Stats`
+            - `Command Settings` > `Command Tooltips`
 
 ## fuller item descriptions
 replace the default short *(pickup)* descriptions in item (and equipment) tooltips with a combination of the short and detailed descriptions (and equipment cooldown)
