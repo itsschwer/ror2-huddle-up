@@ -16,6 +16,7 @@ namespace HUDdleUP.Patches
             string equipmentName = RoR2.Language.GetString(equipment.nameToken);
             if (__instance.nameLabel.text == equipmentName) return;                                // Name already matches equipment
             RoR2.CharacterBody body = __instance.sourceMaster.GetBody();
+            if (body == null) return;                                                              // No body (dead and holding equipment (e.g. Happiest Mask elites))
             if (body.baseNameToken != "EQUIPMENTDRONE_BODY_NAME") return;                          // Not an equipment drone
 
             __instance.nameLabel.text = RoR2.Language.GetString(equipment.nameToken);
