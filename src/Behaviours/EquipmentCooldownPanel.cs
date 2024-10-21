@@ -22,6 +22,13 @@ namespace HUDdleUP.Behaviours
 
         private void Update()
         {
+            if (parent == null) {
+                // TeamMoonstorm-Starstorm2 has a red item "Composite Injector" that instantiates additional EquipmentIcons (from prefab), then destroys and replaces them with custom component "EquipmentIconButEpic"(??)
+                Plugin.Logger.LogWarning($"{nameof(EquipmentCooldownPanel)}> Component instantiated but parent became null, removing self. This warning can safely be ignored if Starstorm 2 is installed.");
+                Destroy(this.gameObject);
+                return;
+            }
+
             float alpha = 1;
             if (parent.targetInventory) {
                 EquipmentState state = (parent.displayAlternateEquipment ? parent.targetInventory.alternateEquipmentState : parent.targetInventory.currentEquipmentState);
