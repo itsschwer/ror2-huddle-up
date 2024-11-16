@@ -1,4 +1,5 @@
 ﻿using RoR2.UI;
+using TMPro;
 using UnityEngine;
 
 namespace HUDdleUP
@@ -6,27 +7,32 @@ namespace HUDdleUP
     public sealed class HUDPanel
     {
         public readonly GameObject gameObject;
-        public readonly HGTextMeshProUGUI label;
+        public readonly TextMeshProUGUI label;
+        private readonly GameObject stripContainer;
 
-        internal HUDPanel(GameObject panel, HGTextMeshProUGUI label)
+        private HUDPanel(GameObject panel, TextMeshProUGUI label, GameObject stripContainer)
         {
             this.gameObject = panel;
             this.label = label;
+            this.stripContainer = stripContainer;
         }
 
-        public HGTextMeshProUGUI AddTextComponent(string name)
+        public TextMeshProUGUI AddTextComponent(string name)
         {
-            HGTextMeshProUGUI text = Object.Instantiate(label, label.transform.parent);
-            var unwanted = text.GetComponent<UnityEngine.UI.LayoutElement>();
-            if (unwanted) Object.Destroy(unwanted);
+            TextMeshProUGUI text = Object.Instantiate(label, stripContainer.transform);
             text.name = name;
+            var layout = text.GetComponent<UnityEngine.UI.LayoutElement>();
+            if (layout) Object.Destroy(layout);
             // Based on in-game objectives text component
-            text.GetComponent<RoR2.UI.SkinControllers.LabelSkinController>().labelType = RoR2.UI.SkinControllers.LabelSkinController.LabelType.Default;
+            if (text.TryGetComponent<RoR2.UI.SkinControllers.LabelSkinController>(out var skin)) {
+                // Using TryGetComponent ∵ LabelSkinController is removed in RiskUI
+                skin.labelType = RoR2.UI.SkinControllers.LabelSkinController.LabelType.Default;
+            }
             text.fontSize = 12;
             text.fontSizeMax = 12;
             text.fontSizeMin = 6;
             // Own defaults
-            text.alignment = TMPro.TextAlignmentOptions.TopLeft;
+            text.alignment = TextAlignmentOptions.TopLeft;
             text.text = "hello world.";
             return text;
         }
@@ -36,27 +42,20 @@ namespace HUDdleUP
 
         public static HUDPanel ClonePanel(ObjectivePanelController objectivePanel, string name)
         {
-            var clone = Object.Instantiate(objectivePanel, objectivePanel.transform.parent);
-            var panel = DeleteObjectiveComponents(clone);
+            ObjectivePanelController clone = Object.Instantiate(objectivePanel, objectivePanel.transform.parent);
+            GameObject stripContainer = clone.transform.GetChild(clone.transform.childCount - 1).gameObject;
+            GameObject panel = clone.gameObject;
+            Object.Destroy(clone);
 
-            var label = panel.GetComponentInChildren<HGTextMeshProUGUI>();
-            var unwanted = label.GetComponent<LanguageTextMeshController>();
-            if (unwanted) Object.DestroyImmediate(unwanted); // DestroyImmediate in case calling AddTextComponent in same frame
+            TextMeshProUGUI label = panel.GetComponentInChildren<HGTextMeshProUGUI>() ?? panel.GetComponentInChildren<TextMeshProUGUI>();
+
+            if (clone.TryGetComponent<HudObjectiveTargetSetter>(out var hudObjectiveTargetSetter))
+                Object.Destroy(hudObjectiveTargetSetter);
+            if (label.TryGetComponent<LanguageTextMeshController>(out var translator))
+                Object.DestroyImmediate(translator); // DestroyImmediate in case calling AddTextComponent in same frame
 
             panel.name = name;
-            return new HUDPanel(panel, label);
-        }
-
-        private static GameObject DeleteObjectiveComponents(ObjectivePanelController objectivePanel)
-        {
-            GameObject stripContainer = objectivePanel.transform.GetChild(objectivePanel.transform.childCount - 1).gameObject;
-            if (stripContainer) Object.Destroy(stripContainer);
-            var component = objectivePanel.GetComponent<HudObjectiveTargetSetter>();
-            if (component) Object.Destroy(component);
-
-            GameObject panel = objectivePanel.gameObject;
-            Object.Destroy(objectivePanel);
-            return panel;
+            return new HUDPanel(panel, label, stripContainer);
         }
     }
 }

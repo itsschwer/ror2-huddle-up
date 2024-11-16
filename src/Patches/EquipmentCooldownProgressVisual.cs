@@ -12,8 +12,11 @@ namespace HUDdleUP.Patches
         {
             if (!Plugin.Config.EquipmentIconCooldownVisual) return;
 
-            // Icon accessing logic based on RoR.UI.HUD.Update()
-            if (__instance.skillIcons.Length <= 0 || !__instance.skillIcons[0]) return;
+            if (__instance.skillIcons.Length <= 0 || !__instance.skillIcons[0]) return; // Icon accessing logic based on RoR.UI.HUD.Update()
+            if (!__instance.skillIcons[0].cooldownRemapPanel || !__instance.skillIcons[0].cooldownRemapPanel.gameObject) {
+                Plugin.Logger.LogWarning($"{nameof(EquipmentCooldownProgressVisual)}> Could not initialize — missing {nameof(SkillIcon.cooldownRemapPanel)}. This warning can safely be ignored if RiskUI is installed.");
+                return;
+            }
 
             GameObject toClone = __instance.skillIcons[0].cooldownRemapPanel.gameObject;
             foreach (EquipmentIcon icon in __instance.equipmentIcons) {

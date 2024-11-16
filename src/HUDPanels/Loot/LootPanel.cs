@@ -23,9 +23,10 @@ namespace HUDdleUP.Loot
                 return;
             }
 
+            LootPanel.hud = hud;
+
             HUDPanel panel = HUDPanel.ClonePanel(objectivePanel, nameof(LootPanel));
             hud.gameObject.AddComponent<LootPanel>().panel = panel;
-            LootPanel.hud = hud;
             Plugin.Logger.LogDebug($"Initialized {nameof(LootPanel)}.");
         }
 
@@ -33,7 +34,7 @@ namespace HUDdleUP.Loot
 
 
         private HUDPanel panel;
-        private HGTextMeshProUGUI display;
+        private TMPro.TextMeshProUGUI display;
         private Interactables interactables;
 
         private void Start()

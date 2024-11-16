@@ -64,7 +64,7 @@ namespace HUDdleUP.Railgunner
 
 
         private HUDPanel panel;
-        private HGTextMeshProUGUI display;
+        private TMPro.TextMeshProUGUI display;
 
         private void Start()
         {
