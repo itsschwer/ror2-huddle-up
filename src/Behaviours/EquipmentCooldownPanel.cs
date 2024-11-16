@@ -7,6 +7,8 @@ namespace HUDdleUP.Behaviours
 {
     internal class EquipmentCooldownPanel : MonoBehaviour
     {
+        private static float LastLogTime; // To prevent spam (Starstorm2 instantiates and destroys 16 times for Composite Injector on HUD.Awake)
+
         private EquipmentIcon parent;
         private RawImage cooldownRemapPanel;
         private float cooldownTimerMax;
@@ -24,7 +26,11 @@ namespace HUDdleUP.Behaviours
         {
             if (parent == null) {
                 // TeamMoonstorm-Starstorm2 has a red item "Composite Injector" that instantiates additional EquipmentIcons (from prefab), then destroys and replaces them with custom component "EquipmentIconButEpic"(??)
-                Plugin.Logger.LogWarning($"{nameof(EquipmentCooldownPanel)}> Component instantiated but parent became null, removing self. This warning can safely be ignored if Starstorm 2 is installed.");
+                float time = Time.time;
+                if (!Mathf.Approximately(LastLogTime, time)) {
+                    Plugin.Logger.LogWarning($"{nameof(EquipmentCooldownPanel)}> Component instantiated but parent became null, removing self. This warning can safely be ignored if Starstorm 2 is installed.");
+                    LastLogTime = time;
+                }
                 Destroy(this.gameObject);
                 return;
             }
