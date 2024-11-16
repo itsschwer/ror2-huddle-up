@@ -45,16 +45,16 @@ namespace HUDdleUP
             ObjectivePanelController clone = Object.Instantiate(objectivePanel, objectivePanel.transform.parent);
             GameObject stripContainer = clone.transform.GetChild(clone.transform.childCount - 1).gameObject;
             GameObject panel = clone.gameObject;
+            panel.name = name;
             Object.Destroy(clone);
 
             TextMeshProUGUI label = panel.GetComponentInChildren<HGTextMeshProUGUI>() ?? panel.GetComponentInChildren<TextMeshProUGUI>();
 
-            if (clone.TryGetComponent<HudObjectiveTargetSetter>(out var hudObjectiveTargetSetter))
+            if (panel.TryGetComponent<HudObjectiveTargetSetter>(out var hudObjectiveTargetSetter))
                 Object.Destroy(hudObjectiveTargetSetter);
             if (label.TryGetComponent<LanguageTextMeshController>(out var translator))
                 Object.DestroyImmediate(translator); // DestroyImmediate in case calling AddTextComponent in same frame
 
-            panel.name = name;
             return new HUDPanel(panel, label, stripContainer);
         }
     }

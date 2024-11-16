@@ -1,3 +1,4 @@
+### 1.0.3
 - Fix the equipment icon cooldown progress visual (`equipmentIconCooldownVisual`) appearing to start midway through when waiting for additional equipment charges after switching from a high cooldown equipment to a low cooldown equipment
 - Fix incompatibility with **`Bubbet-RiskUI`**/**`score-RiskUIRevived`**
     - Improve `EquipmentCooldownProgressVisual` null-checking
