@@ -11,6 +11,7 @@ namespace HUDdleUP.Behaviours
 
         private EquipmentIcon parent;
         private RawImage cooldownRemapPanel;
+        private float cooldownEndTime;
         private float cooldownTimerMax;
 
         internal static void Init(EquipmentIcon parent, GameObject target)
@@ -40,8 +41,15 @@ namespace HUDdleUP.Behaviours
                 EquipmentState state = (parent.displayAlternateEquipment ? parent.targetInventory.alternateEquipmentState : parent.targetInventory.currentEquipmentState);
 
                 float cooldownTimer = state.chargeFinishTime.timeUntilClamped;
-                if (cooldownTimer > cooldownTimerMax || float.IsInfinity(cooldownTimerMax)) cooldownTimerMax = cooldownTimer;
-                if (cooldownTimerMax >= Mathf.Epsilon) {
+                if (cooldownEndTime != state.chargeFinishTime.t) {
+                    cooldownTimerMax = cooldownTimer;
+                    cooldownEndTime = state.chargeFinishTime.t;
+#if DEBUG
+                    Chat.AddMessage($"{nameof(EquipmentCooldownPanel)}> {cooldownTimerMax}");
+#endif
+                }
+
+                if (cooldownTimerMax > 0) {
                     alpha = 1 - (cooldownTimer / cooldownTimerMax);
                 }
             }
