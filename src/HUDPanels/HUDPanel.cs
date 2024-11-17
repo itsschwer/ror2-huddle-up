@@ -21,13 +21,13 @@ namespace HUDdleUP
         {
             TextMeshProUGUI text = Object.Instantiate(label, stripContainer.transform);
             text.name = name;
-            var layout = text.GetComponent<UnityEngine.UI.LayoutElement>();
-            if (layout) Object.Destroy(layout);
+
+            if (text.TryGetComponent<UnityEngine.UI.LayoutElement>(out var layout))
+                Object.Destroy(layout);
+            if (text.TryGetComponent<RoR2.UI.SkinControllers.LabelSkinController>(out var skin)) // Using TryGetComponent ∵ LabelSkinController is removed in RiskUI
+                skin.labelType = RoR2.UI.SkinControllers.LabelSkinController.LabelType.Default; // Based on in-game objectives text component
+
             // Based on in-game objectives text component
-            if (text.TryGetComponent<RoR2.UI.SkinControllers.LabelSkinController>(out var skin)) {
-                // Using TryGetComponent ∵ LabelSkinController is removed in RiskUI
-                skin.labelType = RoR2.UI.SkinControllers.LabelSkinController.LabelType.Default;
-            }
             text.fontSize = 12;
             text.fontSizeMax = 12;
             text.fontSizeMin = 6;
