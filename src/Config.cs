@@ -32,7 +32,7 @@ namespace HUDdleUP
         public bool LootPanel => lootPanel.Value;
         public bool RailgunnerAccuracyPanel => railgunnerAccuracyPanel.Value;
 
-        public Config(ConfigFile config)
+        internal Config(ConfigFile config)
         {
             file = config;
 
