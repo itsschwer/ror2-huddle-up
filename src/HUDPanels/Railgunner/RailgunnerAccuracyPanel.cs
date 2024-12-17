@@ -33,7 +33,7 @@ namespace HUDdleUP.Railgunner
             if (RailgunnerAccuracyPanel.hud != null) return;
 
             var objectivePanel = hud.GetComponentInChildren<ObjectivePanelController>();
-            if (!objectivePanel) {
+            if (!objectivePanel || hud.localUserViewer.cachedBody == null) {
 #if DEBUG
                 Plugin.Logger.LogDebug($"Waiting to initialize {nameof(RailgunnerAccuracyPanel)}.");
 #endif
