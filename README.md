@@ -1,6 +1,6 @@
 # HUDdle UP
 
-A \[ client-side \] mod that aims to expose more information in the HUD UI.
+A client-side mod that aims to expose more information in the HUD UI.
 
 <!--
 ### *planned*
