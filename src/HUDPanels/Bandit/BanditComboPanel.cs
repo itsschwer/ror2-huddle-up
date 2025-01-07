@@ -5,6 +5,7 @@ namespace HUDdleUP.Bandit
     internal sealed class BanditComboPanel : UnityEngine.MonoBehaviour
     {
         private static HUD hud;
+        private static ConsecutiveReset tracker;
 
         public static void Hook()
         {
@@ -14,6 +15,11 @@ namespace HUDdleUP.Bandit
         public static void Unhook()
         {
             HUD.shouldHudDisplay -= Init;
+
+            if (tracker != null) {
+                tracker.Unhook();
+                tracker = null;
+            }
         }
 
         public static void Init(HUD hud, ref bool _)
@@ -35,6 +41,11 @@ namespace HUDdleUP.Bandit
                 return;
             }
 
+            if (tracker == null) {
+                tracker = new ConsecutiveReset(hud.localUserViewer);
+                tracker.Hook();
+            }
+
             HUDPanel panel = HUDPanel.ClonePanel(objectivePanel, nameof(BanditComboPanel));
             hud.gameObject.AddComponent<BanditComboPanel>().panel = panel;
             Plugin.Logger.LogDebug($"Initialized {nameof(BanditComboPanel)}.");
@@ -45,15 +56,11 @@ namespace HUDdleUP.Bandit
 
         private HUDPanel panel;
         private TMPro.TextMeshProUGUI display;
-        private ConsecutiveReset tracker;
 
         private void Start()
         {
             panel.label.text = "Combo:";
             display = panel.AddTextComponent("Combo Tracker");
-
-            tracker = new ConsecutiveReset(hud.localUserViewer);
-            tracker.Hook();
         }
 
         private void Update()
@@ -64,11 +71,6 @@ namespace HUDdleUP.Bandit
         private void FixedUpdate()
         {
             if (tracker != null) tracker.FixedUpdate();
-        }
-
-        private void OnDestroy()
-        {
-            if (tracker != null) tracker.Unhook();
         }
     }
 }

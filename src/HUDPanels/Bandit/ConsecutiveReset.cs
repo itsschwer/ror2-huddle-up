@@ -68,12 +68,20 @@ namespace HUDdleUP.Bandit
         public void Hook()
         {
             GlobalEventManager.onCharacterDeathGlobal += Tracker_End;
+            Stage.onStageStartGlobal += OnStageStart;
         }
 
         public void Unhook()
         {
             GlobalEventManager.onCharacterDeathGlobal -= Tracker_End;
             trackedBody = null;
+            Stage.onStageStartGlobal -= OnStageStart;
+        }
+
+        private void OnStageStart(Stage _)
+        {
+            totalShotsStage = 0;
+            resetShotsStage = 0;
         }
 
         private void Tracker_Start(GenericSkill skillSlot)
