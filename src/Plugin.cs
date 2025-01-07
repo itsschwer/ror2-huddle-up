@@ -49,11 +49,13 @@ namespace HUDdleUP
         private void OnRunStart(RoR2.Run _) {
             Loot.LootPanel.Hook();
             Railgunner.RailgunnerAccuracyPanel.Hook();
+            Bandit.BanditComboPanel.Hook();
         }
 
         private void OnRunDestroy(RoR2.Run _) {
             Loot.LootPanel.Unhook();
             Railgunner.RailgunnerAccuracyPanel.Unhook();
+            Bandit.BanditComboPanel.Unhook();
         }
     }
 }
