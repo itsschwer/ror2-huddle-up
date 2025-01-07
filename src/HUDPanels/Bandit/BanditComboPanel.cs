@@ -65,6 +65,8 @@ namespace HUDdleUP.Bandit
 
         private void Update()
         {
+            if (tracker == null) return;
+
              display.text = tracker.ToString();
         }
 
