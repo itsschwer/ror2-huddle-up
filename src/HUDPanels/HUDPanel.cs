@@ -4,6 +4,24 @@ using UnityEngine;
 
 namespace HUDdleUP
 {
+    /// <summary>
+    /// 
+    /// <code>
+    /// HUDSimple(Clone)
+    ///  │ HUD
+    ///  └─ MainContainer/MainUIArea/SpringCanvas/UpperRightCluster/ClassicRunInfoHudPanel(Clone)/RightInfoBar
+    ///      └─ this [game object]
+    ///          └─ StripContainer
+    ///              │ Image
+    ///              │ RoR2.UI.SkinControllers.PanelSkinController
+    ///              │ VerticalLayoutGroup
+    ///              │ LayoutElement
+    ///              │ RoR2.UI.Juice
+    ///              └─ text component [game object]
+    ///                  │ RoR2.UI.HGTextMeshProUGUI
+    ///                  │ RoR2.UI.SkinControllers.LabelSkinController
+    /// </code>
+    /// </summary>
     public sealed class HUDPanel
     {
         public readonly GameObject gameObject;
@@ -54,6 +72,11 @@ namespace HUDdleUP
                 Object.Destroy(hudObjectiveTargetSetter);
             if (label.TryGetComponent<LanguageTextMeshController>(out var translator))
                 Object.DestroyImmediate(translator); // DestroyImmediate in case calling AddTextComponent in same frame
+
+            var children = stripContainer.GetComponentsInChildren<AnimateUIAlpha>(true);
+            for (int i = children.Length - 1; i >= 0; i--) {
+                Object.Destroy(children[i].gameObject);
+            }
 
             return new HUDPanel(panel, label, stripContainer);
         }
