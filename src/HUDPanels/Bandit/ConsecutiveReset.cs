@@ -54,6 +54,12 @@ namespace HUDdleUP.Bandit
         private int consecutive;
         private int consecutiveBest;
 
+        private int totalShots;
+        private int resetShots;
+        private int totalShotsStage;
+        private int resetShotsStage;
+
+
         public ConsecutiveReset(LocalUser user)
         {
             this.user = user;
@@ -72,29 +78,31 @@ namespace HUDdleUP.Bandit
 
         private void Tracker_Start(GenericSkill skillSlot)
         {
-            Plugin.Logger.LogWarning("ts");
+            // This means that the consecutive counter will only reset to zero on next use of special after miss
+            // -- is there any way to have it accurately reflect zero sooner?
             if (skillSlot.skillDef == requiredSkillDef && requiredSkillDef != null) {
-                Plugin.Logger.LogWarning("skill match");
                 if (waitingForKill) {
-                    Plugin.Logger.LogWarning("reset");
                     resets = 0;
                 }
                 waitingForKill = true;
+
+                totalShots++;
+                totalShotsStage++;
             }
         }
 
         private void Tracker_End(DamageReport damageReport)
         {
-            Plugin.Logger.LogWarning("te");
             if (damageReport.attackerBody == null) return;
             if (damageReport.attackerBody != trackedBody) return;
 
-            Plugin.Logger.LogWarning("attacker match");
             DamageType damageType = Compatibility.Compatibility.ExtractDamageType(damageReport.damageInfo);
             if ((damageType & DamageType.ResetCooldownsOnKill) == DamageType.ResetCooldownsOnKill) {
                 waitingForKill = false;
                 resets++;
-                Plugin.Logger.LogWarning("damage match");
+
+                resetShots++;
+                resetShotsStage++;
             }
         }
 
@@ -110,7 +118,16 @@ namespace HUDdleUP.Bandit
         {
             System.Text.StringBuilder sb = new();
 
-            sb.AppendLine($"<style=cStack>> </style><color={banditSkullColour}>Consecutive Resets</color><style=cStack>: </style>");
+            sb.Append($"<style=cStack>> </style><color={banditSkullColour}>Consecutive Resets</color><style=cStack>: </style>");
+            if (totalShots == 0) sb.Append("<style=cStack>-.--%</style>");
+            else sb.Append($"{((float)resetShots / totalShots):0.00%}");
+            sb.AppendLine();
+
+            sb.Append($"<style=cStack>   > this stage: </style>");
+            if (totalShotsStage == 0) sb.Append("<style=cStack>-.--%</style>");
+            else sb.Append($"{((float)resetShotsStage / totalShotsStage):0.00%}");
+            sb.AppendLine($"<style=cStack> ({resetShotsStage}/{totalShotsStage})</style>");
+
             sb.Append($"<style=cStack>   > consecutive: </style>{consecutive}<style=cStack> ({consecutiveBest})</style>");
 
             return sb.ToString();

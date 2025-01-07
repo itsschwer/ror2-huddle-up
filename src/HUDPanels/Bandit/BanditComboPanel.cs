@@ -49,7 +49,7 @@ namespace HUDdleUP.Bandit
 
         private void Start()
         {
-            panel.label.text = "Combo";
+            panel.label.text = "Combo:";
             display = panel.AddTextComponent("Combo Tracker");
 
             tracker = new ConsecutiveReset(hud.localUserViewer);
