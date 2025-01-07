@@ -90,12 +90,16 @@ namespace HUDdleUP.Bandit
             if (damageReport.attackerBody != trackedBody) return;
 
             Plugin.Logger.LogWarning("attacker match");
-            if ((damageReport.damageInfo.damageType & DamageType.ResetCooldownsOnKill) == DamageType.ResetCooldownsOnKill) {
+            DamageType damageType = Compatibility.Compatibility.ExtractDamageType(damageReport.damageInfo);
+            if ((damageType & DamageType.ResetCooldownsOnKill) == DamageType.ResetCooldownsOnKill) {
                 waitingForKill = false;
                 resets++;
                 Plugin.Logger.LogWarning("damage match");
             }
         }
+
+
+
 
         internal void FixedUpdate()
         {
@@ -108,9 +112,6 @@ namespace HUDdleUP.Bandit
 
             sb.AppendLine($"<style=cStack>> </style><color={banditSkullColour}>Consecutive Resets</color><style=cStack>: </style>");
             sb.Append($"<style=cStack>   > consecutive: </style>{consecutive}<style=cStack> ({consecutiveBest})</style>");
-
-            sb.AppendLine();
-            sb.AppendLine(trackedBody == null ? "null" : trackedBody.name);
 
             return sb.ToString();
         }
