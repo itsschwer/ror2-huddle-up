@@ -45,17 +45,30 @@ namespace HUDdleUP.Bandit
 
         private HUDPanel panel;
         private TMPro.TextMeshProUGUI display;
-        private ConsecutiveReset tracker = new ConsecutiveReset(hud.localUserViewer.cachedBody);
+        private ConsecutiveReset tracker;
 
         private void Start()
         {
             panel.label.text = "Combo";
             display = panel.AddTextComponent("Combo Tracker");
+
+            tracker = new ConsecutiveReset(hud.localUserViewer);
+            tracker.Hook();
         }
 
         private void Update()
         {
              display.text = tracker.ToString();
+        }
+
+        private void FixedUpdate()
+        {
+            if (tracker != null) tracker.FixedUpdate();
+        }
+
+        private void OnDestroy()
+        {
+            if (tracker != null) tracker.Unhook();
         }
     }
 }
