@@ -75,6 +75,10 @@ adds a Loot panel to the hud to track how much loot is left on a stage *— only
 - mountain shrine invitations
 
 ## railgunner accuracy panel
+adds an Accuracy panel to the hud to track your accuracy with landing perfect reloads and hitting weak points
+
+![screenshot of railgunner accuracy panel](https://github.com/itsschwer/ror2-huddle-up/blob/main/xtra/demo-railgunner-accuracy-panel.png?raw=true)
+
 - active reload
     - run accuracy *-percentage-*
     - stage accuracy *-percentage-* (*-cardinal-*)
@@ -83,7 +87,12 @@ adds a Loot panel to the hud to track how much loot is left on a stage *— only
     - stage ratio *— a single shot can hit multiple enemies' weak points*
     - consecutive (best)
 
-![screenshot of railgunner accuracy panel](https://github.com/itsschwer/ror2-huddle-up/blob/main/xtra/demo-railgunner-accuracy-panel.png?raw=true)
+## bandit combo panel
+adds a Combo panel to the hud to track your consecutive cooldown resets when using the special skill "Lights Out"
+
+![screenshot of bandit combo panel](https://github.com/itsschwer/ror2-huddle-up/blob/main/xtra/demo-bandit-combo-panel.png?raw=true)
+
+<mark>todo: add screenshot and corresponding text</mark>
 
 
 ----

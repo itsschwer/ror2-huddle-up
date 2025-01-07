@@ -60,7 +60,7 @@ namespace HUDdleUP
             railgunnerAccuracyPanel = config.Bind<bool>(HUDPanels, nameof(railgunnerAccuracyPanel), true,
                 "Add an Accuracy panel to the HUD to track your accuracy with landing perfect reloads and hitting weak points.");
             banditComboPanel = config.Bind<bool>(HUDPanels, nameof(banditComboPanel), true,
-                "Add a Combo panel to the HUD to track your consecutive resets when using the special skill \"Lights Out\".");
+                "Add a Combo panel to the HUD to track your consecutive cooldown resets when using the special skill \"Lights Out\".");
         }
     }
 }
