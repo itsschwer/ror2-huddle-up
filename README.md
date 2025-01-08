@@ -90,6 +90,8 @@ adds an Accuracy panel to the hud to track your accuracy with landing perfect re
 ## bandit combo panel
 adds a Combo panel to the hud to track your consecutive cooldown resets when using the special skill "Lights Out"
 
+> *※ unfortunately, this feature only works correctly on host — let me know on GitHub if there's a workaround!*
+
 ![screenshot of bandit combo panel](https://github.com/itsschwer/ror2-huddle-up/blob/main/xtra/demo-bandit-combo-panel.png?raw=true)
 
 <mark>todo: add screenshot and corresponding text</mark>

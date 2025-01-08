@@ -67,6 +67,7 @@ namespace HUDdleUP.Bandit
 
         public void Hook()
         {
+            // OnCharacterDeath is server-side only :/
             GlobalEventManager.onCharacterDeathGlobal += Tracker_End;
             Stage.onStageStartGlobal += OnStageStart;
         }
@@ -114,6 +115,8 @@ namespace HUDdleUP.Bandit
             }
         }
 
+        private bool HasRequiredSkill() => trackedBody.skillLocator.FindSkillByDef(requiredSkillDef);
+
 
 
 
@@ -137,6 +140,25 @@ namespace HUDdleUP.Bandit
             sb.AppendLine($"<style=cStack> ({resetShotsStage}/{totalShotsStage})</style>");
 
             sb.Append($"<style=cStack>   > consecutive: </style>{consecutive}<style=cStack> ({consecutiveBest})</style>");
+
+
+            bool lightsOutNotSelected = !HasRequiredSkill();
+            bool notHost = !UnityEngine.Networking.NetworkServer.active;
+            if (lightsOutNotSelected || notHost) {
+                sb.AppendLine().AppendLine();
+
+                if (lightsOutNotSelected) {
+                    sb.AppendLine("<size=80%><style=cDeath>WARN: nothing to track</style></size>");
+                    sb.Append($"<size=80%><style=cStack>    × <style=cDeath><color={banditSkullColour}>{Language.GetString(requiredSkillDef.skillNameToken)}</color> not selected.</style></style></size>");
+                }
+
+                if (lightsOutNotSelected && notHost) sb.AppendLine();
+
+                if (notHost) {
+                    sb.AppendLine("<size=80%><style=cDeath>WARN: sorry, this feature only works").Append("  on host.</style></size>");
+                    sb.AppendLine().Append("<size=80%><style=cStack>    × <style=cDeath>report on <style=cStack>GitHub</style> if you know a fix!</style></style></size>");
+                }
+            }
 
             return sb.ToString();
         }
