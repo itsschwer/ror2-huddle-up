@@ -98,6 +98,12 @@ adds a Combo panel to the hud to track your consecutive cooldown resets when usi
     - run accuracy *-percentage-*
     - stage accuracy *-percentage-* (*-cardinal-*)
     - consecutive (best)
+        > *※ due to how this is tracked internally, the consecutive tracker will not reset to 0 immediately upon miss — it updates the next time "Lights Out" is used instead.*
+
+## multiplayer connection panel
+adds a Connection panel to the HUD to check multiplayer latency (ping) *— only visible when the scoreboard is open*
+
+![screenshot of multiplayer connection panel](https://github.com/itsschwer/ror2-huddle-up/blob/main/xtra/demo-multiplayer-connection-panel.png?raw=true)
 
 
 ----

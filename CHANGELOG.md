@@ -1,3 +1,4 @@
+- Add `MultiplayerConnectionPanel`
 - Add `BanditComboPanel` *(host-only)*
 - Fix survivor body check on clients failing sometimes
     - *Fix `RailgunnerAccuracyPanel` sometimes not appearing on clients that are playing as Railgunner*
