@@ -22,7 +22,7 @@ namespace HUDdleUP.Bandit
             }
         }
 
-        public static void Init(HUD hud, ref bool _)
+        private static void Init(HUD hud, ref bool _)
         {
             if (!Plugin.Config.BanditComboPanel) return;
             if (BanditComboPanel.hud != null) return;

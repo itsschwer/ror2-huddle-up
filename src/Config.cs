@@ -27,10 +27,12 @@ namespace HUDdleUP
 
         // HUD Panels
         private readonly ConfigEntry<bool> lootPanel;
+        private readonly ConfigEntry<bool> multiplayerConnectionPanel;
         private readonly ConfigEntry<bool> railgunnerAccuracyPanel;
         private readonly ConfigEntry<bool> banditComboPanel;
         // Accessors
         public bool LootPanel => lootPanel.Value;
+        public bool MultiplayerConnectionPanel => multiplayerConnectionPanel.Value;
         public bool RailgunnerAccuracyPanel => railgunnerAccuracyPanel.Value;
         public bool BanditComboPanel => banditComboPanel.Value;
 
@@ -57,6 +59,8 @@ namespace HUDdleUP
             const string HUDPanels = "HUD Panels";
             lootPanel = config.Bind<bool>(HUDPanels, nameof(lootPanel), true,
                 "Add a Loot panel to the HUD to track how much loot is left on a stage.\n\nOnly visible when the scoreboard is open.");
+            multiplayerConnectionPanel = config.Bind<bool>(HUDPanels, nameof(multiplayerConnectionPanel), true,
+                "Add a Connection panel to the HUD to check multiplayer latency (ping).\n\nOnly visible when the scoreboard is open.");
             railgunnerAccuracyPanel = config.Bind<bool>(HUDPanels, nameof(railgunnerAccuracyPanel), true,
                 "Add an Accuracy panel to the HUD to track your accuracy with landing perfect reloads and hitting weak points.");
             banditComboPanel = config.Bind<bool>(HUDPanels, nameof(banditComboPanel), true,

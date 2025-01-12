@@ -10,7 +10,7 @@ namespace HUDdleUP.Loot
         public static void Hook() => HUD.shouldHudDisplay += Init;
         public static void Unhook() => HUD.shouldHudDisplay -= Init;
 
-        public static void Init(HUD hud, ref bool _)
+        private static void Init(HUD hud, ref bool _)
         {
             if (!Plugin.Config.LootPanel) return;
             if (LootPanel.hud != null) return;
