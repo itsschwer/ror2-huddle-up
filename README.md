@@ -72,7 +72,7 @@ adds a Loot panel to the hud to track how much loot is left on a stage *— only
 - ***once teleporter is charged:***
     - cloaked chests
 - enemy counts (per team)
-- mountain shrine invitations
+- mountain shrine invitations <sup>*(※ unfortunately, this only works on host)*</sup>
 
 ## railgunner accuracy panel
 adds an Accuracy panel to the hud to track your accuracy with landing perfect reloads and hitting weak points
@@ -94,7 +94,10 @@ adds a Combo panel to the hud to track your consecutive cooldown resets when usi
 
 ![screenshot of bandit combo panel](https://github.com/itsschwer/ror2-huddle-up/blob/main/xtra/demo-bandit-combo-panel.png?raw=true)
 
-<mark>todo: add screenshot and corresponding text</mark>
+- lights out cooldown resets
+    - run accuracy *-percentage-*
+    - stage accuracy *-percentage-* (*-cardinal-*)
+    - consecutive (best)
 
 
 ----

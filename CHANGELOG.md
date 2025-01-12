@@ -1,6 +1,8 @@
-- Add `BanditComboPanel`
+- Add `BanditComboPanel` *(host-only)*
 - Fix survivor body check on clients failing sometimes
     - *Fix `RailgunnerAccuracyPanel` sometimes not appearing on clients that are playing as Railgunner*
+- Note in readme that mountain shrine invitations tracker in `LootPanel` only works on host
+    - *Vanilla property is not networked (i.e. value is not shared with clients)*
 
 ### 1.0.3
 - Fix the equipment icon cooldown progress visual (`equipmentIconCooldownVisual`) appearing to start midway through when waiting for additional equipment charges after switching from a high cooldown equipment to a low cooldown equipment
