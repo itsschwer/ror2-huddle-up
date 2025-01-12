@@ -8,7 +8,7 @@ namespace HUDdleUP.Multiplayer
 {
     internal sealed class ConnectionPanel : MonoBehaviour
     {
-        private const float updateFrequency = 1/20;
+        private const float updateFrequency = 1/5;
         private float lastUpdateTimestamp;
 
 
@@ -61,7 +61,7 @@ namespace HUDdleUP.Multiplayer
             if (deltaTime < updateFrequency) return;
 
             lastUpdateTimestamp = Time.unscaledTime;
-            display.text = $"<style=cStack>> <style=cIsUtility>Ping (round-trip time)</style>: </style>{(NetworkServer.active ? GetPingHost() : GetPingClient())}";
+            display.text = $"<style=cStack>> <style=cIsUtility>Ping (round-trip time)</style>:</style>\n{(NetworkServer.active ? GetPingHost() : GetPingClient())}";
         }
 
         private string GetPingClient()
@@ -75,17 +75,17 @@ namespace HUDdleUP.Multiplayer
                 }
             }
 
-            return $"<style=cStack><style=cSub>{rttMs}</style> ms</style>\n<style=cStack>   > You are client</style>";
+            return $"<style=cStack>   > You are client</style>\n<style=cStack>      > <style=cSub>{rttMs}</style> ms</style>";
         }
 
         private string GetPingHost()
         {
-            System.Text.StringBuilder sb = new("<style=cStack>You are host</style>");
+            System.Text.StringBuilder sb = new("<style=cStack>   > You are host</style>");
 
             foreach (NetworkUser user in NetworkUser.readOnlyInstancesList) {
                 if (user && !user.hasAuthority) {
                     int rttMs = (user.connectionToClient != null) ? (int)RttManager.GetConnectionRTTInMilliseconds(user.connectionToClient) : -1;
-                    sb.AppendLine().Append($"<style=cStack>   > {user.userName}: <style=cSub>{rttMs}</style> ms</style>");
+                    sb.AppendLine().Append($"<style=cStack>   > <style=cUserSetting>{user.userName}</style>: <style=cSub>{rttMs}</style> ms</style>");
                 }
             }
 
