@@ -1,3 +1,4 @@
+## 1.1.0
 - Add `MultiplayerConnectionPanel`
 - Add `BanditComboPanel` *(host-only)*
 - Fix survivor body check on clients failing sometimes
