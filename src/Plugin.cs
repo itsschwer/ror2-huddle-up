@@ -3,7 +3,6 @@ using HarmonyLib;
 
 namespace HUDdleUP
 {
-    [HarmonyPatch]
     [BepInPlugin(GUID, Name, Version)]
     public sealed class Plugin : BaseUnityPlugin
     {
