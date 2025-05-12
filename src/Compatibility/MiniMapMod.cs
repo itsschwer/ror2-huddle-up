@@ -48,6 +48,8 @@ namespace HUDdleUP.Compatibility
                 c.Index--; // move to before stloc.0
                 // Create minimap in clone of objective panel, instead of modifying objective panel directly.
                 c.EmitDelegate<Func<GameObject, GameObject>>((objectivePanelGameObject) => {
+                    if (objectivePanelGameObject == null) return null;
+
                     var objectivePanel = objectivePanelGameObject.GetComponent<RoR2.UI.ObjectivePanelController>();
                     HUDPanel newPanel = HUDPanel.ClonePanel(objectivePanel, "MinimapPanel");
                     return newPanel.gameObject;
