@@ -3,6 +3,9 @@ using HarmonyLib;
 
 namespace HUDdleUP
 {
+    // hack; would prefer changing original mod but no public repository
+    [BepInDependency(Compatibility.MiniMapMod.PLUGIN_GUID, BepInDependency.DependencyFlags.SoftDependency)]
+
     [BepInPlugin(GUID, Name, Version)]
     public sealed class Plugin : BaseUnityPlugin
     {
@@ -24,6 +27,8 @@ namespace HUDdleUP
             Config = new Config(base.Config);
 
             new Harmony(Info.Metadata.GUID).PatchAll();
+
+            Compatibility.MiniMapMod.TryPatch();
 
             Logger.LogMessage("~awake.");
         }
