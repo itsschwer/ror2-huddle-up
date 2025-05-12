@@ -41,6 +41,11 @@ namespace HUDdleUP.Bandit
                 return;
             }
 
+            if (!ConsecutiveReset.HasRequiredSkill(hud.localUserViewer.cachedBody)) {
+                Plugin.Logger.LogDebug($"Local user is Bandit but does not have \"Lights Out\" selected, skipping {nameof(BanditComboPanel)} initialization.");
+                return;
+            }
+
             if (tracker == null) {
                 tracker = new ConsecutiveReset(hud.localUserViewer);
                 tracker.Hook();

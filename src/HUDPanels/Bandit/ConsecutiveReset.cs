@@ -115,7 +115,8 @@ namespace HUDdleUP.Bandit
             }
         }
 
-        private bool HasRequiredSkill() => trackedBody.skillLocator.FindSkillByDef(requiredSkillDef);
+        internal static bool HasRequiredSkill(CharacterBody body) => body.skillLocator.FindSkillByDef(requiredSkillDef);
+        private bool HasRequiredSkill() => HasRequiredSkill(trackedBody);
 
 
 
