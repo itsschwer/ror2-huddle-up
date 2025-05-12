@@ -52,6 +52,8 @@ namespace HUDdleUP.Compatibility
 
                     var objectivePanel = objectivePanelGameObject.GetComponent<RoR2.UI.ObjectivePanelController>();
                     HUDPanel newPanel = HUDPanel.ClonePanel(objectivePanel, "MinimapPanel");
+                    GameObject.Destroy(newPanel.label.gameObject);
+                    newPanel.gameObject.transform.SetAsFirstSibling();
                     return newPanel.gameObject;
                 });
 #if DEBUG

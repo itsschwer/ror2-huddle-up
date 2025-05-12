@@ -64,7 +64,7 @@ namespace HUDdleUP
             GameObject stripContainer = clone.transform.GetChild(clone.transform.childCount - 1).gameObject;
             GameObject panel = clone.gameObject;
             panel.name = name;
-            Object.Destroy(clone);
+            Object.DestroyImmediate(clone); // DestroyImmediate in case a panel becomes ordered above the real objective panel in the hierarchy (which is accessed via GetComponentInChildren as a template for HUDdleUP panels)
 
             TextMeshProUGUI label = panel.GetComponentInChildren<HGTextMeshProUGUI>() ?? panel.GetComponentInChildren<TextMeshProUGUI>();
 
