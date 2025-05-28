@@ -26,9 +26,9 @@ namespace HUDdleUP
     {
         public readonly GameObject gameObject;
         public readonly TextMeshProUGUI label;
-        private readonly GameObject stripContainer;
+        public readonly Transform stripContainer;
 
-        private HUDPanel(GameObject panel, TextMeshProUGUI label, GameObject stripContainer)
+        private HUDPanel(GameObject panel, TextMeshProUGUI label, Transform stripContainer)
         {
             this.gameObject = panel;
             this.label = label;
@@ -61,22 +61,23 @@ namespace HUDdleUP
         public static HUDPanel ClonePanel(ObjectivePanelController objectivePanel, string name)
         {
             ObjectivePanelController clone = Object.Instantiate(objectivePanel, objectivePanel.transform.parent);
-            GameObject stripContainer = clone.transform.GetChild(clone.transform.childCount - 1).gameObject;
             GameObject panel = clone.gameObject;
             panel.name = name;
             Object.DestroyImmediate(clone); // DestroyImmediate in case a panel becomes ordered above the real objective panel in the hierarchy (which is accessed via GetComponentInChildren as a template for HUDdleUP panels)
 
-            TextMeshProUGUI label = panel.GetComponentInChildren<HGTextMeshProUGUI>() ?? panel.GetComponentInChildren<TextMeshProUGUI>();
+            // Destroy unwanted children (e.g. existing objectives)
+            Transform stripContainer = panel.transform.GetChild(panel.transform.childCount - 1); // or .transform.Find("StripContainer")
+            for (int i = stripContainer.transform.childCount - 1; i >= 0; i--)
+                Object.Destroy(stripContainer.GetChild(i).gameObject);
 
             if (panel.TryGetComponent<HudObjectiveTargetSetter>(out var hudObjectiveTargetSetter))
                 Object.Destroy(hudObjectiveTargetSetter);
-            if (label.TryGetComponent<LanguageTextMeshController>(out var translator))
-                Object.DestroyImmediate(translator); // DestroyImmediate in case calling AddTextComponent in same frame
 
-            var children = stripContainer.GetComponentsInChildren<AnimateUIAlpha>(true);
-            for (int i = children.Length - 1; i >= 0; i--) {
-                Object.Destroy(children[i].gameObject);
-            }
+            TextMeshProUGUI label = panel.GetComponentInChildren<HGTextMeshProUGUI>() ?? panel.GetComponentInChildren<TextMeshProUGUI>();
+            if (label == null)
+                Plugin.Logger.LogWarning($"New HUD panel \"{panel.name}\" is missing a label!");
+            else if (label.TryGetComponent<LanguageTextMeshController>(out var localiser))
+                Object.DestroyImmediate(localiser); // DestroyImmediate in case calling AddTextComponent in same frame
 
             return new HUDPanel(panel, label, stripContainer);
         }
