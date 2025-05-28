@@ -50,11 +50,20 @@ namespace HUDdleUP.Compatibility
                 c.EmitDelegate<Func<GameObject, GameObject>>((objectivePanelGameObject) => {
                     if (objectivePanelGameObject == null) return null;
 
-                    var objectivePanel = objectivePanelGameObject.GetComponent<RoR2.UI.ObjectivePanelController>();
-                    HUDPanel newPanel = HUDPanel.ClonePanel(objectivePanel, "MinimapPanel");
-                    GameObject.Destroy(newPanel.label.gameObject);
-                    newPanel.gameObject.transform.SetAsFirstSibling();
-                    return newPanel.gameObject;
+                    Plugin.Logger.LogDebug($"{nameof(Compatibility)}: {nameof(MiniMapMod)}> Attempting to redirect minimap creation from {objectivePanelGameObject.name} to separate panel.");
+                    try {
+                        var objectivePanel = objectivePanelGameObject.GetComponent<RoR2.UI.ObjectivePanelController>();
+                        HUDPanel newPanel = HUDPanel.ClonePanel(objectivePanel, "MinimapPanel");
+                        if (newPanel.label)
+                            GameObject.Destroy(newPanel.label.gameObject);
+                        newPanel.gameObject.transform.SetAsFirstSibling();
+                        return newPanel.gameObject;
+                    }
+                    catch (Exception e) {
+                        Plugin.Logger.LogError(e);
+                        Plugin.Logger.LogWarning($"{nameof(Compatibility)}: {nameof(MiniMapMod)}> Redirecting minimap creation failed! Using original target instead. Other HUD panels may have non-functional copies of the minimap.");
+                        return objectivePanelGameObject;
+                    }
                 });
 #if DEBUG
                 Plugin.Logger.LogDebug(il.ToString());
