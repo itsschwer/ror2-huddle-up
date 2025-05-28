@@ -9,6 +9,7 @@ using UnityEngine;
 
 namespace HUDdleUP.Compatibility
 {
+    // Alternatively could just Destroy(transform.Find("Minimap")?.gameObject) in HUDPanel.ClonePanel() but that feels too vague.
     internal static class MiniMapMod
     {
         internal const string PLUGIN_GUID = "MiniMap";
@@ -61,7 +62,7 @@ namespace HUDdleUP.Compatibility
                     }
                     catch (Exception e) {
                         Plugin.Logger.LogError(e);
-                        Plugin.Logger.LogWarning($"{nameof(Compatibility)}: {nameof(MiniMapMod)}> Redirecting minimap creation failed! Using original target instead. Other HUD panels may have non-functional copies of the minimap.");
+                        Plugin.Logger.LogWarning($"{nameof(Compatibility)}: {nameof(MiniMapMod)}> Attempt to redirect minimap creation failed! Using original target instead. Other HUD panels may have non-functional copies of the minimap.");
                         return objectivePanelGameObject;
                     }
                 });
