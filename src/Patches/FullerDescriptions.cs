@@ -8,6 +8,9 @@ namespace HUDdleUP.Patches
     internal static class FullerDescriptions
     {
         [HarmonyPostfix, HarmonyPatch(typeof(RoR2.UI.ItemIcon), nameof(RoR2.UI.ItemIcon.SetItemIndex))]
+#if NETSTANDARD2_1_OR_GREATER
+        [HarmonyPatch([typeof(ItemIndex), typeof(int), typeof(float)])]
+#endif
         private static void ItemIcon_SetItemIndex(RoR2.UI.ItemIcon __instance)
         {
             if (!Plugin.Config.FullerItemDescriptions) return;

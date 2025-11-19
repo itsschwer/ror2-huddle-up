@@ -12,7 +12,7 @@ namespace HUDdleUP
         public const string GUID = Author + "." + Name;
         public const string Author = "itsschwer";
         public const string Name = "HUDdleUP";
-        public const string Version = "1.1.1";
+        public const string Version = "1.2.0";
 
         internal static new BepInEx.Logging.ManualLogSource Logger { get; private set; }
 
@@ -26,7 +26,12 @@ namespace HUDdleUP
 
             Config = new Config(base.Config);
 
-            new Harmony(Info.Metadata.GUID).PatchAll();
+            try {
+                new Harmony(Info.Metadata.GUID).PatchAll();
+            }
+            catch (System.Exception e) {
+                Logger.LogError(e);
+            }
 
             Compatibility.MiniMapMod.TryPatch();
 
