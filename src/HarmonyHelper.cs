@@ -15,7 +15,7 @@ namespace HUDdleUP
                     harmony.CreateClassProcessor(type).Patch();
                 }
                 catch (Exception e) {
-                    Plugin.Logger.LogError(e);
+                    Plugin.Logger.LogError($"Failed to apply patch in {type.FullName}\n{e}");
                 }
             }
         }
