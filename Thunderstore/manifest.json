@@ -1,7 +1,7 @@
 ﻿{
 	"author": "itsschwer",
 	"name": "HUDdleUP",
-	"version_number": "1.2.0",
+	"version_number": "1.2.1",
 	"website_url": "https://github.com/itsschwer/ror2-huddle-up",
 	"description": "Yet another HUD/UI mod — fuller item descriptions; equipment icon cooldown visual; run difficulty tooltip; loot panel; railgunner accuracy panel — [ client-side ]",
 	"dependencies": [

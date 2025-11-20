@@ -1,3 +1,7 @@
+### 1.2.1
+- Try appying all Harmony patches instead of stopping at first failure
+    - *So that if a feature fails, other features may still be applied and used*
+
 ## 1.2.0
 - Initial fix for the Alloyed Collective patch
     - <mark>*This version of the mod is not compatible with earlier patches of the game. Please use the previous version of this mod if playing on an older game version!*</mark>
