@@ -26,12 +26,7 @@ namespace HUDdleUP
 
             Config = new Config(base.Config);
 
-            try {
-                new Harmony(Info.Metadata.GUID).PatchAll();
-            }
-            catch (System.Exception e) {
-                Logger.LogError(e);
-            }
+            new Harmony(Info.Metadata.GUID).TryPatchAll();
 
             Compatibility.MiniMapMod.TryPatch();
 
