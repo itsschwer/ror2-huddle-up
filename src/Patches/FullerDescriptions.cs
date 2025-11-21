@@ -5,7 +5,7 @@ using System.Text;
 namespace HUDdleUP.Patches
 {
     [HarmonyPatch]
-    internal static class FullerDescriptions
+    public static class FullerDescriptions
     {
         [HarmonyPostfix, HarmonyPatch(typeof(RoR2.UI.ItemIcon), nameof(RoR2.UI.ItemIcon.SetItemIndex))]
 #if NETSTANDARD2_1_OR_GREATER
@@ -35,7 +35,23 @@ namespace HUDdleUP.Patches
             __instance.tooltipProvider.overrideBodyText = sb.ToString();
         }
 
-        internal static string GetCombinedDescription(string descriptionToken, string pickupToken)
+        [HarmonyPostfix, HarmonyPatch(typeof(RoR2.UI.GenericNotification), nameof(RoR2.UI.GenericNotification.SetItem))]
+        private static void GenericNotification_SetItem(RoR2.UI.GenericNotification __instance, ItemDef itemDef)
+        {
+            if (!Plugin.Config.FullerItemDescriptions || !Plugin.Config.FullerDescriptionsOnPickUp) return;
+
+            __instance.descriptionText.token = GetCombinedDescription(itemDef.descriptionToken, itemDef.pickupToken);
+        }
+
+        [HarmonyPostfix, HarmonyPatch(typeof(RoR2.UI.GenericNotification), nameof(RoR2.UI.GenericNotification.SetEquipment))]
+        private static void GenericNotification_SetEquipment(RoR2.UI.GenericNotification __instance, EquipmentDef equipmentDef)
+        {
+            if (!Plugin.Config.FullerEquipmentDescriptions || !Plugin.Config.FullerDescriptionsOnPickUp) return;
+
+            __instance.descriptionText.token = GetCombinedDescription(equipmentDef.descriptionToken, equipmentDef.pickupToken);
+        }
+
+        public static string GetCombinedDescription(string descriptionToken, string pickupToken)
         {
             StringBuilder sb = new();
             string longDescription = Language.GetString(descriptionToken);
@@ -54,7 +70,7 @@ namespace HUDdleUP.Patches
             return sb.ToString();
         }
 
-        internal static string GetEquipmentCooldown(EquipmentDef equipment, Inventory inventory)
+        public static string GetEquipmentCooldown(EquipmentDef equipment, Inventory inventory)
         {
             if (inventory == null) return $"Cooldown: <style=cIsDamage>{(equipment.cooldown):0.###}s</style>";
             StringBuilder sb = new();
