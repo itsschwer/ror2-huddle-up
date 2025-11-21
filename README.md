@@ -15,10 +15,12 @@ each feature can be toggled on or off
 
 ### compatibility
 - can be used alongside [***LookingGlass***](https://thunderstore.io/package/DropPod/LookingGlass/)
-    - **LookingGlass** also implements item descriptions *(+stat calculations)* and Artifact of Command menu tooltips
-        - If you prefer **HUDdleUP**'s implementation, disable the following configs in **LookingGlass**:
-            - `Misc` > `Item Stats`
-            - `Command Settings` > `Command Tooltips`
+    - There is some feature overlap, so please adjust the following configuration options to fit personal preference:
+        HUDdleUP | LookingGlass
+        ---      | ---
+        `fullerItemDescriptions` <br/> `fullerEquipmentDescriptions` | `Misc` > `Item Stats`
+        `fullerDescriptionsOnPickUp` | `Misc` > `Full Item Description On Pickup`
+        `commandMenuItemTooltips` | `Command Settings` > `Command Tooltips`
 
 ## fuller item descriptions
 replace the default short *(pickup)* descriptions in item (and equipment) tooltips with a combination of the short and detailed descriptions (and equipment cooldown)

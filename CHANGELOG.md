@@ -1,3 +1,8 @@
+### 1.2.2
+- Add new configuration option `fullerDescriptionsOnPickUp`
+    - Defaults to `false`
+- Rename main configuration section from empty string to `_`
+
 ### 1.2.1
 - Try appying all Harmony patches instead of stopping at first failure
     - *So that if a feature fails, other features may still be applied and used*
