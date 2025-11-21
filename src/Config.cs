@@ -42,7 +42,7 @@ namespace HUDdleUP
         {
             file = config;
 
-            const string Generic = "";
+            const string Generic = "_";
             fullerItemDescriptions = config.Bind<bool>(Generic, nameof(fullerItemDescriptions), true,
                 "Replace the default short (pickup) descriptions in item tooltips with a combination of the short and detailed descriptions.\n\nNote that this mod currently does not provide calculated item stack stats.");
             fullerEquipmentDescriptions = config.Bind<bool>(Generic, nameof(fullerEquipmentDescriptions), true,
