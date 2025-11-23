@@ -1,7 +1,12 @@
+### 1.2.3
+- Fix *"only visible when the scoreboard is open"* HUD panels to respect the *Toggle Inventory* gameplay setting
+    - Does not (yet?) apply to `scoreboardShowChat` as that does not have a direct reference to the HUD
+
 ### 1.2.2
 - Add new configuration option `fullerDescriptionsOnPickUp`
     - Defaults to `false`
 - Rename main configuration section from empty string to `_`
+    - *So that section appears correctly in new(?) r2modman config editor*
 
 ### 1.2.1
 - Try appying all Harmony patches instead of stopping at first failure

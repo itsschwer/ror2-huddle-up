@@ -45,8 +45,7 @@ namespace HUDdleUP.Loot
 
         private void Update()
         {
-            // Scoreboard visibility logic from RoR2.UI.HUD.Update()
-            bool visible = (hud.localUserViewer?.inputPlayer != null && hud.localUserViewer.inputPlayer.GetButton("info"));
+            bool visible = hud.scoreboardPanel.activeSelf;
             panel.gameObject.SetActive(visible);
             if (!visible) return;
 
