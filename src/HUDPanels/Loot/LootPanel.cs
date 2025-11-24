@@ -87,6 +87,9 @@ namespace HUDdleUP.Loot
             if (TeleporterInteraction.instance != null && TeleporterInteraction.instance.shrineBonusStacks > 0)
                 sb.AppendLine($"<style=cStack>Invitations: <style=cIsUtility>{TeleporterInteraction.instance.shrineBonusStacks}</style></style>");
 
+            if (Stage.instance && Stage.instance.sceneDef)
+                sb.AppendLine().AppendLine($"<style=cStack>-- {Language.GetString(Stage.instance.sceneDef.nameToken)} --</style>");
+
             return sb.ToString();
         }
 
