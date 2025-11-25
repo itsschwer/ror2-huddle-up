@@ -52,13 +52,19 @@ namespace HUDdleUP.Loot
         public readonly int bombardmentDrones = 0;
         public readonly int freezeDrones = 0;
 
+        public int drones => gunnerDrones + healingDrones + missileDrones
+            + incineratorDrones + emergencyDrones + tc280Drones
+            + equipmentDrones + transportDrones + junkDrones + barrierDrones
+            + cleanupDrones + jailerDrones + bombardmentDrones + freezeDrones;
+
         public int t1Drones => gunnerDrones + healingDrones + transportDrones + junkDrones;
         public int t2Drones => missileDrones + incineratorDrones + emergencyDrones + barrierDrones + cleanupDrones + jailerDrones; // technically equipment drones too
         public int t3Drones => tc280Drones + bombardmentDrones + freezeDrones;
 
+        public readonly int droneTerminals = 0;
+        public readonly int droneTerminalsAvailable = 0;
         public readonly bool droneCombinerPresent = false; // "DRONE_COMBINER_NAME"
         public readonly bool droneScrapperPresent = false; // "DRONE_SCRAPPER_NAME"
-        // "DRONE_VENDOR_TERMINAL_NAME", check each terminal for tier..?
 
 
         public Interactables() : this(InstanceTracker.GetInstancesList<PurchaseInteraction>()) { }
@@ -193,6 +199,16 @@ namespace HUDdleUP.Loot
                         break;
                     case "DRONE_COPYCAT_INTERACTABLE_NAME":
                         freezeDrones++;
+                        break;
+                    case "DRONE_VENDOR_TERMINAL_NAME":
+                        droneTerminals++;
+                        if (interactions[i].available) droneTerminalsAvailable++;
+                        break;
+                    case "DRONE_COMBINER_NAME":
+                        droneCombinerPresent = true;
+                        break;
+                    case "DRONE_SCRAPPER_NAME":
+                        droneScrapperPresent = true;
                         break;
                 }
             }

@@ -122,11 +122,11 @@ namespace HUDdleUP.Loot
 
         private static string FormatLine(string tagKey, string tagValue, string token, int available, int total, int meta)
             => $"{FormatToken(token, tagKey, tagValue)}{FormatCounter(available, total, meta)}";
-        private static string FormatLine(string tagKey, string tagValue, string token, int available, int total)
+        internal static string FormatLine(string tagKey, string tagValue, string token, int available, int total)
             => $"{FormatToken(token, tagKey, tagValue)}{FormatCounter(available, total)}";
         private static string FormatToken(string token, string tagKey, string tagValue)
             => FormatLabel($"<{tagKey}={tagValue}>{Language.GetString(token)}</{tagKey}>");
-        private static string FormatLabel(string label)
+        internal static string FormatLabel(string label)
             => $"<style=cStack>> </style>{label}<style=cStack>:</style> ";
         private static string FormatCounter(int available, int total, int meta)
             => $"{FormatCounter(available, total)}<style=cStack><size=90%> ({meta})</size></style>";
