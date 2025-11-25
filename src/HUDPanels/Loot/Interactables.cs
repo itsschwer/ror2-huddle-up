@@ -4,8 +4,6 @@ namespace HUDdleUP.Loot
 {
     public sealed record Interactables
     {
-        public readonly int frameTimestamp;
-
         public readonly int chests = 0;
         public readonly int chestsAvailable = 0;
         public readonly int terminals = 0;
@@ -28,8 +26,6 @@ namespace HUDdleUP.Loot
         public readonly int lunarPods = 0;
         public readonly int lunarPodsAvailable = 0;
         public readonly bool cleansingPoolPresent = false;
-
-        public readonly bool scrapperPresent = false;
 
         public readonly int whiteTakers = 0;
         public readonly int greenTakers = 0;
@@ -65,12 +61,9 @@ namespace HUDdleUP.Loot
         // "DRONE_VENDOR_TERMINAL_NAME", check each terminal for tier..?
 
 
-
-        public Interactables(System.Collections.Generic.List<PurchaseInteraction> interactions, bool scrapperPresent, int generatedFrame)
+        public Interactables() : this(InstanceTracker.GetInstancesList<PurchaseInteraction>()) { }
+        public Interactables(System.Collections.Generic.List<PurchaseInteraction> interactions)
         {
-            this.frameTimestamp = generatedFrame;
-            this.scrapperPresent = scrapperPresent;
-
             for (int i = 0; i < interactions.Count; i++) {
                 switch (interactions[i].displayNameToken) {
                     default: break;

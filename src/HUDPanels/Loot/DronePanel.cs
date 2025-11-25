@@ -49,7 +49,7 @@ namespace HUDdleUP.Loot
             panel.gameObject.SetActive(visible);
             if (!visible) return;
 
-            // interactables
+            interactables = LootPanel.Instance ? LootPanel.Instance.interactables : new Interactables();
 
             display.text = GenerateText();
         }

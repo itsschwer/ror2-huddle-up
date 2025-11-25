@@ -50,17 +50,14 @@ namespace HUDdleUP.Loot
             panel.gameObject.SetActive(visible);
             if (!visible) return;
 
-            interactables = new Interactables(
-                InstanceTracker.GetInstancesList<PurchaseInteraction>(),
-                FindObjectOfType<ScrapperController>() != null,
-                UnityEngine.Time.frameCount
-            );
+            interactables = new Interactables();
             display.text = GenerateText();
         }
 
         public string GenerateText()
         {
             string equip = $"#{ColorCatalog.GetColorHexString(ColorCatalog.ColorIndex.Equipment)}";
+            bool scrapperPresent = FindObjectOfType<ScrapperController>() != null;
             System.Text.StringBuilder sb = new();
 
             if (interactables.terminals > 0)      sb.AppendLine(FormatLine("style", "cIsUtility", "MULTISHOP_TERMINAL_NAME", interactables.terminalsAvailable, interactables.terminals));
@@ -75,7 +72,7 @@ namespace HUDdleUP.Loot
             if (TeleporterInteraction.instance != null) {
                 if (TeleporterInteraction.instance.monstersCleared) {
                     string cleansingPool = interactables.cleansingPoolPresent ? " · <style=cLunarObjective>@</style>" : "";
-                    sb.AppendLine().AppendLine($"{FormatLabel("<style=cSub>" + Language.GetString("SCRAPPER_NAME") + "</style>")}{(interactables.scrapperPresent ? "@" : "×")}{cleansingPool}");
+                    sb.AppendLine().AppendLine($"{FormatLabel("<style=cSub>" + Language.GetString("SCRAPPER_NAME") + "</style>")}{(scrapperPresent ? "@" : "×")}{cleansingPool}");
                     AppendFabricators(interactables, sb);
                     if (interactables.voids > 0) sb.AppendLine(FormatLine("style", "cIsVoid", "VOID_CHEST_NAME", interactables.voidsAvailable, interactables.voids));
                     if (interactables.lunarPods > 0) sb.AppendLine(FormatLine("style", "cLunarObjective", "LUNAR_CHEST_NAME", interactables.lunarPodsAvailable, interactables.lunarPods));
