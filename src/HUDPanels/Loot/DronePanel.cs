@@ -64,8 +64,8 @@ namespace HUDdleUP.Loot
 
             System.Text.StringBuilder sb = new();
 
-            if (interactables.gunnerTurrets > 0) sb.AppendLine(FormatLine("style", "cIsUtility", Language.GetString("TURRET1_BODY_NAME"),interactables.gunnerTurrets));
-            sb.AppendLine(GenerateDronesText(interactables, teleporterBossDefeated, teleporterFullyCharged));
+            if (interactables.gunnerTurrets > 0) sb.AppendLine(FormatLine("style", "cIsUtility", Language.GetString("TURRET1_BODY_NAME"), interactables.gunnerTurrets));
+            GenerateDronesText(interactables, teleporterBossDefeated, teleporterFullyCharged, sb);
             if (interactables.droneTerminals > 0) sb.AppendLine(LootPanel.FormatLine("style", "cIsUtility", "DRONE_VENDOR_TERMINAL_NAME", interactables.droneTerminalsAvailable, interactables.droneTerminals));
 
             if (teleporterBossDefeated) {
@@ -77,31 +77,28 @@ namespace HUDdleUP.Loot
             return sb.ToString();
         }
 
-        private static string GenerateDronesText(Interactables interactables, bool teleporterBossDefeated, bool teleporterFullyCharged)
+        private static System.Text.StringBuilder GenerateDronesText(Interactables interactables, bool teleporterBossDefeated, bool teleporterFullyCharged, System.Text.StringBuilder sb)
         {
             if (interactables.drones > 0) {
                 if (teleporterFullyCharged) {
-                    System.Text.StringBuilder sb = new();
-
                     AppendDrone("DRONE_GUNNER_BODY_NAME", ColorCatalog.ColorIndex.Tier1Item, interactables.gunnerDrones, sb);
                     AppendDrone("DRONE_HEALING_BODY_NAME", ColorCatalog.ColorIndex.Tier1Item, interactables.healingDrones, sb);
+                    AppendDrone("DRONE_HAULER_BODY_NAME", ColorCatalog.ColorIndex.Tier1Item, interactables.transportDrones, sb);
+                    AppendDrone("DRONE_JUNK_BODY_NAME", ColorCatalog.ColorIndex.Tier1Item, interactables.junkDrones, sb);
                     AppendDrone("DRONE_MISSILE_BODY_NAME", ColorCatalog.ColorIndex.Tier2Item, interactables.missileDrones, sb);
                     AppendDrone("FLAMEDRONE_BODY_NAME", ColorCatalog.ColorIndex.Tier2Item, interactables.incineratorDrones, sb);
                     AppendDrone("EMERGENCYDRONE_BODY_NAME", ColorCatalog.ColorIndex.Tier2Item, interactables.emergencyDrones, sb);
-                    AppendDrone("DRONE_MEGA_BODY_NAME", ColorCatalog.ColorIndex.Tier3Item, interactables.tc280Drones, sb);
-                    AppendDrone("EQUIPMENTDRONE_BODY_NAME", ColorCatalog.ColorIndex.Equipment, interactables.equipmentDrones, sb);
-                    AppendDrone("DRONE_HAULER_BODY_NAME", ColorCatalog.ColorIndex.Tier1Item, interactables.transportDrones, sb);
-                    AppendDrone("DRONE_JUNK_BODY_NAME", ColorCatalog.ColorIndex.Tier1Item, interactables.junkDrones, sb);
                     AppendDrone("DRONE_RECHARGE_BODY_NAME", ColorCatalog.ColorIndex.Tier2Item, interactables.barrierDrones, sb);
                     AppendDrone("DRONE_CLEANUP_BODY_NAME", ColorCatalog.ColorIndex.Tier2Item, interactables.cleanupDrones, sb);
                     AppendDrone("DRONE_JAILER_BODY_NAME", ColorCatalog.ColorIndex.Tier2Item, interactables.jailerDrones, sb);
                     AppendDrone("DRONE_BOMBARDMENT_BODY_NAME", ColorCatalog.ColorIndex.Tier3Item, interactables.bombardmentDrones, sb);
                     AppendDrone("DRONE_COPYCAT_BODY_NAME", ColorCatalog.ColorIndex.Tier3Item, interactables.freezeDrones, sb);
+                    AppendDrone("DRONE_MEGA_BODY_NAME", ColorCatalog.ColorIndex.Tier3Item, interactables.tc280Drones, sb);
+                    AppendDrone("EQUIPMENTDRONE_BODY_NAME", ColorCatalog.ColorIndex.Equipment, interactables.equipmentDrones, sb);
 
-                    return sb.ToString();
+                    return sb;
                 }
                 else if (teleporterBossDefeated) {
-                    System.Text.StringBuilder sb = new();
                     System.Collections.Generic.List<string> strings = new();
                     if (interactables.t1Drones > 0) strings.Add(Util.GenerateColoredString(interactables.t1Drones.ToString(), ColorCatalog.GetColor(ColorCatalog.ColorIndex.Tier1Item)));
                     if (interactables.t2Drones > 0) strings.Add(Util.GenerateColoredString(interactables.t2Drones.ToString(), ColorCatalog.GetColor(ColorCatalog.ColorIndex.Tier2Item)));
@@ -110,11 +107,11 @@ namespace HUDdleUP.Loot
                     string result = string.Join(" · ", strings);
 
                     if (!string.IsNullOrEmpty(result)) sb.AppendLine($"{LootPanel.FormatLabel("<style=cIsUtility>Drones</style>")}<style=cStack>{result}</style>");
-                    return sb.ToString();
+                    return sb;
                 }
             }
 
-            return FormatLine("style", "cIsUtility", "Drones", interactables.drones);
+            return sb.AppendLine(FormatLine("style", "cIsUtility", "Drones", interactables.drones));
         }
 
         private static System.Text.StringBuilder AppendDrone(string nameToken, ColorCatalog.ColorIndex color, int count, System.Text.StringBuilder sb)
@@ -124,6 +121,6 @@ namespace HUDdleUP.Loot
         }
 
         private static string FormatLine(string tagKey, string tagValue, string label, int count)
-            => $"{LootPanel.FormatLabel($"<{tagKey}={tagValue}></{tagKey}>")}<style=cStack>{count}</style>";
+            => $"{LootPanel.FormatLabel($"<{tagKey}={tagValue}>{label}</{tagKey}>")}{count}";
     }
 }
