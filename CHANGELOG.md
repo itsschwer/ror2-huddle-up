@@ -1,3 +1,5 @@
+## 1.3.0
+- Add `DronePanel`
 - Show stage name in `LootPanel`
 
 ### 1.2.3

@@ -63,7 +63,7 @@ namespace HUDdleUP.Loot
 
         public readonly int droneTerminals = 0;
         public readonly int droneTerminalsAvailable = 0;
-        public readonly bool droneScrapperPresent = false; // "DRONE_SCRAPPER_NAME"
+        public readonly bool droneScrapperPresent = false;
 
 
         public Interactables() : this(InstanceTracker.GetInstancesList<PurchaseInteraction>()) { }
