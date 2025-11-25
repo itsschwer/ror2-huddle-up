@@ -80,7 +80,11 @@ adds a Loot panel to the hud to track how much loot is left on a stage *— only
 ## drone panel
 adds a Drone panel to the HUD to track how many interactable drones are left on a stage *— only visible when the scoreboard is open*
 
-![screenshot of drone panel](https://github.com/itsschwer/ror2-huddle-up/blob/main/xtra/demo-drone-panel.png?raw=true)
+initial | teleporter boss defeated | teleporter fully charged
+--- | --- | ---
+![screenshot of drone panel 1](https://github.com/itsschwer/ror2-huddle-up/blob/main/xtra/demo-drone-panel-1.png?raw=true) | ![screenshot of drone panel 2](https://github.com/itsschwer/ror2-huddle-up/blob/main/xtra/demo-drone-panel-2.png?raw=true) | ![screenshot of drone panel 3](https://github.com/itsschwer/ror2-huddle-up/blob/main/xtra/demo-drone-panel-3.png?raw=true)
+
+*each screenshot is from a different stage! not meant to be the same drones at different teleporter phases!*
 
 ### what is tracked?
 - gunner turrets
@@ -90,11 +94,11 @@ adds a Drone panel to the HUD to track how many interactable drones are left on 
 - ***once teleporter boss is defeated:***
     - broken drones by tier
     - drone scrapper *(`@` if present)*
-    - drone combiner *(`@` if present)*
+    - drone combiner station *(`@` if present)*
 - ***once teleporter is charged:***
     - broken drones by type *(if >0)*
 <!--  -->
-<mark>***known issue:** broken upgrade drones (from drone combiner) are not tracked*<mark>
+<mark>***known issue:** broken upgrade drones (from drone combiner station) are not tracked*<mark>
 
 ## railgunner accuracy panel
 adds an Accuracy panel to the hud to track your accuracy with landing perfect reloads and hitting weak points

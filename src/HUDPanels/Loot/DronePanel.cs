@@ -120,7 +120,7 @@ namespace HUDdleUP.Loot
 
         private static System.Text.StringBuilder AppendDrone(string nameToken, ColorCatalog.ColorIndex color, int count, System.Text.StringBuilder sb)
         {
-            if (count > 0) sb.AppendLine($"{LootPanel.FormatLabel(Util.GenerateColoredString(Language.GetString(nameToken), ColorCatalog.GetColor(color)))}<style=cStack>{count}</style>");
+            if (count > 0) sb.AppendLine($"{LootPanel.FormatLabel(Util.GenerateColoredString(Language.GetString(nameToken), ColorCatalog.GetColor(color)))}{count}");
             return sb;
         }
 
