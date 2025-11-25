@@ -102,6 +102,7 @@ namespace HUDdleUP.Loot
                     return sb;
                 }
                 else if (teleporterBossDefeated) {
+                    // other potential idea is to split by drone category (healing [#77FF75], combat [#FF4B32],utility [#AC68F8]; names from DroneType, colours from Operator UI assets..?)
                     System.Collections.Generic.List<string> strings = new();
                     if (interactables.t1Drones > 0) strings.Add(Util.GenerateColoredString(interactables.t1Drones.ToString(), ColorCatalog.GetColor(ColorCatalog.ColorIndex.Tier1Item)));
                     if (interactables.t2Drones > 0) strings.Add(Util.GenerateColoredString(interactables.t2Drones.ToString(), ColorCatalog.GetColor(ColorCatalog.ColorIndex.Tier2Item)));

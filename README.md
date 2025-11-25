@@ -74,7 +74,27 @@ adds a Loot panel to the hud to track how much loot is left on a stage *— only
 - ***once teleporter is charged:***
     - cloaked chests
 - enemy counts (per team)
-- mountain shrine invitations <sup>*(※ unfortunately, this only works on host)*</sup>
+- mountain shrine invitations <sup>*(~~※ unfortunately, this only works on host.~~ works on Alloyed Collective patch?)*</sup>
+- stage name
+
+## drone panel
+adds a Drone panel to the HUD to track how many interactable drones are left on a stage *— only visible when the scoreboard is open*
+
+![screenshot of drone panel](https://github.com/itsschwer/ror2-huddle-up/blob/main/xtra/demo-drone-panel.png?raw=true)
+
+### what is tracked?
+- gunner turrets
+- triple drone shop *(counts individual terminals)*
+- ***before teleporter boss is defeated:***
+    - broken drones total
+- ***once teleporter boss is defeated:***
+    - broken drones by tier
+    - drone scrapper *(`@` if present)*
+    - drone combiner *(`@` if present)*
+- ***once teleporter is charged:***
+    - broken drones by type *(if >0)*
+<!--  -->
+<mark>***known issue:** broken upgrade drones (from drone combiner) are not tracked*<mark>
 
 ## railgunner accuracy panel
 adds an Accuracy panel to the hud to track your accuracy with landing perfect reloads and hitting weak points
