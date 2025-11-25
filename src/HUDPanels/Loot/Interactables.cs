@@ -63,7 +63,6 @@ namespace HUDdleUP.Loot
 
         public readonly int droneTerminals = 0;
         public readonly int droneTerminalsAvailable = 0;
-        public readonly bool droneCombinerPresent = false; // "DRONE_COMBINER_NAME"
         public readonly bool droneScrapperPresent = false; // "DRONE_SCRAPPER_NAME"
 
 
@@ -203,9 +202,6 @@ namespace HUDdleUP.Loot
                     case "DRONE_VENDOR_TERMINAL_NAME":
                         droneTerminals++;
                         if (interactions[i].available) droneTerminalsAvailable++;
-                        break;
-                    case "DRONE_COMBINER_NAME":
-                        droneCombinerPresent = true;
                         break;
                     case "DRONE_SCRAPPER_NAME":
                         droneScrapperPresent = true;

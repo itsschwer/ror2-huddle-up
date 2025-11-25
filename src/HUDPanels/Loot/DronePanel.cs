@@ -68,11 +68,14 @@ namespace HUDdleUP.Loot
             GenerateDronesText(interactables, teleporterBossDefeated, teleporterFullyCharged, sb);
             if (interactables.droneTerminals > 0) sb.AppendLine(LootPanel.FormatLine("style", "cIsUtility", "DRONE_VENDOR_TERMINAL_NAME", interactables.droneTerminalsAvailable, interactables.droneTerminals));
 
+#if NETSTANDARD2_1_OR_GREATER && ALLOYED_COLLECTIVE
             if (teleporterBossDefeated) {
+                bool droneCombinerPresent = InstanceTracker.GetInstancesList<DroneCombinerController>().Count > 0;
                 sb.AppendLine();
                 sb.AppendLine($"{LootPanel.FormatLabel("<style=cSub>" + Language.GetString("DRONE_SCRAPPER_NAME") + "</style>")}{(interactables.droneScrapperPresent ? "@" : "×")}");
-                sb.AppendLine($"{LootPanel.FormatLabel("<style=cSub>" + Language.GetString("DRONE_COMBINER_NAME") + "</style>")}{(interactables.droneCombinerPresent ? "@" : "×")}");
+                sb.AppendLine($"{LootPanel.FormatLabel("<style=cSub>" + Language.GetString("DRONE_COMBINER_NAME") + "</style>")}{(droneCombinerPresent ? "@" : "×")}");
             }
+#endif
 
             return sb.ToString();
         }
