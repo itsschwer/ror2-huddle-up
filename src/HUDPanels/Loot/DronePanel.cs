@@ -12,7 +12,7 @@ namespace HUDdleUP.Loot
 
         private static void Init(HUD hud, ref bool _)
         {
-            // if (!Plugin.Config.DronePanel) return;
+            if (!Plugin.Config.DronePanel) return;
             if (DronePanel.hud != null) return;
 
             var objectivePanel = hud.GetComponentInChildren<ObjectivePanelController>();

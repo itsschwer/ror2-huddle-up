@@ -52,6 +52,7 @@ namespace HUDdleUP
 
         private void OnRunStart(RoR2.Run _) {
             Loot.LootPanel.Hook();
+            Loot.DronePanel.Hook();
             Multiplayer.ConnectionPanel.Hook();
             Railgunner.RailgunnerAccuracyPanel.Hook();
             Bandit.BanditComboPanel.Hook();
@@ -59,6 +60,7 @@ namespace HUDdleUP
 
         private void OnRunDestroy(RoR2.Run _) {
             Loot.LootPanel.Unhook();
+            Loot.DronePanel.Unhook();
             Multiplayer.ConnectionPanel.Unhook();
             Railgunner.RailgunnerAccuracyPanel.Unhook();
             Bandit.BanditComboPanel.Unhook();
