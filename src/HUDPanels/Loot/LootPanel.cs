@@ -5,6 +5,7 @@ namespace HUDdleUP.Loot
 {
     internal sealed class LootPanel : UnityEngine.MonoBehaviour
     {
+        internal static LootPanel Instance { get; private set; }
         private static HUD hud;
 
         public static void Hook() => HUD.shouldHudDisplay += Init;
@@ -35,7 +36,7 @@ namespace HUDdleUP.Loot
 
         private HUDPanel panel;
         private TMPro.TextMeshProUGUI display;
-        private Interactables interactables;
+        internal Interactables interactables;
 
         private void Start()
         {
@@ -51,7 +52,8 @@ namespace HUDdleUP.Loot
 
             interactables = new Interactables(
                 InstanceTracker.GetInstancesList<PurchaseInteraction>(),
-                FindObjectOfType<ScrapperController>() != null
+                FindObjectOfType<ScrapperController>() != null,
+                UnityEngine.Time.frameCount
             );
             display.text = GenerateText();
         }

@@ -4,6 +4,8 @@ namespace HUDdleUP.Loot
 {
     public sealed record Interactables
     {
+        public readonly int frameTimestamp;
+
         public readonly int chests = 0;
         public readonly int chestsAvailable = 0;
         public readonly int terminals = 0;
@@ -34,8 +36,39 @@ namespace HUDdleUP.Loot
         public readonly int redTakers = 0;
         public readonly int yellowTakers = 0;
 
-        public Interactables(System.Collections.Generic.List<PurchaseInteraction> interactions, bool scrapperPresent)
+        // "Broken "
+        public readonly int gunnerTurrets = 0;
+
+        public readonly int gunnerDrones = 0;
+        public readonly int healingDrones = 0;
+        public readonly int missileDrones = 0;
+        public readonly int incineratorDrones = 0;
+        public readonly int emergencyDrones = 0;
+        public readonly int tc280Drones = 0;
+
+        public readonly int equipmentDrones = 0;
+
+        public readonly int transportDrones = 0;
+        public readonly int junkDrones = 0;
+        public readonly int barrierDrones = 0;
+        public readonly int cleanupDrones = 0;
+        public readonly int jailerDrones = 0;
+        public readonly int bombardmentDrones = 0;
+        public readonly int freezeDrones = 0;
+
+        public int t1Drones => gunnerDrones + healingDrones + transportDrones + junkDrones;
+        public int t2Drones => missileDrones + incineratorDrones + emergencyDrones + barrierDrones + cleanupDrones + jailerDrones; // technically equipment drones too
+        public int t3Drones => tc280Drones + bombardmentDrones + freezeDrones;
+
+        public readonly bool droneCombinerPresent = false; // "DRONE_COMBINER_NAME"
+        public readonly bool droneScrapperPresent = false; // "DRONE_SCRAPPER_NAME"
+        // "DRONE_VENDOR_TERMINAL_NAME", check each terminal for tier..?
+
+
+
+        public Interactables(System.Collections.Generic.List<PurchaseInteraction> interactions, bool scrapperPresent, int generatedFrame)
         {
+            this.frameTimestamp = generatedFrame;
             this.scrapperPresent = scrapperPresent;
 
             for (int i = 0; i < interactions.Count; i++) {
@@ -121,6 +154,52 @@ namespace HUDdleUP.Loot
                     case "LUNAR_CHEST_NAME":
                         lunarPods++;
                         if (interactions[i].available) lunarPodsAvailable++;
+                        break;
+                    // drones
+                    case "TURRET1_INTERACTABLE_NAME":
+                        gunnerTurrets++;
+                        break;
+                    case "DRONE_GUNNER_INTERACTABLE_NAME":
+                        gunnerDrones++;
+                        break;
+                    case "DRONE_HEALING_INTERACTABLE_NAME":
+                        healingDrones++;
+                        break;
+                    case "DRONE_MISSILE_INTERACTABLE_NAME":
+                        missileDrones++;
+                        break;
+                    case "FLAMEDRONE_INTERACTABLE_NAME":
+                        incineratorDrones++;
+                        break;
+                    case "EMERGENCYDRONE_INTERACTABLE_NAME":
+                        emergencyDrones++;
+                        break;
+                    case "DRONE_MEGA_INTERACTABLE_NAME":
+                        tc280Drones++;
+                        break;
+                    case "EQUIPMENTDRONE_INTERACTABLE_NAME":
+                        equipmentDrones++;
+                        break;
+                    case "DRONE_HAULER_INTERACTABLE_NAME":
+                        transportDrones++;
+                        break;
+                    case "DRONE_JUNK_INTERACTABLE_NAME":
+                        junkDrones++;
+                        break;
+                    case "DRONE_RECHARGE_INTERACTABLE_NAME":
+                        barrierDrones++;
+                        break;
+                    case "DRONE_CLEANUP_INTERACTABLE_NAME":
+                        cleanupDrones++;
+                        break;
+                    case "DRONE_JAILER_INTERACTABLE_NAME":
+                        jailerDrones++;
+                        break;
+                    case "DRONE_BOMBARDMENT_INTERACTABLE_NAME":
+                        bombardmentDrones++;
+                        break;
+                    case "DRONE_COPYCAT_INTERACTABLE_NAME":
+                        freezeDrones++;
                         break;
                 }
             }
