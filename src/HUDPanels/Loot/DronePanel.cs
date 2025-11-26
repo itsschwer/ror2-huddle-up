@@ -3,6 +3,14 @@ using RoR2.UI;
 
 namespace HUDdleUP.Loot
 {
+    // PurchaseInteraction.displayNameToken and .contextToken
+    // appear to be resolved into language string if drone is upgraded
+    // e.g. "Broken Emergency Drone (Tier 2)"
+    // which kind of seems like a massive pain to check for
+    //
+    // spawn_prefab
+    // "RoR2/DLC3/DroneCombinerStation/DroneCombinerStation.prefab"
+    // "RoR2/Base/Drones/EmergencyDroneBroken.prefab"
     internal sealed class DronePanel : UnityEngine.MonoBehaviour
     {
         private static HUD hud;
@@ -36,7 +44,7 @@ namespace HUDdleUP.Loot
         private HUDPanel panel;
         private TMPro.TextMeshProUGUI display;
         private Interactables interactables;
-        
+
         private void Start()
         {
             panel.label.text = "Drones:";
