@@ -68,7 +68,7 @@ namespace HUDdleUP.Loot
             GenerateDronesText(interactables, teleporterBossDefeated, teleporterFullyCharged, sb);
             if (interactables.droneTerminals > 0) sb.AppendLine(LootPanel.FormatLine("style", "cIsUtility", "DRONE_VENDOR_TERMINAL_NAME", interactables.droneTerminalsAvailable, interactables.droneTerminals));
 
-#if NETSTANDARD2_1_OR_GREATER && ALLOYED_COLLECTIVE
+#if ALLOYED_COLLECTIVE
             if (teleporterBossDefeated) {
                 bool droneCombinerPresent = InstanceTracker.GetInstancesList<DroneCombinerController>().Count > 0;
                 sb.AppendLine();
