@@ -8,7 +8,7 @@ namespace HUDdleUP.Multiplayer
 {
     internal sealed class ConnectionPanel : MonoBehaviour
     {
-        private const float updateFrequency = 1/5;
+        private const float updateFrequency = 1f/5;
         private float lastUpdateTimestamp;
 
 
@@ -58,8 +58,8 @@ namespace HUDdleUP.Multiplayer
 
             float deltaTime = Time.unscaledTime - lastUpdateTimestamp;
             if (deltaTime < updateFrequency) return;
-
             lastUpdateTimestamp = Time.unscaledTime;
+
             display.text = $"<style=cStack>> <style=cIsUtility>Ping (round-trip time)</style>:</style>\n{(NetworkServer.active ? GetPingHost() : GetPingClient())}";
         }
 
