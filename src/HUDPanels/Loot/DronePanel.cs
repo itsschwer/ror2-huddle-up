@@ -43,12 +43,13 @@ namespace HUDdleUP.Loot
 
         private HUDPanel panel;
         private TMPro.TextMeshProUGUI display;
-        private Interactables interactables;
+        private InteractablesTracker tracker;
 
         private void Start()
         {
             panel.label.text = "Drones:";
             display = panel.AddTextComponent("Drone Tracker");
+            tracker = hud.GetComponent<InteractablesTracker>();
         }
 
         private void Update()
@@ -57,12 +58,15 @@ namespace HUDdleUP.Loot
             panel.gameObject.SetActive(visible);
             if (!visible) return;
 
-            interactables = LootPanel.Instance ? LootPanel.Instance.interactables : new Interactables();
             display.text = GenerateText();
         }
 
         public string GenerateText()
         {
+            if (tracker == null) return "<style=cDeath>error: missing interactables tracker</style>";
+            if (tracker.interactables == null) return "<style=cDeath>error: missing interactables</style>";
+            Interactables interactables = tracker.interactables;
+
             bool teleporterBossDefeated = false;
             bool teleporterFullyCharged = false;
             if (TeleporterInteraction.instance != null) {

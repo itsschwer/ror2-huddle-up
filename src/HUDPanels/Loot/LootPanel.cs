@@ -5,7 +5,6 @@ namespace HUDdleUP.Loot
 {
     internal sealed class LootPanel : UnityEngine.MonoBehaviour
     {
-        internal static LootPanel Instance { get; private set; }
         private static HUD hud;
 
         public static void Hook() => HUD.shouldHudDisplay += Init;
@@ -36,12 +35,17 @@ namespace HUDdleUP.Loot
 
         private HUDPanel panel;
         private TMPro.TextMeshProUGUI display;
-        internal Interactables interactables;
+        private InteractablesTracker tracker;
+
+        private const float scrapperSearchFrequency = 1f/4;
+        private float lastScrapperSearchTimestamp;
+        private bool scrapperPresent;
 
         private void Start()
         {
             panel.label.text = "Loot:";
             display = panel.AddTextComponent("Loot Tracker");
+            tracker = hud.GetComponent<InteractablesTracker>();
         }
 
         private void Update()
@@ -50,14 +54,22 @@ namespace HUDdleUP.Loot
             panel.gameObject.SetActive(visible);
             if (!visible) return;
 
-            interactables = new Interactables();
+            float deltaTime = UnityEngine.Time.unscaledTime - lastScrapperSearchTimestamp;
+            if (deltaTime >= scrapperSearchFrequency) {
+                lastScrapperSearchTimestamp = UnityEngine.Time.unscaledTime;
+                scrapperPresent = FindObjectOfType<ScrapperController>() != null;
+            }
+
             display.text = GenerateText();
         }
 
         public string GenerateText()
         {
+            if (tracker == null) return "<style=cDeath>error: missing interactables tracker</style>";
+            if (tracker.interactables == null) return "<style=cDeath>error: missing interactables</style>";
+            Interactables interactables = tracker.interactables;
+
             string equip = $"#{ColorCatalog.GetColorHexString(ColorCatalog.ColorIndex.Equipment)}";
-            bool scrapperPresent = FindObjectOfType<ScrapperController>() != null;
             System.Text.StringBuilder sb = new();
 
             if (interactables.terminals > 0)      sb.AppendLine(FormatLine("style", "cIsUtility", "MULTISHOP_TERMINAL_NAME", interactables.terminalsAvailable, interactables.terminals));

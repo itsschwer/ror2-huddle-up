@@ -51,6 +51,7 @@ namespace HUDdleUP
 
 
         private void OnRunStart(RoR2.Run _) {
+            Loot.InteractablesTracker.Hook();
             Loot.LootPanel.Hook();
             Loot.DronePanel.Hook();
             Multiplayer.ConnectionPanel.Hook();
@@ -59,6 +60,7 @@ namespace HUDdleUP
         }
 
         private void OnRunDestroy(RoR2.Run _) {
+            Loot.InteractablesTracker.Unhook();
             Loot.LootPanel.Unhook();
             Loot.DronePanel.Unhook();
             Multiplayer.ConnectionPanel.Unhook();

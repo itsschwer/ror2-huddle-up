@@ -40,6 +40,17 @@ namespace HUDdleUP
         public bool RailgunnerAccuracyPanel => railgunnerAccuracyPanel.Value;
         public bool BanditComboPanel => banditComboPanel.Value;
 
+        public bool TrackInteractables => lootPanel.Value || dronePanel.Value;
+
+#if FPS
+        // Advanced
+        private readonly ConfigEntry<int> interactablesTrackingUpdatesPerSecond;
+        // Accessors
+        internal float interactablesUpdateFrequency =>
+            interactablesTrackingUpdatesPerSecond.Value > 0
+            ? (1f/interactablesTrackingUpdatesPerSecond.Value) : 0;
+#endif
+
         internal Config(ConfigFile config)
         {
             file = config;
@@ -73,6 +84,12 @@ namespace HUDdleUP
                 "Add an Accuracy panel to the HUD to track your accuracy with landing perfect reloads and hitting weak points.");
             banditComboPanel = config.Bind<bool>(HUDPanels, nameof(banditComboPanel), true,
                 "Add a Combo panel to the HUD to track your consecutive cooldown resets when using the special skill \"Lights Out\".");
+
+#if FPS
+            const string Advanced = "Advanced";
+            interactablesTrackingUpdatesPerSecond = config.Bind<int>(Advanced, nameof(interactablesTrackingUpdatesPerSecond), 30,
+                "How many times should the interactables tracker (used by Loot Panel and Drone Panel) update per second?\n\n[ Higher numbers are heavier on performance! ]");
+#endif
         }
     }
 }
