@@ -1,3 +1,8 @@
+### 1.3.1
+- Fix `MultiplayerConnectionPanel` updating more frequently than intended
+- Fix excessive frame drop caused by `LootPanel`
+- Refactor interactables tracking
+
 ## 1.3.0
 - Add `DronePanel`
 - Show stage name in `LootPanel`
