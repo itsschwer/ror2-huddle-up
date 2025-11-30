@@ -96,6 +96,7 @@ namespace HUDdleUP.Loot
         {
             if (interactables.drones > 0) {
                 if (teleporterFullyCharged && Plugin.Config.ExpandDroneTrackingOnTeleporterCharged) {
+                    //todo: potentially refactor and break into per-type config setting to only separately list whitelisted drones (and keep split by tier)
                     AppendDrone("DRONE_GUNNER_BODY_NAME", ColorCatalog.ColorIndex.Tier1Item, interactables.gunnerDrones, sb);
                     AppendDrone("DRONE_HEALING_BODY_NAME", ColorCatalog.ColorIndex.Tier1Item, interactables.healingDrones, sb);
                     AppendDrone("DRONE_HAULER_BODY_NAME", ColorCatalog.ColorIndex.Tier1Item, interactables.transportDrones, sb);
@@ -114,20 +115,25 @@ namespace HUDdleUP.Loot
                     return sb;
                 }
                 else if (teleporterBossDefeated) {
-                    // other potential idea is to split by drone category (healing [#77FF75], combat [#FF4B32],utility [#AC68F8]; names from DroneType, colours from Operator UI assets..?)
-                    System.Collections.Generic.List<string> strings = new();
-                    if (interactables.t1Drones > 0) strings.Add(Util.GenerateColoredString(interactables.t1Drones.ToString(), ColorCatalog.GetColor(ColorCatalog.ColorIndex.Tier1Item)));
-                    if (interactables.t2Drones > 0) strings.Add(Util.GenerateColoredString(interactables.t2Drones.ToString(), ColorCatalog.GetColor(ColorCatalog.ColorIndex.Tier2Item)));
-                    if (interactables.t3Drones > 0) strings.Add(Util.GenerateColoredString(interactables.t3Drones.ToString(), ColorCatalog.GetColor(ColorCatalog.ColorIndex.Tier3Item)));
-                    if (interactables.equipmentDrones > 0) strings.Add(Util.GenerateColoredString(interactables.equipmentDrones.ToString(), ColorCatalog.GetColor(ColorCatalog.ColorIndex.Equipment)));
-                    string result = string.Join(" · ", strings);
-
-                    if (!string.IsNullOrEmpty(result)) sb.AppendLine($"{LootPanel.FormatLabel("<style=cIsUtility>Drones</style>")}<style=cStack>{result}</style>");
-                    return sb;
+                    return AppendDroneTiers(interactables, sb);
                 }
             }
 
             return sb.AppendLine(FormatLine("style", "cIsUtility", "Drones", interactables.drones));
+        }
+
+        private static System.Text.StringBuilder AppendDroneTiers(Interactables interactables, System.Text.StringBuilder sb)
+        {
+            // other potential idea is to split by drone category (healing [#77FF75], combat [#FF4B32],utility [#AC68F8]; names from DroneType, colours from Operator UI assets..?)
+            System.Collections.Generic.List<string> strings = new();
+            if (interactables.t1Drones > 0) strings.Add(Util.GenerateColoredString(interactables.t1Drones.ToString(), ColorCatalog.GetColor(ColorCatalog.ColorIndex.Tier1Item)));
+            if (interactables.t2Drones > 0) strings.Add(Util.GenerateColoredString(interactables.t2Drones.ToString(), ColorCatalog.GetColor(ColorCatalog.ColorIndex.Tier2Item)));
+            if (interactables.t3Drones > 0) strings.Add(Util.GenerateColoredString(interactables.t3Drones.ToString(), ColorCatalog.GetColor(ColorCatalog.ColorIndex.Tier3Item)));
+            if (interactables.equipmentDrones > 0) strings.Add(Util.GenerateColoredString(interactables.equipmentDrones.ToString(), ColorCatalog.GetColor(ColorCatalog.ColorIndex.Equipment)));
+            string result = string.Join(" · ", strings);
+
+            if (!string.IsNullOrEmpty(result)) sb.AppendLine($"{LootPanel.FormatLabel("<style=cIsUtility>Drones</style>")}<style=cStack>{result}</style>");
+            return sb;
         }
 
         private static System.Text.StringBuilder AppendDrone(string nameToken, ColorCatalog.ColorIndex color, int count, System.Text.StringBuilder sb)
