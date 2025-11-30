@@ -42,14 +42,10 @@ namespace HUDdleUP
 
         public bool TrackInteractables => lootPanel.Value || dronePanel.Value;
 
-#if FPS
         // Advanced
-        private readonly ConfigEntry<int> interactablesTrackingUpdatesPerSecond;
+        private readonly ConfigEntry<bool> expandDroneTrackingOnTeleporterCharged;
         // Accessors
-        internal float interactablesUpdateFrequency =>
-            interactablesTrackingUpdatesPerSecond.Value > 0
-            ? (1f/interactablesTrackingUpdatesPerSecond.Value) : 0;
-#endif
+        public bool ExpandDroneTrackingOnTeleporterCharged => expandDroneTrackingOnTeleporterCharged.Value;
 
         internal Config(ConfigFile config)
         {
@@ -85,11 +81,9 @@ namespace HUDdleUP
             banditComboPanel = config.Bind<bool>(HUDPanels, nameof(banditComboPanel), true,
                 "Add a Combo panel to the HUD to track your consecutive cooldown resets when using the special skill \"Lights Out\".");
 
-#if FPS
             const string Advanced = "Advanced";
-            interactablesTrackingUpdatesPerSecond = config.Bind<int>(Advanced, nameof(interactablesTrackingUpdatesPerSecond), 30,
-                "How many times should the interactables tracker (used by Loot Panel and Drone Panel) update per second?\n\n[ Higher numbers are heavier on performance! ]");
-#endif
+            expandDroneTrackingOnTeleporterCharged = config.Bind<bool>(Advanced, nameof(expandDroneTrackingOnTeleporterCharged), true,
+                "Show broken drones by drone type after the Teleporter is fully charged.");
         }
     }
 }

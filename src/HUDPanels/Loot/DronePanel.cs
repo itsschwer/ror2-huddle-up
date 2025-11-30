@@ -95,7 +95,7 @@ namespace HUDdleUP.Loot
         private static System.Text.StringBuilder GenerateDronesText(Interactables interactables, bool teleporterBossDefeated, bool teleporterFullyCharged, System.Text.StringBuilder sb)
         {
             if (interactables.drones > 0) {
-                if (teleporterFullyCharged) {
+                if (teleporterFullyCharged && Plugin.Config.ExpandDroneTrackingOnTeleporterCharged) {
                     AppendDrone("DRONE_GUNNER_BODY_NAME", ColorCatalog.ColorIndex.Tier1Item, interactables.gunnerDrones, sb);
                     AppendDrone("DRONE_HEALING_BODY_NAME", ColorCatalog.ColorIndex.Tier1Item, interactables.healingDrones, sb);
                     AppendDrone("DRONE_HAULER_BODY_NAME", ColorCatalog.ColorIndex.Tier1Item, interactables.transportDrones, sb);
