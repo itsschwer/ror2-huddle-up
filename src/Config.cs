@@ -50,6 +50,8 @@ namespace HUDdleUP
         internal Config(ConfigFile config)
         {
             file = config;
+            config.SaveOnConfigSet = false;
+
 
             const string Generic = "_";
             fullerItemDescriptions = config.Bind<bool>(Generic, nameof(fullerItemDescriptions), true,
@@ -84,6 +86,10 @@ namespace HUDdleUP
             const string Advanced = "Advanced";
             expandDroneTrackingOnTeleporterCharged = config.Bind<bool>(Advanced, nameof(expandDroneTrackingOnTeleporterCharged), true,
                 "Show broken drones by drone type after the Teleporter is fully charged.");
+
+
+            config.SaveOnConfigSet = true;
+            config.Save();
         }
     }
 }
