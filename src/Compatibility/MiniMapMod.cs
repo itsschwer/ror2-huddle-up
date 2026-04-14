@@ -13,6 +13,7 @@ namespace HUDdleUP.Compatibility
     internal static class MiniMapMod
     {
         internal const string PLUGIN_GUID = "MiniMap";
+        internal const string PLUGIN_GUID_2 = "com.minimapmod.rebalance"; // :(
 
         private const string TARGET_ASSEMBLY = "MiniMapMod";
         private const string TARGET_TYPE = "MiniMapMod.MiniMapPlugin";
@@ -20,14 +21,20 @@ namespace HUDdleUP.Compatibility
 
         internal static void TryPatch()
         {
-            if (!Chainloader.PluginInfos.ContainsKey(PLUGIN_GUID)) return;
+            if (!Chainloader.PluginInfos.ContainsKey(PLUGIN_GUID)
+                && !Chainloader.PluginInfos.ContainsKey(PLUGIN_GUID_2)) return;
 
             try {
-                Assembly targetAssembly = AppDomain.CurrentDomain.GetAssemblies().SingleOrDefault(a => a.GetName().Name == TARGET_ASSEMBLY);
-                Type targetType = targetAssembly?.GetType(TARGET_TYPE);
-                MethodBase targetMethod = targetType?.GetMethod(TARGET_METHOD, BindingFlags.Instance | BindingFlags.NonPublic);
-
-                ILHook hook = new(targetMethod, TryCreateMinimap_InSeparatePanel);
+                var matches = AppDomain.CurrentDomain.GetAssemblies().Where(a => a.GetName().Name == TARGET_ASSEMBLY);
+                foreach (Assembly targetAssembly in matches) {
+#if DEBUG || true
+                    string path = System.IO.Path.GetRelativePath(BepInEx.Paths.PluginPath, targetAssembly.Location);
+                    Plugin.Logger.LogDebug($"{nameof(Compatibility)}: {nameof(MiniMapMod)}> Found assembly at {path}.");
+#endif
+                    Type targetType = targetAssembly?.GetType(TARGET_TYPE);
+                    MethodBase targetMethod = targetType?.GetMethod(TARGET_METHOD, BindingFlags.Instance | BindingFlags.NonPublic);
+                    ILHook hook = new(targetMethod, TryCreateMinimap_InSeparatePanel);
+                }
             }
             catch (Exception e) {
                 Plugin.Logger.LogError(e);
@@ -38,15 +45,18 @@ namespace HUDdleUP.Compatibility
         {
             ILCursor c = new(il);
 
-            // GameObject val = GameObject.Find("ObjectivePanel");
+            // GameObject val = GameObject.Find("ObjectivePanel"); | GameObject val = ResolveMinimapParent();
+            // if ((Object)(object)val == (Object)null || SpriteManager == null)
+            int loc = -1;
             Func<Instruction, bool>[] match = {
-                x => x.MatchLdstr("ObjectivePanel"),
-                x => x.MatchCallOrCallvirt<GameObject>(nameof(GameObject.Find)),
-                x => x.MatchStloc(0)
+                x => x.MatchStloc(out loc),
+                // end of GameObject val assignment
+                x => x.MatchLdloc(loc),
+                x => x.MatchLdnull(),
+                x => x.MatchCallOrCallvirt<UnityEngine.Object>("op_Equality")
             };
 
-            if (c.TryGotoNext(MoveType.After, match)) {
-                c.Index--; // move to before stloc.0
+            if (c.TryGotoNext(MoveType.Before, match)) {
                 // Create minimap in clone of objective panel, instead of modifying objective panel directly.
                 c.EmitDelegate<Func<GameObject, GameObject>>((objectivePanelGameObject) => {
                     if (objectivePanelGameObject == null) return null;
