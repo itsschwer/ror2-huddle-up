@@ -1,3 +1,7 @@
+### 1.3.2
+- Add new configuration option `expandDroneTrackingOnTeleporterCharged`
+- Fix incompatibility with **`toni20k5267-MiniMapModRebalance`**
+
 ### 1.3.1
 - Fix `MultiplayerConnectionPanel` updating more frequently than intended
 - Fix excessive frame drop caused by `LootPanel`

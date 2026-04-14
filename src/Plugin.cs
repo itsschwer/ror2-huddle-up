@@ -13,7 +13,7 @@ namespace HUDdleUP
         public const string GUID = Author + "." + Name;
         public const string Author = "itsschwer";
         public const string Name = "HUDdleUP";
-        public const string Version = "1.3.1";
+        public const string Version = "1.3.2";
 
         internal static new BepInEx.Logging.ManualLogSource Logger { get; private set; }
 

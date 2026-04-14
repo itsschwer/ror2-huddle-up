@@ -95,7 +95,7 @@ initial | teleporter boss defeated | teleporter fully charged
     - broken drones by tier
     - drone scrapper *(`@` if present)*
     - drone combiner station *(`@` if present)*
-- ***once teleporter is charged:***
+- ***once teleporter is charged:** (can be disabled in config if too verbose)*
     - broken drones by type *(if >0)*
 <!--  -->
 <mark>***known issue:** broken upgrade drones (from drone combiner station) are not tracked*<mark>
