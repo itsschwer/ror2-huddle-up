@@ -1,3 +1,6 @@
+### 1.3.3
+- Fix `fullerItemDescriptions` for the Hallowed Concepts patch
+
 ### 1.3.2
 - Add new configuration option `expandDroneTrackingOnTeleporterCharged`
 - Fix incompatibility with **`toni20k5267-MiniMapModRebalance`**

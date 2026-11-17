@@ -134,6 +134,15 @@ adds a Connection panel to the HUD to check multiplayer latency (ping) *— only
 
 ----
 
+## versions
+> *Check the **changelog** to see version differences!*
+
+- If playing on a game version ***before*** the *Alloyed Collective* patch, please use version `1.1.1` of this mod
+- If playing on a game version ***before*** the *Hallowed Concepts* patch, please use version `1.3.2` of this mod
+- Otherwise, use the latest available version of this mod
+
+----
+
 ## see also
 - [LookingGlass](https://thunderstore.io/package/DropPod/LookingGlass/) <sup>[*src*](https://github.com/Wet-Boys/LookingGlass)</sup> by [DropPod](https://thunderstore.io/package/DropPod/) — the more definitive quality-of-life UI mod
     - goes beyond exposing information *(e.g. sorts items in inventory and menu UI elements)*
