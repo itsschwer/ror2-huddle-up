@@ -9,7 +9,11 @@ namespace HUDdleUP.Patches
     {
         [HarmonyPostfix, HarmonyPatch(typeof(RoR2.UI.ItemIcon), nameof(RoR2.UI.ItemIcon.SetItemIndex))]
 #if NETSTANDARD2_1_OR_GREATER
+#if HALLOWED_CONCEPTS
+        [HarmonyPatch([typeof(RoR2.UI.ItemIcon.SetItemIndexArgs)])]
+#else
         [HarmonyPatch([typeof(ItemIndex), typeof(int), typeof(float)])]
+#endif
 #endif
         private static void ItemIcon_SetItemIndex(RoR2.UI.ItemIcon __instance)
         {
